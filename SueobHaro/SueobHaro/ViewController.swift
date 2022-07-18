@@ -10,15 +10,10 @@ import CoreData
 
 class ViewController: UIViewController {
     
-    var container: NSPersistentContainer!
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard container != nil else { fatalError("This view needs a persistent container.") }
-        
-        
+        guard DataManager.shared.container != nil else { fatalError("This view needs a persistent container.") }
     }
-
-
+    
 }
 
