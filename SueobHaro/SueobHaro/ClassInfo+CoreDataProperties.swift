@@ -23,26 +23,26 @@ extension ClassInfo {
     @NSManaged public var name: String?
     @NSManaged public var color: String?
     @NSManaged public var location: String?
-    @NSManaged public var schdule: NSSet?
+    @NSManaged public var schedule: NSSet?
     @NSManaged public var classIteration: NSSet?
     @NSManaged public var members: NSSet?
 
 }
 
-// MARK: Generated accessors for schdule
+// MARK: Generated accessors for schedule
 extension ClassInfo {
 
-    @objc(addSchduleObject:)
-    @NSManaged public func addToSchdule(_ value: Schedule)
+    @objc(addScheduleObject:)
+    @NSManaged public func addToSchedule(_ value: Schedule)
 
-    @objc(removeSchduleObject:)
-    @NSManaged public func removeFromSchdule(_ value: Schedule)
+    @objc(removeScheduleObject:)
+    @NSManaged public func removeFromSchedule(_ value: Schedule)
 
-    @objc(addSchdule:)
-    @NSManaged public func addToSchdule(_ values: NSSet)
+    @objc(addSchedule:)
+    @NSManaged public func addToSchedule(_ values: NSSet)
 
-    @objc(removeSchdule:)
-    @NSManaged public func removeFromSchdule(_ values: NSSet)
+    @objc(removeSchedule:)
+    @NSManaged public func removeFromSchedule(_ values: NSSet)
 
 }
 

@@ -16,10 +16,11 @@ extension ClassIteration {
         return NSFetchRequest<ClassIteration>(entityName: "ClassIteration")
     }
 
-    @NSManaged public var id: String?
+    @NSManaged public var id: UUID?
     @NSManaged public var day: String?
     @NSManaged public var startTime: Date?
     @NSManaged public var endTime: Date?
+    @NSManaged public var classInfo: ClassInfo?
 
 }
 

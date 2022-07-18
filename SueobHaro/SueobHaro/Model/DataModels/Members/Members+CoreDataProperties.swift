@@ -16,9 +16,10 @@ extension Members {
         return NSFetchRequest<Members>(entityName: "Members")
     }
 
-    @NSManaged public var id: String?
+    @NSManaged public var id: UUID?
     @NSManaged public var name: String?
     @NSManaged public var phoneNumber: String?
+    @NSManaged public var classInfo: ClassInfo?
 
 }
 

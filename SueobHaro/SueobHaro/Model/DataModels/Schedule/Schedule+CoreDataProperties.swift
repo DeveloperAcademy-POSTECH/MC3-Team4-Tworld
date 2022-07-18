@@ -16,12 +16,13 @@ extension Schedule {
         return NSFetchRequest<Schedule>(entityName: "Schedule")
     }
 
-    @NSManaged public var id: String?
+    @NSManaged public var id: UUID?
     @NSManaged public var startTime: Date?
     @NSManaged public var endTime: Date?
     @NSManaged public var progress: String?
     @NSManaged public var count: Int16
     @NSManaged public var isCanceled: Bool
+    @NSManaged public var classInfo: ClassInfo?
 
 }
 
