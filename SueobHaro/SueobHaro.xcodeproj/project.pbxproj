@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		211CF4732885325800BDE26A /* ClassInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211CF4722885325800BDE26A /* ClassInfoCell.swift */; };
 		37B0421A288277E00043E9CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B04219288277E00043E9CB /* AppDelegate.swift */; };
 		37B0421C288277E00043E9CB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0421B288277E00043E9CB /* SceneDelegate.swift */; };
 		37B0421E288277E00043E9CB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0421D288277E00043E9CB /* ViewController.swift */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		211CF4722885325800BDE26A /* ClassInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInfoCell.swift; sourceTree = "<group>"; };
 		37B04216288277E00043E9CB /* SueobHaro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SueobHaro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37B04219288277E00043E9CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37B0421B288277E00043E9CB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 				37B04219288277E00043E9CB /* AppDelegate.swift */,
 				37B0421B288277E00043E9CB /* SceneDelegate.swift */,
 				37B0421D288277E00043E9CB /* ViewController.swift */,
+				211CF4722885325800BDE26A /* ClassInfoCell.swift */,
 				37B04222288277E20043E9CB /* Assets.xcassets */,
 				37B04224288277E20043E9CB /* LaunchScreen.storyboard */,
 				37B04227288277E20043E9CB /* Info.plist */,
@@ -134,6 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				211CF4732885325800BDE26A /* ClassInfoCell.swift in Sources */,
 				37B0421E288277E00043E9CB /* ViewController.swift in Sources */,
 				37B0421A288277E00043E9CB /* AppDelegate.swift in Sources */,
 				37B0421C288277E00043E9CB /* SceneDelegate.swift in Sources */,
