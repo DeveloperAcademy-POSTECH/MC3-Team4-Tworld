@@ -40,7 +40,6 @@ class ClassInfoCell: UICollectionViewCell {
         configuration.baseBackgroundColor = .cyan
         configuration.buttonSize = .medium
         
-        
         let button = UIButton(configuration: configuration, primaryAction: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -73,7 +72,10 @@ class ClassInfoCell: UICollectionViewCell {
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.spacing = 18
-        stackView.backgroundColor = .gray
+        stackView.backgroundColor = .black
+        stackView.layoutMargins = UIEdgeInsets(top: 18, left: 18, bottom: 18, right: 18)
+        stackView.layer.cornerRadius = 12
+        stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
     
@@ -100,6 +102,8 @@ class ClassInfoCell: UICollectionViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.alignment = .top
+        stackView.spacing = 12
+        stackView.distribution = .fill
         return stackView
     }()
     
@@ -123,7 +127,7 @@ extension ClassInfoCell {
         [titleLabel, durationLabel, teamLabel].forEach{ labelStackView.addArrangedSubview($0) }
         [progressIcon, progressInfoLabel].forEach{ progressStackView.addArrangedSubview($0) }
         [labelStackView, divider, progressStackView].forEach{ mainStackView.addArrangedSubview($0) }
-        [daylabel, dayOfWeeklabel].forEach{ dayStackView.addArrangedSubview($0) }
+        [dayOfWeeklabel, daylabel].forEach{ dayStackView.addArrangedSubview($0) }
         [dayStackView, mainStackView].forEach{ cellStackView.addArrangedSubview($0) }
         self.addSubview(cellStackView)
         self.addSubview(progressCountLabel)

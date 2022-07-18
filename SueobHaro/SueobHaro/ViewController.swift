@@ -33,6 +33,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .darkGray
         configureCollectionView()
     }
 
@@ -41,14 +42,18 @@ class ViewController: UIViewController {
         let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             
             let section: NSCollectionLayoutSection
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(200))
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(200))
+            item.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 0, bottom: 12, trailing: 0)
+            
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             
+            
+            
             section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 0, bottom: 6, trailing: 0)
+            section.interGroupSpacing = 14
             
             return section
         }
@@ -84,7 +89,11 @@ extension ViewController: UICollectionViewDelegate {
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, TestCellData>()
         snapshot.appendSections([.next])
-        snapshot.appendItems([TestCellData(name: "asdfasdfasdf")])
+        snapshot.appendItems([
+            TestCellData(name: "asdfasdfasdf"),
+            TestCellData(name: "asdfasdff"),
+            TestCellData(name: "asdfasdfasㅁㅁdf")
+        ])
         
         dataSource.apply(snapshot, animatingDifferences: false)
     }
@@ -93,6 +102,8 @@ extension ViewController: UICollectionViewDelegate {
 struct PreView: PreviewProvider {
     static var previews: some View {
         ViewController().toPreview()
+            .ignoresSafeArea()
+            .preferredColorScheme(.dark)
     }
 }
 
