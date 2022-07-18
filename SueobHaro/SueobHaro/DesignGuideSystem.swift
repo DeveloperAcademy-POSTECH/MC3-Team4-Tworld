@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+//MARK: Color
 extension UIColor {
     static let theme = ColorTheme()
 }
@@ -27,6 +28,7 @@ struct ColorTheme {
     let greyscale7 = UIColor(named: "Greyscale7")!
 }
 
+//MARK: Font
 extension UIFont {
     static func systemFont(for customStyle: CustomTextStyle) -> UIFont {
         var customFont: UIFont!
@@ -40,7 +42,7 @@ extension UIFont {
         case .body1:
             customFont = UIFont(name: CustomFont.pretendardMedium.name, size: 16)!
         case .body2:
-            //MARK: 사용 시 UILabel에서 행간 22로 고정
+            // 사용 시 UILabel에서 행간 22로 고정
             customFont = UIFont(name: CustomFont.pretendardLight.name, size: 16)!
         case .button:
             customFont = UIFont(name: CustomFont.pretendardBold.name, size: 17)!
@@ -78,6 +80,7 @@ enum CustomTextStyle {
     case caption
 }
 
+//MARK: Padding
 extension CGFloat {
     static let padding = PaddingTheme()
 }
