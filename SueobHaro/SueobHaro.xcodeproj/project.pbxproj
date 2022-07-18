@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		211CF4752885A6B300BDE26A /* DesignGuideSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211CF4742885A6B300BDE26A /* DesignGuideSystem.swift */; };
+		211CF47A2885AB2700BDE26A /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 211CF4772885AB2700BDE26A /* Pretendard-Medium.otf */; };
+		211CF47B2885AB2700BDE26A /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 211CF4782885AB2700BDE26A /* Pretendard-Light.otf */; };
+		211CF47C2885AB2700BDE26A /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 211CF4792885AB2700BDE26A /* Pretendard-Bold.otf */; };
 		37B0421A288277E00043E9CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B04219288277E00043E9CB /* AppDelegate.swift */; };
 		37B0421C288277E00043E9CB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0421B288277E00043E9CB /* SceneDelegate.swift */; };
 		37B0421E288277E00043E9CB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0421D288277E00043E9CB /* ViewController.swift */; };
@@ -17,6 +20,9 @@
 
 /* Begin PBXFileReference section */
 		211CF4742885A6B300BDE26A /* DesignGuideSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignGuideSystem.swift; sourceTree = "<group>"; };
+		211CF4772885AB2700BDE26A /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		211CF4782885AB2700BDE26A /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		211CF4792885AB2700BDE26A /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		37B04216288277E00043E9CB /* SueobHaro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SueobHaro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37B04219288277E00043E9CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37B0421B288277E00043E9CB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -37,6 +43,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		211CF4762885AAE100BDE26A /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				211CF4792885AB2700BDE26A /* Pretendard-Bold.otf */,
+				211CF4782885AB2700BDE26A /* Pretendard-Light.otf */,
+				211CF4772885AB2700BDE26A /* Pretendard-Medium.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		37B0420D288277E00043E9CB = {
 			isa = PBXGroup;
 			children = (
@@ -60,6 +76,7 @@
 				37B0421B288277E00043E9CB /* SceneDelegate.swift */,
 				37B0421D288277E00043E9CB /* ViewController.swift */,
 				211CF4742885A6B300BDE26A /* DesignGuideSystem.swift */,
+				211CF4762885AAE100BDE26A /* Fonts */,
 				37B04222288277E20043E9CB /* Assets.xcassets */,
 				37B04224288277E20043E9CB /* LaunchScreen.storyboard */,
 				37B04227288277E20043E9CB /* Info.plist */,
@@ -126,7 +143,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				37B04226288277E20043E9CB /* LaunchScreen.storyboard in Resources */,
+				211CF47C2885AB2700BDE26A /* Pretendard-Bold.otf in Resources */,
+				211CF47B2885AB2700BDE26A /* Pretendard-Light.otf in Resources */,
 				37B04223288277E20043E9CB /* Assets.xcassets in Resources */,
+				211CF47A2885AB2700BDE26A /* Pretendard-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

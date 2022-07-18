@@ -27,6 +27,57 @@ struct ColorTheme {
     let greyscale7 = UIColor(named: "Greyscale7")!
 }
 
+extension UIFont {
+    static func systemFont(for customStyle: CustomTextStyle) -> UIFont {
+        var customFont: UIFont!
+        switch customStyle {
+        case .title1:
+            customFont = UIFont(name: CustomFont.pretendardBold.name, size: 28)!
+        case .title2:
+            customFont = UIFont(name: CustomFont.pretendardBold.name, size: 24)!
+        case .title3:
+            customFont = UIFont(name: CustomFont.pretendardBold.name, size: 20)!
+        case .body1:
+            customFont = UIFont(name: CustomFont.pretendardMedium.name, size: 16)!
+        case .body2:
+            //MARK: 사용 시 UILabel에서 행간 22로 고정
+            customFont = UIFont(name: CustomFont.pretendardLight.name, size: 16)!
+        case .button:
+            customFont = UIFont(name: CustomFont.pretendardBold.name, size: 17)!
+        case .caption:
+            customFont = UIFont(name: CustomFont.pretendardBold.name, size: 12)!
+        }
+        return customFont
+    }
+}
+
+enum CustomFont {
+    case pretendardBold
+    case pretendardLight
+    case pretendardMedium
+    
+    var name: String {
+        switch self {
+        case .pretendardBold:
+            return "Pretendard-Bold"
+        case .pretendardLight:
+            return "Pretendard-Light"
+        case .pretendardMedium:
+            return "Pretendard-Medium"
+        }
+    }
+}
+
+enum CustomTextStyle {
+    case title1
+    case title2
+    case title3
+    case body1
+    case body2
+    case button
+    case caption
+}
+
 extension CGFloat {
     static let padding = PaddingTheme()
 }
