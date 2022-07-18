@@ -32,9 +32,18 @@ class ClassInfoCell: UICollectionViewCell {
         return stackView
     }()
     
-    lazy var progressCountLabel: UILabel = {
-        let label = UILabel(frame: .zero)
-        return label
+    lazy var progressCountLabel: UIButton = {
+        
+        var configuration = UIButton.Configuration.filled()
+        configuration.cornerStyle = .capsule
+        configuration.baseForegroundColor = .black
+        configuration.baseBackgroundColor = .cyan
+        configuration.buttonSize = .medium
+        
+        
+        let button = UIButton(configuration: configuration, primaryAction: nil)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     lazy var progressIcon: UIImageView = {
@@ -46,6 +55,7 @@ class ClassInfoCell: UICollectionViewCell {
     
     lazy var progressInfoLabel: UILabel = {
         let label = UILabel(frame: .zero)
+        label.numberOfLines = 0
         return label
     }()
     
@@ -54,13 +64,15 @@ class ClassInfoCell: UICollectionViewCell {
         stackView.axis = .horizontal
         stackView.alignment = .top
         return stackView
-
+        
     }()
     
     lazy var cellStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.alignment = .leading
+        stackView.spacing = 18
         return stackView
     }()
     
@@ -75,16 +87,24 @@ class ClassInfoCell: UICollectionViewCell {
 
 extension ClassInfoCell {
     func configure() {
+        let divider = UIView(frame: .zero)
+        divider.translatesAutoresizingMaskIntoConstraints = false
+        divider.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        divider.backgroundColor = .white
+        
         [titleLabel, durationLabel, teamLabel].forEach{ labelStackView.addArrangedSubview($0) }
         [progressIcon, progressInfoLabel].forEach{ progressStackView.addArrangedSubview($0) }
-        [labelStackView, progressStackView].forEach{ cellStackView.addArrangedSubview($0) }
-        self.contentView.addSubview(cellStackView)
+        [labelStackView, divider, progressStackView].forEach{ cellStackView.addArrangedSubview($0) }
+        self.addSubview(cellStackView)
+        self.addSubview(progressCountLabel)
         
         NSLayoutConstraint.activate([
-            cellStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            cellStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            cellStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            cellStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
+            cellStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            cellStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            cellStackView.topAnchor.constraint(equalTo: self.topAnchor),
+            cellStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            progressCountLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12),
+            progressCountLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20)
         ])
     }
 }

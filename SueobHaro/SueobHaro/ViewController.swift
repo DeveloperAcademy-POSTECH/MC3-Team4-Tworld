@@ -58,6 +58,34 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: UICollectionViewDelegate {
+    func configureCollectionView() {
+        
+        view.addSubview(collectionView)
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+        
+        let cellRegistration = UICollectionView.CellRegistration<ClassInfoCell, TestCellData> { (cell, indexPath, item) in
+            cell.titleLabel.text = "코딩 영재반"
+            cell.durationLabel.text = "13:00~15:00"
+            cell.teamLabel.text = "사샤, 에반, 린다, 베테브, 엑스"
+            cell.progressInfoLabel.text = "어쩌구 저쩌꾸까지 설명하고 진도\n나가야함 담주까지 숙제 있었음"
+            cell.progressCountLabel.setTitle("3회차", for: .normal)
+        }
+        
+        dataSource = UICollectionViewDiffableDataSource<Section, TestCellData>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
+            return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
+        }
+        
+        var snapshot = NSDiffableDataSourceSnapshot<Section, TestCellData>()
+        snapshot.appendSections([.next])
+        snapshot.appendItems([TestCellData(name: "asdfasdfasdf")])
+        
+        dataSource.apply(snapshot, animatingDifferences: false)
+    }
 }
 
 struct PreView: PreviewProvider {
