@@ -26,3 +26,16 @@ struct ColorTheme {
     let greyscale6 = UIColor(named: "Greyscale6")!
     let greyscale7 = UIColor(named: "Greyscale7")!
 }
+
+extension CGFloat {
+    static let padding = PaddingTheme()
+}
+
+struct PaddingTheme {
+    let toComponents = CGFloat(12)
+    let toText = CGFloat(8)
+    let inBox = CGFloat(18)
+    let toBox = CGFloat(18)
+    let toTextComponents = CGFloat(26)
+    let toDifferentHierarchy = CGFloat(36)
+}
