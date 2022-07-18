@@ -6,14 +6,16 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        guard DataManager.shared.container != nil else { fatalError("This view needs a persistent container.") }
     }
-
-
+    
 }
+
+
 
