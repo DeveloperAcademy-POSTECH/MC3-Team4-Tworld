@@ -67,14 +67,42 @@ class ClassInfoCell: UICollectionViewCell {
         
     }()
     
-    lazy var cellStackView: UIStackView = {
+    lazy var mainStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.spacing = 18
+        stackView.backgroundColor = .gray
         return stackView
     }()
+    
+    lazy var dayOfWeeklabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        return label
+    }()
+    
+    lazy var daylabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        return label
+    }()
+    
+    lazy var dayStackView: UIStackView = {
+        let stackView = UIStackView(frame: .zero)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        return stackView
+    }()
+    
+    lazy var cellStackView: UIStackView = {
+        let stackView = UIStackView(frame: .zero)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.alignment = .top
+        return stackView
+    }()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -94,7 +122,9 @@ extension ClassInfoCell {
         
         [titleLabel, durationLabel, teamLabel].forEach{ labelStackView.addArrangedSubview($0) }
         [progressIcon, progressInfoLabel].forEach{ progressStackView.addArrangedSubview($0) }
-        [labelStackView, divider, progressStackView].forEach{ cellStackView.addArrangedSubview($0) }
+        [labelStackView, divider, progressStackView].forEach{ mainStackView.addArrangedSubview($0) }
+        [daylabel, dayOfWeeklabel].forEach{ dayStackView.addArrangedSubview($0) }
+        [dayStackView, mainStackView].forEach{ cellStackView.addArrangedSubview($0) }
         self.addSubview(cellStackView)
         self.addSubview(progressCountLabel)
         
