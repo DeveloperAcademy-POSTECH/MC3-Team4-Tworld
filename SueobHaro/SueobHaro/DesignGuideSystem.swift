@@ -8,7 +8,8 @@
 import Foundation
 import UIKit
 
-//MARK: Color
+// MARK: Color
+// self.view.backgroundColor = .theme.spLightBlue
 extension UIColor {
     static let theme = ColorTheme()
 }
@@ -28,7 +29,8 @@ struct ColorTheme {
     let greyscale7 = UIColor(named: "Greyscale7")!
 }
 
-//MARK: Font
+// MARK: Font
+// label.font = .systemFont(for: .title1)
 extension UIFont {
     static func systemFont(for customStyle: CustomTextStyle) -> UIFont {
         var customFont: UIFont!
@@ -80,7 +82,8 @@ enum CustomTextStyle {
     case caption
 }
 
-//MARK: Padding
+// MARK: Padding
+// stackView.layoutMargins = UIEdgeInsets(top: .padding.toComponents, left: 0, bottom: 0, right: 0)
 extension CGFloat {
     static let padding = PaddingTheme()
 }
