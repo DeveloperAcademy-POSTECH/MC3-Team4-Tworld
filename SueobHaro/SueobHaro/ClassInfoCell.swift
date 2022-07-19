@@ -113,14 +113,15 @@ extension ClassInfoCell {
         self.addSubview(progressCountLabel)
         
         NSLayoutConstraint.activate([
-            divider.heightAnchor.constraint(equalToConstant: 1),
-            divider.widthAnchor.constraint(equalTo: self.widthAnchor),
             daylabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 17),
             daylabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
             mainStackView.leadingAnchor.constraint(equalTo: daylabel.trailingAnchor, constant: 12),
             mainStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             mainStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             mainStackView.topAnchor.constraint(equalTo: self.topAnchor),
+            divider.heightAnchor.constraint(equalToConstant: 1),
+            divider.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
+            
             progressCountLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12),
             progressCountLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20)
         ])
