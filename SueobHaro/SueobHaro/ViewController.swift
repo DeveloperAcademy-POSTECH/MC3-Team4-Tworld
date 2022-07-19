@@ -45,6 +45,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .darkGray
+        configureNavbar()
         configureCollectionView()
     }
 
@@ -131,9 +132,32 @@ extension ViewController: UICollectionViewDelegate {
         snapshot.appendItems([
             TestCellData(name: "fasdf"),
             TestCellData(name: "asdfasf"),
+            TestCellData(name: "asdfasf"),
+            TestCellData(name: "asdfasf"),
+            TestCellData(name: "asdfasf"),
         ])
         
         dataSource.apply(snapshot, animatingDifferences: false)
+    }
+}
+
+extension ViewController {
+    private func configureNavbar() {
+        let iconButton = UIButton(type: .custom)
+        let image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 17, weight: .semibold))!
+        iconButton.setImage(image, for: .normal)
+        iconButton.imageView?.tintColor = .cyan
+        iconButton.setTitle("수업 추가하기", for: .normal)
+        iconButton.setTitleColor(.cyan, for: .normal)
+        iconButton.semanticContentAttribute = .forceRightToLeft
+        let leftIconBarItem = UIBarButtonItem(customView: iconButton)
+        self.navigationItem.rightBarButtonItem = leftIconBarItem
+        
+        let logo = UILabel(frame: .zero)
+        logo.text = "LOGO"
+        logo.textColor = .cyan
+        let rightIconBarItem = UIBarButtonItem(customView: logo)
+        self.navigationItem.leftBarButtonItem = rightIconBarItem
     }
 }
 
