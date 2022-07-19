@@ -25,7 +25,7 @@ struct ClassNameView: View {
         ZStack {
             Color.spBlack.ignoresSafeArea()
             VStack(alignment: .leading) {
-                VStack (alignment: .leading, spacing: CGFloat.padding.toComponents) {
+                VStack(alignment: .leading, spacing: CGFloat.padding.toComponents) {
                     HStack {
                         Text("수업 추가하기")
                             .font(Font(uiFont: .systemFont(for: .title1)))
