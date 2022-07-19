@@ -13,6 +13,7 @@ class ClassInfoCell: UICollectionViewCell {
     lazy var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = .systemFont(for: .title3)
+        label.textColor = .theme.greyscale1
         return label
     }()
     
@@ -90,13 +91,30 @@ class ClassInfoCell: UICollectionViewCell {
         stackView.layer.borderColor = UIColor.theme.spLightBlue.cgColor
         return stackView
     }()
-    
+        
     lazy var daylabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "asdfasdfas"
         label.font = .systemFont(for: .title3)
+        label.textColor = .theme.greyscale1
         return label
+    }()
+    
+    lazy var daySubLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(for: .caption)
+        label.text = "내일"
+        label.textColor = .theme.greyscale3
+        return label
+    }()
+    
+    lazy var dayStackView: UIStackView = {
+        let stackView = UIStackView(frame: .zero)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .center
+        stackView.axis = .vertical
+        return stackView
     }()
     
     override init(frame: CGRect) {
@@ -142,15 +160,15 @@ extension ClassInfoCell {
         [titleLabel, durationLabel, teamLabel].forEach{ labelStackView.addArrangedSubview($0) }
         [progressIcon, progressInfoLabel].forEach{ progressStackView.addArrangedSubview($0) }
         [labelStackView, divider, progressStackView].forEach{ mainStackView.addArrangedSubview($0) }
-        
-        self.addSubview(daylabel)
+        [daySubLabel, daylabel].forEach{ dayStackView.addArrangedSubview($0) }
+        self.addSubview(dayStackView)
         self.addSubview(mainStackView)
         self.addSubview(progressCountLabel)
         
         NSLayoutConstraint.activate([
-            daylabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 17),
-            daylabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-            daylabel.widthAnchor.constraint(equalToConstant: 32),
+            dayStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            dayStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+            dayStackView.widthAnchor.constraint(equalToConstant: 32),
             mainStackView.leadingAnchor.constraint(equalTo: daylabel.trailingAnchor, constant: .padding.toComponents),
             mainStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 1),
             mainStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),

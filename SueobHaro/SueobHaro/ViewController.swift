@@ -133,7 +133,7 @@ extension ViewController: UICollectionViewDelegate {
         snapshot.appendItems([
         ])
         
-        dataSource.apply(snapshot, animatingDifferences: false)
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 
