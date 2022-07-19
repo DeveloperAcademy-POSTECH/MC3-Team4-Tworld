@@ -150,6 +150,7 @@ extension ClassInfoCell {
         NSLayoutConstraint.activate([
             daylabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 17),
             daylabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+            daylabel.widthAnchor.constraint(equalToConstant: 32),
             mainStackView.leadingAnchor.constraint(equalTo: daylabel.trailingAnchor, constant: .padding.toComponents),
             mainStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 1),
             mainStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),

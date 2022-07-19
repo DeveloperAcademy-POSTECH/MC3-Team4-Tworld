@@ -104,9 +104,11 @@ extension ViewController: UICollectionViewDelegate {
             
             var container = AttributeContainer()
             container.font = .systemFont(for: .caption)
+            
             cell.progressCountLabel.configuration?.attributedTitle = AttributedString("3회차", attributes: container)
             
-            cell.daylabel.text = "19"
+            cell.daylabel.text = "18"
+            
         }
         
         let headerRegistration = UICollectionView.SupplementaryRegistration
