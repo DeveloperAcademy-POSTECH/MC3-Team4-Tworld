@@ -47,13 +47,14 @@ class ClassInfoCell: UICollectionViewCell {
     
     lazy var progressIcon: UIImageView = {
         let imageView = UIImageView(frame: .zero)
-        let image = UIImage(systemName: "highlighter", withConfiguration: UIImage.SymbolConfiguration(pointSize: 13, weight: .semibold))!
+        let image = UIImage(systemName: "highlighter", withConfiguration: UIImage.SymbolConfiguration(pointSize: 15, weight: .semibold))!
+        imageView.tintColor = .cyan
         imageView.image = image
         return imageView
     }()
     
-    lazy var progressInfoLabel: UILabel = {
-        let label = UILabel(frame: .zero)
+    lazy var progressInfoLabel: ProgressLabel = {
+        let label = ProgressLabel(frame: .zero)
         label.numberOfLines = 0
         return label
     }()
@@ -62,6 +63,7 @@ class ClassInfoCell: UICollectionViewCell {
         let stackView = UIStackView(frame: .zero)
         stackView.axis = .horizontal
         stackView.alignment = .top
+        stackView.spacing = 14
         return stackView
         
     }()
@@ -92,6 +94,31 @@ class ClassInfoCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
+    }
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+}
+
+class ProgressLabel: UILabel {
+    
+    let placeHolder = "진행한 진도를 입력해주세요."
+    
+    override var text: String? {
+        didSet {
+            if let text = text {
+                if text == "" {
+                    self.text = placeHolder
+                    self.textColor = .cyan
+                } else {
+                    self.textColor = .white
+                }
+            }
+        }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
     }
     required init?(coder: NSCoder) {
         fatalError()
