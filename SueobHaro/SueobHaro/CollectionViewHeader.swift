@@ -27,6 +27,8 @@ class TitleHeaderSupplementaryView: UICollectionReusableView {
 
 extension TitleHeaderSupplementaryView {
     func configure() {
+        self.backgroundColor = .darkGray
+        
         [label].forEach{ addSubview($0) }
         
         NSLayoutConstraint.activate([

@@ -72,6 +72,7 @@ class ViewController: UIViewController {
                 layoutSize: headerSize,
                 elementKind: ViewController.sectionHeaderElementKind,
                 alignment: .top)
+            sectionHeader.pinToVisibleBounds = true
             
             section.boundarySupplementaryItems = [sectionHeader]
             
