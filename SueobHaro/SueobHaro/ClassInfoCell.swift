@@ -108,7 +108,7 @@ extension ClassInfoCell {
         [titleLabel, durationLabel, teamLabel].forEach{ labelStackView.addArrangedSubview($0) }
         [progressIcon, progressInfoLabel].forEach{ progressStackView.addArrangedSubview($0) }
         [labelStackView, divider, progressStackView].forEach{ mainStackView.addArrangedSubview($0) }
-//        [daylabel, mainStackView].forEach{ cellStackView.addArrangedSubview($0) }
+        
         self.addSubview(daylabel)
         self.addSubview(mainStackView)
         self.addSubview(progressCountLabel)
