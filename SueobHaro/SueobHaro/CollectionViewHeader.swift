@@ -30,7 +30,8 @@ extension TitleHeaderSupplementaryView {
         [label].forEach{ addSubview($0) }
         
         NSLayoutConstraint.activate([
-            label.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 17)
+            label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 17),
+            label.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
     }
 }

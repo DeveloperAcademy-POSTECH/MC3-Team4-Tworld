@@ -9,16 +9,27 @@ import UIKit
 import SwiftUI
 
 struct TestCellData: Hashable {
+    let id = UUID()
     var name: String
 }
  
 enum Section: Int, Hashable, CaseIterable {
     case next
     case prev
+    
+    var description: String {
+        switch self {
+        case .next:
+            return "다음 수업을 잊지마세요!"
+        case .prev:
+            return "지난 수업을 확인해보세요"
+        }
+    }
 }
 
 class ViewController: UIViewController {
     
+    static let sectionHeaderElementKind = "section-header-element-kind"
     var dataSource: UICollectionViewDiffableDataSource<Section, TestCellData>! = nil
 
     lazy var collectionView: UICollectionView = {
@@ -50,10 +61,19 @@ class ViewController: UIViewController {
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(200))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             
-            
-            
             section = NSCollectionLayoutSection(group: group)
             section.interGroupSpacing = 14
+            section.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 0, bottom: 17, trailing: 0)
+            
+            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                    heightDimension: .estimated(34))
+            
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: ViewController.sectionHeaderElementKind,
+                alignment: .top)
+            
+            section.boundarySupplementaryItems = [sectionHeader]
             
             return section
         }
@@ -82,16 +102,34 @@ extension ViewController: UICollectionViewDelegate {
             cell.daylabel.text = "19"
         }
         
+        let headerRegistration = UICollectionView.SupplementaryRegistration
+        <TitleHeaderSupplementaryView>(elementKind: ViewController.sectionHeaderElementKind) {
+            (supplementaryView, string, indexPath) in
+            supplementaryView.label.text = Section(rawValue: indexPath.section)?.description
+        }
+        
         dataSource = UICollectionViewDiffableDataSource<Section, TestCellData>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
         }
         
+        dataSource.supplementaryViewProvider = { (view, kind, index) in
+            return self.collectionView.dequeueConfiguredReusableSupplementary(
+                using: headerRegistration, for: index)
+        }
+        
         var snapshot = NSDiffableDataSourceSnapshot<Section, TestCellData>()
+        
+        // 샘플 데이터 추가
         snapshot.appendSections([.next])
         snapshot.appendItems([
             TestCellData(name: "asdfasdfasdf"),
             TestCellData(name: "asdfasdff"),
-            TestCellData(name: "asdfasdfasㅁㅁdf")
+            TestCellData(name: "asdf")
+        ])
+        snapshot.appendSections([.prev])
+        snapshot.appendItems([
+            TestCellData(name: "fasdf"),
+            TestCellData(name: "asdfasf"),
         ])
         
         dataSource.apply(snapshot, animatingDifferences: false)
