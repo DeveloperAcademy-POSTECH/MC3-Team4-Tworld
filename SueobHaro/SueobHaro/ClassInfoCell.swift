@@ -102,8 +102,7 @@ extension ClassInfoCell {
     func configure() {
         let divider = UIView(frame: .zero)
         divider.translatesAutoresizingMaskIntoConstraints = false
-        divider.heightAnchor.constraint(equalToConstant: 2).isActive = true
-        divider.backgroundColor = .white
+        divider.backgroundColor = .darkGray
         
         [titleLabel, durationLabel, teamLabel].forEach{ labelStackView.addArrangedSubview($0) }
         [progressIcon, progressInfoLabel].forEach{ progressStackView.addArrangedSubview($0) }
@@ -114,6 +113,8 @@ extension ClassInfoCell {
         self.addSubview(progressCountLabel)
         
         NSLayoutConstraint.activate([
+            divider.heightAnchor.constraint(equalToConstant: 1),
+            divider.widthAnchor.constraint(equalTo: self.widthAnchor),
             daylabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 17),
             daylabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
             mainStackView.leadingAnchor.constraint(equalTo: daylabel.trailingAnchor, constant: 12),
