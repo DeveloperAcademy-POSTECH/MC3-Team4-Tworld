@@ -74,39 +74,20 @@ class ClassInfoCell: UICollectionViewCell {
         stackView.spacing = 18
         stackView.backgroundColor = .black
         stackView.layoutMargins = UIEdgeInsets(top: 18, left: 18, bottom: 18, right: 18)
-        stackView.layer.cornerRadius = 12
         stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layer.cornerRadius = 12
+        stackView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
+        stackView.layer.borderWidth = 1
+        stackView.layer.borderColor = UIColor.cyan.cgColor
         return stackView
-    }()
-    
-    lazy var dayOfWeeklabel: UILabel = {
-        let label = UILabel(frame: .zero)
-        return label
     }()
     
     lazy var daylabel: UILabel = {
         let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "asdfasdfas"
         return label
     }()
-    
-    lazy var dayStackView: UIStackView = {
-        let stackView = UIStackView(frame: .zero)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        return stackView
-    }()
-    
-    lazy var cellStackView: UIStackView = {
-        let stackView = UIStackView(frame: .zero)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
-        stackView.alignment = .top
-        stackView.spacing = 12
-        stackView.distribution = .fill
-        return stackView
-    }()
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -127,16 +108,18 @@ extension ClassInfoCell {
         [titleLabel, durationLabel, teamLabel].forEach{ labelStackView.addArrangedSubview($0) }
         [progressIcon, progressInfoLabel].forEach{ progressStackView.addArrangedSubview($0) }
         [labelStackView, divider, progressStackView].forEach{ mainStackView.addArrangedSubview($0) }
-        [dayOfWeeklabel, daylabel].forEach{ dayStackView.addArrangedSubview($0) }
-        [dayStackView, mainStackView].forEach{ cellStackView.addArrangedSubview($0) }
-        self.addSubview(cellStackView)
+//        [daylabel, mainStackView].forEach{ cellStackView.addArrangedSubview($0) }
+        self.addSubview(daylabel)
+        self.addSubview(mainStackView)
         self.addSubview(progressCountLabel)
         
         NSLayoutConstraint.activate([
-            cellStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            cellStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            cellStackView.topAnchor.constraint(equalTo: self.topAnchor),
-            cellStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            daylabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 17),
+            daylabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
+            mainStackView.leadingAnchor.constraint(equalTo: daylabel.trailingAnchor, constant: 12),
+            mainStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            mainStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            mainStackView.topAnchor.constraint(equalTo: self.topAnchor),
             progressCountLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12),
             progressCountLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20)
         ])

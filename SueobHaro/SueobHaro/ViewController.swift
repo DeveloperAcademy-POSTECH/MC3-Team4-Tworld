@@ -11,7 +11,7 @@ import SwiftUI
 struct TestCellData: Hashable {
     var name: String
 }
-
+ 
 enum Section: Int, Hashable, CaseIterable {
     case next
     case prev
@@ -80,7 +80,6 @@ extension ViewController: UICollectionViewDelegate {
             cell.progressInfoLabel.text = "어쩌구 저쩌꾸까지 설명하고 진도\n나가야함 담주까지 숙제 있었음"
             cell.progressCountLabel.setTitle("3회차", for: .normal)
             cell.daylabel.text = "19"
-            cell.dayOfWeeklabel.text = "화"
         }
         
         dataSource = UICollectionViewDiffableDataSource<Section, TestCellData>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
