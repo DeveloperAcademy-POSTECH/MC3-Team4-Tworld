@@ -21,7 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         DataManager.shared.container = persistentContainer
         window = UIWindow(windowScene: windowScene)
         let viewController = ViewController()
-        window?.rootViewController = viewController
+        let navViewController = UINavigationController(rootViewController: viewController)
+        window?.rootViewController = navViewController
         window?.makeKeyAndVisible()
     }
 
