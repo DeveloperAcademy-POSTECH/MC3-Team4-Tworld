@@ -46,7 +46,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         guard DataManager.shared.container != nil else { fatalError("This view needs a persistent container.") }
-        self.view.backgroundColor = .darkGray
+        self.view.backgroundColor = .theme.spBlack
         configureNavbar()
         configureCollectionView()
     }
@@ -65,8 +65,8 @@ class ViewController: UIViewController {
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             
             section = NSCollectionLayoutSection(group: group)
-            section.interGroupSpacing = 14
-            section.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 0, bottom: 17, trailing: 0)
+            section.interGroupSpacing = .padding.toComponents
+            section.contentInsets = NSDirectionalEdgeInsets(top: .padding.toTextComponents, leading: 0, bottom: .padding.toDifferentHierarchy, trailing: 0)
             
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                     heightDimension: .estimated(34))
@@ -90,7 +90,7 @@ extension ViewController: UICollectionViewDelegate {
         
         view.addSubview(collectionView)
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: .padding.toComponents),
             collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
@@ -101,7 +101,11 @@ extension ViewController: UICollectionViewDelegate {
             cell.durationLabel.text = "13:00~15:00"
             cell.teamLabel.text = "사샤, 에반, 린다, 베테브, 엑스"
             cell.progressInfoLabel.text = "어쩌구 저쩌꾸까지 설명하고 진도\n나가야함 담주까지 숙제 있었음"
-            cell.progressCountLabel.setTitle("3회차", for: .normal)
+            
+            var container = AttributeContainer()
+            container.font = .systemFont(for: .caption)
+            cell.progressCountLabel.configuration?.attributedTitle = AttributedString("3회차", attributes: container)
+            
             cell.daylabel.text = "19"
         }
         
@@ -147,7 +151,7 @@ extension ViewController {
         let iconButton = UIButton(type: .custom)
         let image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 17, weight: .semibold))!
         iconButton.setImage(image, for: .normal)
-        iconButton.imageView?.tintColor = .cyan
+        iconButton.imageView?.tintColor = .theme.spLightBlue
         iconButton.setTitle("수업 추가하기", for: .normal)
         iconButton.setTitleColor(.cyan, for: .normal)
         iconButton.semanticContentAttribute = .forceRightToLeft
@@ -156,7 +160,7 @@ extension ViewController {
         
         let logo = UILabel(frame: .zero)
         logo.text = "LOGO"
-        logo.textColor = .cyan
+        logo.textColor = .theme.spLightBlue
         let rightIconBarItem = UIBarButtonItem(customView: logo)
         self.navigationItem.leftBarButtonItem = rightIconBarItem
     }

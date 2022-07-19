@@ -12,16 +12,21 @@ class ClassInfoCell: UICollectionViewCell {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
+        label.font = .systemFont(for: .title3)
         return label
     }()
     
     lazy var durationLabel: UILabel = {
         let label = UILabel(frame: .zero)
+        label.font = .systemFont(for: .body1)
+        label.textColor = .theme.greyscale3
         return label
     }()
     
     lazy var teamLabel: UILabel = {
         let label = UILabel(frame: .zero)
+        label.font = .systemFont(for: .body1)
+        label.textColor = .theme.greyscale3
         return label
     }()
     
@@ -29,6 +34,7 @@ class ClassInfoCell: UICollectionViewCell {
         let stackView = UIStackView(frame: .zero)
         stackView.axis = .vertical
         stackView.alignment = .leading
+        stackView.spacing = .padding.toText
         return stackView
     }()
     
@@ -37,7 +43,7 @@ class ClassInfoCell: UICollectionViewCell {
         var configuration = UIButton.Configuration.filled()
         configuration.cornerStyle = .capsule
         configuration.baseForegroundColor = .black
-        configuration.baseBackgroundColor = .cyan
+        configuration.baseBackgroundColor = .theme.spLightBlue
         configuration.buttonSize = .medium
         
         let button = UIButton(configuration: configuration, primaryAction: nil)
@@ -48,13 +54,14 @@ class ClassInfoCell: UICollectionViewCell {
     lazy var progressIcon: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         let image = UIImage(systemName: "highlighter", withConfiguration: UIImage.SymbolConfiguration(pointSize: 15, weight: .semibold))!
-        imageView.tintColor = .cyan
+        imageView.tintColor = .theme.spLightBlue
         imageView.image = image
         return imageView
     }()
     
     lazy var progressInfoLabel: ProgressLabel = {
         let label = ProgressLabel(frame: .zero)
+        label.font = .systemFont(for: .body2)
         label.numberOfLines = 0
         return label
     }()
@@ -73,14 +80,14 @@ class ClassInfoCell: UICollectionViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.alignment = .leading
-        stackView.spacing = 18
+        stackView.spacing = .padding.inBox
         stackView.backgroundColor = .black
         stackView.layoutMargins = UIEdgeInsets(top: 18, left: 18, bottom: 18, right: 18)
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layer.cornerRadius = 12
         stackView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
         stackView.layer.borderWidth = 1
-        stackView.layer.borderColor = UIColor.cyan.cgColor
+        stackView.layer.borderColor = UIColor.theme.spLightBlue.cgColor
         return stackView
     }()
     
@@ -88,6 +95,7 @@ class ClassInfoCell: UICollectionViewCell {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "asdfasdfas"
+        label.font = .systemFont(for: .title3)
         return label
     }()
     
@@ -141,16 +149,16 @@ extension ClassInfoCell {
         
         NSLayoutConstraint.activate([
             daylabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 17),
-            daylabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
-            mainStackView.leadingAnchor.constraint(equalTo: daylabel.trailingAnchor, constant: 12),
-            mainStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            daylabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+            mainStackView.leadingAnchor.constraint(equalTo: daylabel.trailingAnchor, constant: .padding.toComponents),
+            mainStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 1),
             mainStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             mainStackView.topAnchor.constraint(equalTo: self.topAnchor),
             divider.heightAnchor.constraint(equalToConstant: 1),
             divider.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
             
-            progressCountLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12),
-            progressCountLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20)
+            progressCountLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -17),
+            progressCountLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: .padding.toBox)
         ])
     }
 }

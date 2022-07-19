@@ -13,6 +13,7 @@ class TitleHeaderSupplementaryView: UICollectionReusableView {
     lazy var label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(for: .title1)
         return label
     }()
     
@@ -27,7 +28,6 @@ class TitleHeaderSupplementaryView: UICollectionReusableView {
 
 extension TitleHeaderSupplementaryView {
     func configure() {
-        self.backgroundColor = .darkGray
         
         [label].forEach{ addSubview($0) }
         

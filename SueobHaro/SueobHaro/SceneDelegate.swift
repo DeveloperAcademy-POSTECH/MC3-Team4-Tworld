@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         let viewController = ViewController()
         let navigationApperance = UINavigationBarAppearance()
-        navigationApperance.backgroundColor = .darkGray
+        navigationApperance.backgroundColor = .theme.spBlack
         navigationApperance.shadowColor = .clear
         let navViewController = UINavigationController(rootViewController: viewController)
         navViewController.navigationBar.standardAppearance = navigationApperance
