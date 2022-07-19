@@ -99,6 +99,14 @@ enum CustomTextStyle {
     case caption
 }
 
+// MARK: SwiftUI Font extension
+// .font(Font(uiFont: .systemFont(for: .body2)))
+extension Font {
+    init(uiFont: UIFont) {
+        self = Font(uiFont as CTFont)
+    }
+}
+
 // MARK: Padding
 // stackView.layoutMargins = UIEdgeInsets(top: .padding.toComponents, left: 0, bottom: 0, right: 0)
 extension CGFloat {
