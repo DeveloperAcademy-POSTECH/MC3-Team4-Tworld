@@ -92,10 +92,11 @@ extension ViewController: UICollectionViewDelegate {
         ])
         
         let cellRegistration = UICollectionView.CellRegistration<ClassInfoCell, Schedule> { (cell, indexPath, item) in
-            cell.titleLabel.text = "코딩 영재반"
-            cell.durationLabel.text = "13:00~15:00"
-            cell.teamLabel.text = "사샤, 에반, 린다, 베테브, 엑스"
-            cell.progressInfoLabel.text = "어쩌구 저쩌꾸까지 설명하고 진도\n나가야함 담주까지 숙제 있었음"
+            cell.titleLabel.text = item.classInfo?.name ?? ""
+            cell.durationLabel.text = "\((item.startTime ?? Date()).toString())~\((item.endTime ?? Date()).toString())"
+            let members = item.classInfo?.members?.allObjects as? [Members] ?? []
+            cell.teamLabel.text = String(members.reduce(into: ""){ $0 += "\($1.name ?? "")" }.dropLast(2))
+            cell.progressInfoLabel.text = item.progress ?? ""
             
             var container = AttributeContainer()
             container.font = .systemFont(for: .caption)
@@ -178,6 +179,12 @@ extension ViewController {
         snapshot.appendItems([
         ])
         dataSource.apply(snapshot, animatingDifferences: true)
+    }
+}
+
+extension Date {
+    func toString() -> String {
+        return self.formatted(date: .omitted, time: .shortened)
     }
 }
 
