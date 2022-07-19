@@ -8,11 +8,6 @@
 import UIKit
 import SwiftUI
 import CoreData
-
-struct TestCellData: Hashable {
-    let id = UUID()
-    var name: String
-}
  
 enum Section: Int, Hashable, CaseIterable {
     case next
@@ -31,7 +26,7 @@ enum Section: Int, Hashable, CaseIterable {
 class ViewController: UIViewController {
     
     static let sectionHeaderElementKind = "section-header-element-kind"
-    var dataSource: UICollectionViewDiffableDataSource<Section, TestCellData>! = nil
+    var dataSource: UICollectionViewDiffableDataSource<Section, Schedule>! = nil
 
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
@@ -96,7 +91,7 @@ extension ViewController: UICollectionViewDelegate {
             collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
         
-        let cellRegistration = UICollectionView.CellRegistration<ClassInfoCell, TestCellData> { (cell, indexPath, item) in
+        let cellRegistration = UICollectionView.CellRegistration<ClassInfoCell, Schedule> { (cell, indexPath, item) in
             cell.titleLabel.text = "코딩 영재반"
             cell.durationLabel.text = "13:00~15:00"
             cell.teamLabel.text = "사샤, 에반, 린다, 베테브, 엑스"
@@ -117,7 +112,7 @@ extension ViewController: UICollectionViewDelegate {
             supplementaryView.label.text = Section(rawValue: indexPath.section)?.description
         }
         
-        dataSource = UICollectionViewDiffableDataSource<Section, TestCellData>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, Schedule>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
         }
         
@@ -126,22 +121,16 @@ extension ViewController: UICollectionViewDelegate {
                 using: headerRegistration, for: index)
         }
         
-        var snapshot = NSDiffableDataSourceSnapshot<Section, TestCellData>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
         
         // 샘플 데이터 추가
         snapshot.appendSections([.next])
-        snapshot.appendItems([
-            TestCellData(name: "asdfasdfasdf"),
-            TestCellData(name: "asdfasdff"),
-            TestCellData(name: "asdf")
-        ])
+        DataManager.shared.fetchData(target: .schedule)
+        snapshot.appendItems(
+            DataManager.shared.schedule ?? []
+        )
         snapshot.appendSections([.prev])
         snapshot.appendItems([
-            TestCellData(name: "fasdf"),
-            TestCellData(name: "asdfasf"),
-            TestCellData(name: "asdfasf"),
-            TestCellData(name: "asdfasf"),
-            TestCellData(name: "asdfasf"),
         ])
         
         dataSource.apply(snapshot, animatingDifferences: false)
@@ -157,6 +146,7 @@ extension ViewController {
         iconButton.setTitle("수업 추가하기", for: .normal)
         iconButton.setTitleColor(.cyan, for: .normal)
         iconButton.semanticContentAttribute = .forceRightToLeft
+        iconButton.addTarget(self, action: #selector(addSchedule), for: .touchUpInside)
         let leftIconBarItem = UIBarButtonItem(customView: iconButton)
         self.navigationItem.rightBarButtonItem = leftIconBarItem
         
@@ -165,6 +155,29 @@ extension ViewController {
         logo.textColor = .theme.spLightBlue
         let rightIconBarItem = UIBarButtonItem(customView: logo)
         self.navigationItem.leftBarButtonItem = rightIconBarItem
+    }
+}
+
+extension ViewController {
+    @objc private func addSchedule() {
+        DataManager.shared.addClassInfo(firstDate: Date(), tuition: 12, tuitionPer: 12, name: "코딩 영재반", color: "blue", location: "집", day: ["월"], startTime: [Date()], endTime: [Date()], memberName: ["예훈"], memberPhoneNumber: ["010-4170-1111"])
+        DataManager.shared.fetchData(target: .classInfo)
+        if let classInfo = DataManager.shared.classInfo?.first {
+            DataManager.shared.addSchedule(count: 1, endTime: Date(), startTime: Date(), isCanceled: false, progress: "asdfasdf", classInfo: classInfo)
+        }
+        DataManager.shared.fetchData(target: .schedule)
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
+        
+        // 샘플 데이터 추가
+        snapshot.appendSections([.next])
+        DataManager.shared.fetchData(target: .schedule)
+        snapshot.appendItems(
+            DataManager.shared.schedule ?? []
+        )
+        snapshot.appendSections([.prev])
+        snapshot.appendItems([
+        ])
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 
