@@ -5,9 +5,15 @@
 //  Created by leejunmo on 2022/07/16.
 //
 
+//회차
+//날짜
+//진도입력 탭
+//그레디언트
+
 import UIKit
 import SwiftUI
 import CoreData
+import Combine
  
 enum Section: Int, Hashable, CaseIterable {
     case next
@@ -27,6 +33,10 @@ class ViewController: UIViewController {
     
     static let sectionHeaderElementKind = "section-header-element-kind"
     var dataSource: UICollectionViewDiffableDataSource<Section, Schedule>! = nil
+    
+    var dayStack: [Date] = []
+    
+    var cancellables = Set<AnyCancellable>()
 
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
@@ -44,6 +54,22 @@ class ViewController: UIViewController {
         self.view.backgroundColor = .theme.spBlack
         configureNavbar()
         configureCollectionView()
+        
+        DataManager.shared.$schedule.sink { [weak self] schedules in
+            if let schedules = schedules {
+                var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
+                
+                // 샘플 데이터 추가
+                snapshot.appendSections([.next])
+                snapshot.appendItems(schedules)
+                snapshot.appendSections([.prev])
+                snapshot.appendItems([
+                ])
+                
+                self?.dataSource.apply(snapshot, animatingDifferences: true)
+            }
+        }
+        .store(in: &cancellables)
     }
 
     private func createLayout() -> UICollectionViewLayout {
@@ -85,7 +111,7 @@ extension ViewController: UICollectionViewDelegate {
         
         view.addSubview(collectionView)
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: .padding.toComponents),
+            collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
@@ -95,16 +121,16 @@ extension ViewController: UICollectionViewDelegate {
             cell.titleLabel.text = item.classInfo?.name ?? ""
             cell.durationLabel.text = "\((item.startTime ?? Date()).toString())~\((item.endTime ?? Date()).toString())"
             let members = item.classInfo?.members?.allObjects as? [Members] ?? []
-            cell.teamLabel.text = String(members.reduce(into: ""){ $0 += "\($1.name ?? "")" }.dropLast(2))
+            cell.teamLabel.text = String(members.reduce(into: ""){ $0 += "\($1.name ?? ""), " }.dropLast(2))
             cell.progressInfoLabel.text = item.progress ?? ""
             
             var container = AttributeContainer()
             container.font = .systemFont(for: .caption)
             
-            cell.progressCountLabel.configuration?.attributedTitle = AttributedString("3회차", attributes: container)
+            cell.progressCountLabel.configuration?.attributedTitle = AttributedString("\(item.count)회차", attributes: container)
             
-            cell.daylabel.text = "18"
-            
+            cell.daylabel.text = item.startTime?.todayString() ?? ""
+            cell.daySubLabel.text = item.startTime?.toDayOfWeekString() ?? ""
         }
         
         let headerRegistration = UICollectionView.SupplementaryRegistration
@@ -167,24 +193,36 @@ extension ViewController {
             DataManager.shared.addSchedule(count: 1, endTime: Date(), startTime: Date(), isCanceled: false, progress: "asdfasdf", classInfo: classInfo)
         }
         DataManager.shared.fetchData(target: .schedule)
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
-        
-        // 샘플 데이터 추가
-        snapshot.appendSections([.next])
-        DataManager.shared.fetchData(target: .schedule)
-        snapshot.appendItems(
-            DataManager.shared.schedule ?? []
-        )
-        snapshot.appendSections([.prev])
-        snapshot.appendItems([
-        ])
-        dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 
 extension Date {
     func toString() -> String {
         return self.formatted(date: .omitted, time: .shortened)
+    }
+    
+    func todayString() -> String {
+        let date = Date()
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.day], from: date)
+        let dayOfMonth = components.day
+        return String(dayOfMonth ?? 0)
+    }
+    
+    func toDayOfWeekString() -> String {
+        let calendar = Calendar.current
+        if calendar.isDateInToday(self) {
+            return "오늘"
+        } else if calendar.isDateInTomorrow(self) {
+            return "내일"
+        } else {
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEEE"
+            let dayOfTheWeekString = dateFormatter.string(from: date)
+            return dayOfTheWeekString
+        }
+
     }
 }
 

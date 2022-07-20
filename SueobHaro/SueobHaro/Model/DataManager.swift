@@ -20,10 +20,10 @@ class DataManager {
     
     
     // MARK: Data
-    var classInfo: [ClassInfo]?
-    var schedule: [Schedule]?
-    var members: [Members]?
-    var classIteration: [ClassIteration]?
+    @Published var classInfo: [ClassInfo]?
+    @Published var schedule: [Schedule]?
+    @Published var members: [Members]?
+    @Published var classIteration: [ClassIteration]?
     
     
     // MARK: Create
