@@ -25,7 +25,6 @@ class DataManager {
     @Published var members: [Members]?
     @Published var classIteration: [ClassIteration]?
     
-    
     // MARK: Create
     func addClassInfo(firstDate: Date, tuition: Int32, tuitionPer: Int16, name: String, color: String, location: String, day: [String], startTime: [Date], endTime: [Date], memberName: [String], memberPhoneNumber: [String]) -> Void {
         let newClassInfo = ClassInfo(context: container.viewContext)

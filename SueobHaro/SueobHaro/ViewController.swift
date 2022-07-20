@@ -59,12 +59,21 @@ class ViewController: UIViewController {
             if let schedules = schedules {
                 var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
                 
-                // 샘플 데이터 추가
+                var prevSchedules: [Schedule] = []
+                var nextSchedules: [Schedule] = []
+                
+                for schedule in schedules {
+                    if (schedule.endTime ?? Date()) < Date() {
+                        prevSchedules.append(schedule)
+                    } else {
+                        nextSchedules.append(schedule)
+                    }
+                }
+                
                 snapshot.appendSections([.next])
-                snapshot.appendItems(schedules)
+                snapshot.appendItems(nextSchedules)
                 snapshot.appendSections([.prev])
-                snapshot.appendItems([
-                ])
+                snapshot.appendItems(prevSchedules)
                 
                 self?.dataSource.apply(snapshot, animatingDifferences: true)
             }
