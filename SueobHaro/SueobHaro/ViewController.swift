@@ -5,8 +5,6 @@
 //  Created by leejunmo on 2022/07/16.
 //
 
-//회차
-//날짜
 //진도입력 탭
 //그레디언트
 
@@ -70,9 +68,16 @@ class ViewController: UIViewController {
                     }
                 }
                 
-                snapshot.appendSections([.next])
+                if !nextSchedules.isEmpty {
+                    snapshot.appendSections([.next])
+                }
+                
                 snapshot.appendItems(nextSchedules)
-                snapshot.appendSections([.prev])
+                
+                if !prevSchedules.isEmpty {
+                    snapshot.appendSections([.prev])
+                }
+                
                 snapshot.appendItems(prevSchedules)
                 
                 self?.dataSource.apply(snapshot, animatingDifferences: true)
