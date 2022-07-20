@@ -70,17 +70,15 @@ class ViewController: UIViewController {
                 
                 if !nextSchedules.isEmpty {
                     snapshot.appendSections([.next])
+                    snapshot.appendItems(nextSchedules)
                 }
-                
-                snapshot.appendItems(nextSchedules)
                 
                 if !prevSchedules.isEmpty {
                     snapshot.appendSections([.prev])
+                    snapshot.appendItems(prevSchedules)
                 }
                 
-                snapshot.appendItems(prevSchedules)
-                
-                self?.dataSource.apply(snapshot, animatingDifferences: true)
+                self?.dataSource.apply(snapshot, animatingDifferences: false)
             }
         }
         .store(in: &cancellables)
