@@ -28,6 +28,11 @@ struct ColorTheme {
     let spLightBlue = UIColor(named: "SPLightBlue")!
     let spTurkeyBlue = UIColor(named: "SPTurkeyBlue")!
     
+    let spLightGradientLeft = UIColor(named: "SPLightGradient-left")!
+    let spLightGradientRight = UIColor(named: "SPLightGradient-right")!
+    let spDeepGradientLeft = UIColor(named: "SPDeepGradient-left")!
+    let spDeepGradientRight = UIColor(named: "SPDeepGradient-right")!
+    
     let greyscale1 = UIColor(named: "Greyscale1")!
     let greyscale2 = UIColor(named: "Greyscale2")!
     let greyscale3 = UIColor(named: "Greyscale3")!

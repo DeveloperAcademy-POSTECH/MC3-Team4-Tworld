@@ -39,18 +39,7 @@ class ClassInfoCell: UICollectionViewCell {
         return stackView
     }()
     
-    lazy var progressCountLabel: UIButton = {
-        
-        var configuration = UIButton.Configuration.filled()
-        configuration.cornerStyle = .capsule
-        configuration.baseForegroundColor = .black
-        configuration.baseBackgroundColor = .theme.spLightBlue
-        configuration.buttonSize = .medium
-        
-        let button = UIButton(configuration: configuration, primaryAction: nil)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+    lazy var progressCountLabel = GradientCapsuleLabel(frame: .zero)
     
     lazy var progressIcon: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -123,6 +112,67 @@ class ClassInfoCell: UICollectionViewCell {
     }
     required init?(coder: NSCoder) {
         fatalError()
+    }
+}
+
+class GradientView: UIView {
+    var leadingColor: UIColor = UIColor.tertiarySystemBackground
+    var trailingColor: UIColor = UIColor.systemPurple
+
+    override class var layerClass: AnyClass {
+        return CAGradientLayer.self
+    }
+
+    override func layoutSubviews() {
+        (layer as! CAGradientLayer).colors = [leadingColor.cgColor, trailingColor.cgColor]
+        (layer as! CAGradientLayer).startPoint = .init(x: 0, y: 0.5)
+        (layer as! CAGradientLayer).endPoint = .init(x: 1, y: 0.5)
+        (layer as! CAGradientLayer).locations = [0.0, 1.0]
+    }
+}
+
+class GradientCapsuleLabel: UIView {
+    
+    lazy var label: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .theme.spBlack
+        label.font = .systemFont(for: .caption)
+        return label
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configure()
+    }
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
+    private func configure() {
+        self.backgroundColor = .white
+        self.layer.cornerRadius = 12
+        let gradient = GradientView(frame: .zero)
+        gradient.leadingColor = .theme.spLightGradientLeft
+        gradient.trailingColor = .theme.spLightGradientRight
+        self.addSubview(gradient)
+        gradient.layer.cornerRadius = 12
+        gradient.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            gradient.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            gradient.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            gradient.topAnchor.constraint(equalTo: self.topAnchor),
+            gradient.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+        ])
+        
+        self.addSubview(label)
+        self.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 6),
+            label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -6),
+            label.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+            label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
+        ])
     }
 }
 

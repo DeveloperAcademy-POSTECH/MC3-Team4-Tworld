@@ -138,8 +138,7 @@ extension ViewController: UICollectionViewDelegate {
             
             var container = AttributeContainer()
             container.font = .systemFont(for: .caption)
-            
-            cell.progressCountLabel.configuration?.attributedTitle = AttributedString("\(item.count)회차", attributes: container)
+            cell.progressCountLabel.label.text = "\(item.count)회차"
             
             cell.daylabel.text = item.startTime?.todayString() ?? ""
             cell.daySubLabel.text = item.startTime?.toDayOfWeekString() ?? ""
@@ -198,6 +197,17 @@ extension ViewController {
 }
 
 extension ViewController {
+    
+    private func addGradient(uiView: UIView) {
+        let gradient = CAGradientLayer()
+        gradient.colors = [UIColor.theme.spBlack.cgColor, UIColor.theme.spLightGradientRight.cgColor]
+        gradient.locations = [0.0 , 1.0]
+        gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradient.frame = uiView.bounds
+        uiView.layer.addSublayer(gradient)
+    }
+    
     @objc private func addSchedule() {
         DataManager.shared.addClassInfo(firstDate: Date(), tuition: 12, tuitionPer: 12, name: "코딩 영재반", color: "blue", location: "집", day: ["월"], startTime: [Date()], endTime: [Date()], memberName: ["예훈"], memberPhoneNumber: ["010-4170-1111"])
         DataManager.shared.fetchData(target: .classInfo)
