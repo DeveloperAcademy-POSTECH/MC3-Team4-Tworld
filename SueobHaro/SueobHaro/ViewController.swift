@@ -78,7 +78,7 @@ class ViewController: UIViewController {
                     snapshot.appendItems(prevSchedules)
                 }
                 
-                self?.dataSource.apply(snapshot, animatingDifferences: false)
+                self?.dataSource.apply(snapshot, animatingDifferences: true)
             }
         }
         .store(in: &cancellables)
@@ -142,6 +142,10 @@ extension ViewController: UICollectionViewDelegate {
             
             cell.daylabel.text = item.startTime?.todayString() ?? ""
             cell.daySubLabel.text = item.startTime?.toDayOfWeekString() ?? ""
+             
+            if indexPath.row > 0, Calendar.current.isDate((DataManager.shared.schedule?[indexPath.row - 1].startTime ?? Date()), inSameDayAs: item.startTime ?? Date()) {
+                cell.dayStackView.alpha = 0
+            }
         }
         
         let headerRegistration = UICollectionView.SupplementaryRegistration
