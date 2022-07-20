@@ -11,6 +11,7 @@
 		211CF47A2885AB2700BDE26A /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 211CF4772885AB2700BDE26A /* Pretendard-Medium.otf */; };
 		211CF47B2885AB2700BDE26A /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 211CF4782885AB2700BDE26A /* Pretendard-Light.otf */; };
 		211CF47C2885AB2700BDE26A /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 211CF4792885AB2700BDE26A /* Pretendard-Bold.otf */; };
+		2186376728888C5800F71595 /* TeamInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2186376628888C5800F71595 /* TeamInfoView.swift */; };
 		21977B4C28868E0700BAE020 /* ClassInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21977B4B28868E0700BAE020 /* ClassInfoCell.swift */; };
 		21977B4E28868E6800BAE020 /* CollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21977B4D28868E6800BAE020 /* CollectionViewHeader.swift */; };
 		37B0421A288277E00043E9CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B04219288277E00043E9CB /* AppDelegate.swift */; };
@@ -35,6 +36,7 @@
 		211CF4772885AB2700BDE26A /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		211CF4782885AB2700BDE26A /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		211CF4792885AB2700BDE26A /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		2186376628888C5800F71595 /* TeamInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInfoView.swift; sourceTree = "<group>"; };
 		21977B4B28868E0700BAE020 /* ClassInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInfoCell.swift; sourceTree = "<group>"; };
 		21977B4D28868E6800BAE020 /* CollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeader.swift; sourceTree = "<group>"; };
 		37B04216288277E00043E9CB /* SueobHaro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SueobHaro.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,11 +100,12 @@
 			children = (
 				37B0427428848F8B0043E9CB /* Model */,
 				37B04219288277E00043E9CB /* AppDelegate.swift */,
-				37B0421B288277E00043E9CB /* SceneDelegate.swift */,
 				37B0421D288277E00043E9CB /* ViewController.swift */,
+				37B0421B288277E00043E9CB /* SceneDelegate.swift */,
 				21977B4B28868E0700BAE020 /* ClassInfoCell.swift */,
 				21977B4D28868E6800BAE020 /* CollectionViewHeader.swift */,
 				211CF4742885A6B300BDE26A /* DesignGuideSystem.swift */,
+				2186376628888C5800F71595 /* TeamInfoView.swift */,
 				211CF4762885AAE100BDE26A /* Fonts */,
 				37B04222288277E20043E9CB /* Assets.xcassets */,
 				37B04224288277E20043E9CB /* LaunchScreen.storyboard */,
@@ -249,6 +252,7 @@
 				21977B4E28868E6800BAE020 /* CollectionViewHeader.swift in Sources */,
 				37B04252288434D50043E9CB /* SueobHaro.xcdatamodeld in Sources */,
 				37B042B928854A290043E9CB /* ClassIteration+CoreDataProperties.swift in Sources */,
+				2186376728888C5800F71595 /* TeamInfoView.swift in Sources */,
 				37B042CD28854F010043E9CB /* ClassInfo+CoreDataProperties.swift in Sources */,
 				37B042B428854A290043E9CB /* Schedule+CoreDataClass.swift in Sources */,
 				37B042B628854A290043E9CB /* Members+CoreDataClass.swift in Sources */,
