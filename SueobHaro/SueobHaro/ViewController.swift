@@ -7,12 +7,17 @@
 
 import UIKit
 import CoreData
+import SwiftUI
+
+
 
 class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         guard DataManager.shared.container != nil else { fatalError("This view needs a persistent container.") }
+        view.backgroundColor = .theme.spTurkeyBlue
+        self.navigationController?.pushViewController(UIHostingController(rootView: ClassDetailView()), animated: true)
     }
     
 }

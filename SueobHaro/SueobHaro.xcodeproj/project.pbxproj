@@ -11,6 +11,20 @@
 		211CF47A2885AB2700BDE26A /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 211CF4772885AB2700BDE26A /* Pretendard-Medium.otf */; };
 		211CF47B2885AB2700BDE26A /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 211CF4782885AB2700BDE26A /* Pretendard-Light.otf */; };
 		211CF47C2885AB2700BDE26A /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 211CF4792885AB2700BDE26A /* Pretendard-Bold.otf */; };
+		317AE6852886919200FDA57B /* ClassDeatilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6842886919200FDA57B /* ClassDeatilViewController.swift */; };
+		317AE6882886927400FDA57B /* ClassDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6872886927400FDA57B /* ClassDetailTableViewCell.swift */; };
+		317AE68A2886A25200FDA57B /* ClassDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6892886A25200FDA57B /* ClassDetailHeaderView.swift */; };
+		317AE68C2886EFE700FDA57B /* ClassInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE68B2886EFE700FDA57B /* ClassInformationViewController.swift */; };
+		317AE68E28870DAF00FDA57B /* ProgressUpdateModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE68D28870DAF00FDA57B /* ProgressUpdateModalViewController.swift */; };
+		317AE69228873BCE00FDA57B /* ClassInformationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE69128873BCE00FDA57B /* ClassInformationHeaderView.swift */; };
+		317AE69428873BEA00FDA57B /* ClassInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE69328873BEA00FDA57B /* ClassInformationTableViewCell.swift */; };
+		317AE6B828883D1400FDA57B /* ClassDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6B728883D1400FDA57B /* ClassDetailView.swift */; };
+		317AE6BA28883D2700FDA57B /* ClassHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6B928883D2700FDA57B /* ClassHeaderComponent.swift */; };
+		317AE6BE28883D4700FDA57B /* ClassScheduleCardComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6BD28883D4700FDA57B /* ClassScheduleCardComponent.swift */; };
+		317AE6C028884E9D00FDA57B /* ClassUpdateModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6BF28884E9D00FDA57B /* ClassUpdateModalView.swift */; };
+		317AE6C22888647000FDA57B /* ClassInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6C12888647000FDA57B /* ClassInformationView.swift */; };
+		317AE6C42888648B00FDA57B /* ClassInformationHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6C32888648B00FDA57B /* ClassInformationHeaderComponent.swift */; };
+		317AE6C62888649B00FDA57B /* ClassInformationListComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6C52888649B00FDA57B /* ClassInformationListComponent.swift */; };
 		37B0421A288277E00043E9CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B04219288277E00043E9CB /* AppDelegate.swift */; };
 		37B0421C288277E00043E9CB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0421B288277E00043E9CB /* SceneDelegate.swift */; };
 		37B0421E288277E00043E9CB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0421D288277E00043E9CB /* ViewController.swift */; };
@@ -33,6 +47,20 @@
 		211CF4772885AB2700BDE26A /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		211CF4782885AB2700BDE26A /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		211CF4792885AB2700BDE26A /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		317AE6842886919200FDA57B /* ClassDeatilViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassDeatilViewController.swift; sourceTree = "<group>"; };
+		317AE6872886927400FDA57B /* ClassDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassDetailTableViewCell.swift; sourceTree = "<group>"; };
+		317AE6892886A25200FDA57B /* ClassDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassDetailHeaderView.swift; sourceTree = "<group>"; };
+		317AE68B2886EFE700FDA57B /* ClassInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationViewController.swift; sourceTree = "<group>"; };
+		317AE68D28870DAF00FDA57B /* ProgressUpdateModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressUpdateModalViewController.swift; sourceTree = "<group>"; };
+		317AE69128873BCE00FDA57B /* ClassInformationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationHeaderView.swift; sourceTree = "<group>"; };
+		317AE69328873BEA00FDA57B /* ClassInformationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationTableViewCell.swift; sourceTree = "<group>"; };
+		317AE6B728883D1400FDA57B /* ClassDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassDetailView.swift; sourceTree = "<group>"; };
+		317AE6B928883D2700FDA57B /* ClassHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassHeaderComponent.swift; sourceTree = "<group>"; };
+		317AE6BD28883D4700FDA57B /* ClassScheduleCardComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassScheduleCardComponent.swift; sourceTree = "<group>"; };
+		317AE6BF28884E9D00FDA57B /* ClassUpdateModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassUpdateModalView.swift; sourceTree = "<group>"; };
+		317AE6C12888647000FDA57B /* ClassInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationView.swift; sourceTree = "<group>"; };
+		317AE6C32888648B00FDA57B /* ClassInformationHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationHeaderComponent.swift; sourceTree = "<group>"; };
+		317AE6C52888649B00FDA57B /* ClassInformationListComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationListComponent.swift; sourceTree = "<group>"; };
 		37B04216288277E00043E9CB /* SueobHaro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SueobHaro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37B04219288277E00043E9CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37B0421B288277E00043E9CB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +101,49 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		317AE683288690E200FDA57B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				317AE6842886919200FDA57B /* ClassDeatilViewController.swift */,
+				317AE68B2886EFE700FDA57B /* ClassInformationViewController.swift */,
+				317AE68D28870DAF00FDA57B /* ProgressUpdateModalViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		317AE6862886924100FDA57B /* ViewComponent */ = {
+			isa = PBXGroup;
+			children = (
+				317AE6892886A25200FDA57B /* ClassDetailHeaderView.swift */,
+				317AE6872886927400FDA57B /* ClassDetailTableViewCell.swift */,
+				317AE69128873BCE00FDA57B /* ClassInformationHeaderView.swift */,
+				317AE69328873BEA00FDA57B /* ClassInformationTableViewCell.swift */,
+			);
+			path = ViewComponent;
+			sourceTree = "<group>";
+		};
+		317AE6B528883CEC00FDA57B /* SwfitUIViews */ = {
+			isa = PBXGroup;
+			children = (
+				317AE6B628883CFC00FDA57B /* SubViews */,
+				317AE6B728883D1400FDA57B /* ClassDetailView.swift */,
+				317AE6C12888647000FDA57B /* ClassInformationView.swift */,
+			);
+			path = SwfitUIViews;
+			sourceTree = "<group>";
+		};
+		317AE6B628883CFC00FDA57B /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				317AE6B928883D2700FDA57B /* ClassHeaderComponent.swift */,
+				317AE6BD28883D4700FDA57B /* ClassScheduleCardComponent.swift */,
+				317AE6BF28884E9D00FDA57B /* ClassUpdateModalView.swift */,
+				317AE6C32888648B00FDA57B /* ClassInformationHeaderComponent.swift */,
+				317AE6C52888649B00FDA57B /* ClassInformationListComponent.swift */,
+			);
+			path = SubViews;
+			sourceTree = "<group>";
+		};
 		37B0420D288277E00043E9CB = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +163,9 @@
 		37B04218288277E00043E9CB /* SueobHaro */ = {
 			isa = PBXGroup;
 			children = (
+				317AE6B528883CEC00FDA57B /* SwfitUIViews */,
+				317AE6862886924100FDA57B /* ViewComponent */,
+				317AE683288690E200FDA57B /* Controller */,
 				37B0427428848F8B0043E9CB /* Model */,
 				37B04219288277E00043E9CB /* AppDelegate.swift */,
 				37B0421B288277E00043E9CB /* SceneDelegate.swift */,
@@ -235,15 +309,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				317AE6B828883D1400FDA57B /* ClassDetailView.swift in Sources */,
 				211CF4752885A6B300BDE26A /* DesignGuideSystem.swift in Sources */,
 				37B0421E288277E00043E9CB /* ViewController.swift in Sources */,
 				37B0427628848FC00043E9CB /* DataManager.swift in Sources */,
+				317AE6C42888648B00FDA57B /* ClassInformationHeaderComponent.swift in Sources */,
+				317AE6BE28883D4700FDA57B /* ClassScheduleCardComponent.swift in Sources */,
 				37B042B728854A290043E9CB /* Members+CoreDataProperties.swift in Sources */,
+				317AE6852886919200FDA57B /* ClassDeatilViewController.swift in Sources */,
+				317AE69428873BEA00FDA57B /* ClassInformationTableViewCell.swift in Sources */,
+				317AE6882886927400FDA57B /* ClassDetailTableViewCell.swift in Sources */,
+				317AE6C62888649B00FDA57B /* ClassInformationListComponent.swift in Sources */,
+				317AE69228873BCE00FDA57B /* ClassInformationHeaderView.swift in Sources */,
+				317AE6C22888647000FDA57B /* ClassInformationView.swift in Sources */,
 				37B0421A288277E00043E9CB /* AppDelegate.swift in Sources */,
 				37B04252288434D50043E9CB /* SueobHaro.xcdatamodeld in Sources */,
+				317AE6BA28883D2700FDA57B /* ClassHeaderComponent.swift in Sources */,
 				37B042B928854A290043E9CB /* ClassIteration+CoreDataProperties.swift in Sources */,
+				317AE6C028884E9D00FDA57B /* ClassUpdateModalView.swift in Sources */,
 				37B042CD28854F010043E9CB /* ClassInfo+CoreDataProperties.swift in Sources */,
 				37B042B428854A290043E9CB /* Schedule+CoreDataClass.swift in Sources */,
+				317AE68A2886A25200FDA57B /* ClassDetailHeaderView.swift in Sources */,
+				317AE68C2886EFE700FDA57B /* ClassInformationViewController.swift in Sources */,
+				317AE68E28870DAF00FDA57B /* ProgressUpdateModalViewController.swift in Sources */,
 				37B042B628854A290043E9CB /* Members+CoreDataClass.swift in Sources */,
 				37B0421C288277E00043E9CB /* SceneDelegate.swift in Sources */,
 				37B042B828854A290043E9CB /* ClassIteration+CoreDataClass.swift in Sources */,
@@ -387,7 +475,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JP3V2463G6;
+				DEVELOPMENT_TEAM = A44U4A2F2G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SueobHaro/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -414,7 +502,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JP3V2463G6;
+				DEVELOPMENT_TEAM = A44U4A2F2G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SueobHaro/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
