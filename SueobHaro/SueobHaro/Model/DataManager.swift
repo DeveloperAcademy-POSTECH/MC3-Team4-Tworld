@@ -26,7 +26,7 @@ class DataManager {
     @Published var classIteration: [ClassIteration]?
     
     // MARK: Create
-    func addClassInfo(firstDate: Date, tuition: Int32, tuitionPer: Int16, name: String, color: String, location: String, day: [String], startTime: [Date], endTime: [Date], memberName: [String], memberPhoneNumber: [String]) -> Void {
+    func addClassInfo(firstDate: Date, tuition: Int32, tuitionPer: Int16, name: String, color: String?, location: String?, day: [String], startTime: [Date], endTime: [Date], memberName: [String], memberPhoneNumber: [String]?) -> Void {
         let newClassInfo = ClassInfo(context: container.viewContext)
         newClassInfo.id = UUID()
         newClassInfo.firstDate = firstDate
@@ -41,9 +41,9 @@ class DataManager {
         for idx in 0..<day.count {
             addClassIteration(day: day[idx], startTime: startTime[idx], endTime: endTime[idx], classInfo: newClassInfo)
         }
-        guard max(memberName.count, memberPhoneNumber.count) == min(memberName.count, memberPhoneNumber.count) else { fatalError("맴버 정보 갯수 불일치") }
+        guard max(memberName.count, memberPhoneNumber!.count) == min(memberName.count, memberPhoneNumber!.count) else { fatalError("맴버 정보 갯수 불일치") }
         for idx in 0..<memberName.count {
-            addMember(name: memberName[idx], phoneNumber: memberPhoneNumber[idx], classInfo: newClassInfo)
+            addMember(name: memberName[idx], phoneNumber: memberPhoneNumber![idx], classInfo: newClassInfo)
         }
     }
     

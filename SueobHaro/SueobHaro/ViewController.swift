@@ -211,7 +211,7 @@ extension ViewController {
         gradient.frame = uiView.bounds
         uiView.layer.addSublayer(gradient)
     }
-    
+
     @objc private func addSchedule() {
         DataManager.shared.addClassInfo(firstDate: Date(), tuition: 12, tuitionPer: 12, name: "코딩 영재반", color: "blue", location: "집", day: ["월"], startTime: [Date()], endTime: [Date()], memberName: ["예훈"], memberPhoneNumber: ["010-4170-1111"])
         DataManager.shared.fetchData(target: .classInfo)
@@ -260,7 +260,6 @@ struct PreView: PreviewProvider {
     }
 }
 
-#if DEBUG
 extension UIViewController {
     private struct Preview: UIViewControllerRepresentable {
             let viewController: UIViewController
@@ -277,4 +276,3 @@ extension UIViewController {
             Preview(viewController: self)
         }
 }
-#endif
