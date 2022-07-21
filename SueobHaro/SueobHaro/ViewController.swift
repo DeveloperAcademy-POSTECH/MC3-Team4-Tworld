@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import SwiftUI
 
 class ViewController: UIViewController {
     
@@ -14,8 +15,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         guard DataManager.shared.container != nil else { fatalError("This view needs a persistent container.") }
     }
-    
 }
+
 
 
 
