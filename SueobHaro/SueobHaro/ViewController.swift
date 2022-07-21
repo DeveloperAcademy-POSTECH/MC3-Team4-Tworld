@@ -48,7 +48,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard DataManager.shared.container != nil else { fatalError("This view needs a persistent container.") }
+        guard DataManager.shared.container != nil else { fatalError("This view needs a persistent container.") 
         self.view.backgroundColor = .theme.spBlack
         configureNavbar()
         configureCollectionView()
