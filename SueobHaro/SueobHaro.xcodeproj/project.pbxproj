@@ -25,6 +25,9 @@
 		317AE6C22888647000FDA57B /* ClassInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6C12888647000FDA57B /* ClassInformationView.swift */; };
 		317AE6C42888648B00FDA57B /* ClassInformationHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6C32888648B00FDA57B /* ClassInformationHeaderComponent.swift */; };
 		317AE6C62888649B00FDA57B /* ClassInformationListComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6C52888649B00FDA57B /* ClassInformationListComponent.swift */; };
+		2186376728888C5800F71595 /* TeamInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2186376628888C5800F71595 /* TeamInfoView.swift */; };
+		21977B4C28868E0700BAE020 /* ClassInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21977B4B28868E0700BAE020 /* ClassInfoCell.swift */; };
+		21977B4E28868E6800BAE020 /* CollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21977B4D28868E6800BAE020 /* CollectionViewHeader.swift */; };
 		37B0421A288277E00043E9CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B04219288277E00043E9CB /* AppDelegate.swift */; };
 		37B0421C288277E00043E9CB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0421B288277E00043E9CB /* SceneDelegate.swift */; };
 		37B0421E288277E00043E9CB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0421D288277E00043E9CB /* ViewController.swift */; };
@@ -40,6 +43,11 @@
 		37B042B928854A290043E9CB /* ClassIteration+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B042B128854A290043E9CB /* ClassIteration+CoreDataProperties.swift */; };
 		37B042CC28854F010043E9CB /* ClassInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B042CA28854F010043E9CB /* ClassInfo+CoreDataClass.swift */; };
 		37B042CD28854F010043E9CB /* ClassInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B042CB28854F010043E9CB /* ClassInfo+CoreDataProperties.swift */; };
+		37B0431328868DE50043E9CB /* ClassNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0431228868DE40043E9CB /* ClassNameView.swift */; };
+		37B0431528868DF80043E9CB /* ClassMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0431428868DF80043E9CB /* ClassMembersView.swift */; };
+		37B0431728868E060043E9CB /* ClassTuitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0431628868E060043E9CB /* ClassTuitionView.swift */; };
+		37B043192887294E0043E9CB /* ClassCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B043182887294E0043E9CB /* ClassCheckView.swift */; };
+		37B0431E288856E40043E9CB /* NavigationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0431D288856E40043E9CB /* NavigationUtil.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +69,9 @@
 		317AE6C12888647000FDA57B /* ClassInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationView.swift; sourceTree = "<group>"; };
 		317AE6C32888648B00FDA57B /* ClassInformationHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationHeaderComponent.swift; sourceTree = "<group>"; };
 		317AE6C52888649B00FDA57B /* ClassInformationListComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationListComponent.swift; sourceTree = "<group>"; };
+		2186376628888C5800F71595 /* TeamInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInfoView.swift; sourceTree = "<group>"; };
+		21977B4B28868E0700BAE020 /* ClassInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInfoCell.swift; sourceTree = "<group>"; };
+		21977B4D28868E6800BAE020 /* CollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeader.swift; sourceTree = "<group>"; };
 		37B04216288277E00043E9CB /* SueobHaro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SueobHaro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37B04219288277E00043E9CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37B0421B288277E00043E9CB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +89,11 @@
 		37B042B128854A290043E9CB /* ClassIteration+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClassIteration+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		37B042CA28854F010043E9CB /* ClassInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ClassInfo+CoreDataClass.swift"; path = "../../../ClassInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
 		37B042CB28854F010043E9CB /* ClassInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ClassInfo+CoreDataProperties.swift"; path = "../../../ClassInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		37B0431228868DE40043E9CB /* ClassNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassNameView.swift; sourceTree = "<group>"; };
+		37B0431428868DF80043E9CB /* ClassMembersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassMembersView.swift; sourceTree = "<group>"; };
+		37B0431628868E060043E9CB /* ClassTuitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassTuitionView.swift; sourceTree = "<group>"; };
+		37B043182887294E0043E9CB /* ClassCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassCheckView.swift; sourceTree = "<group>"; };
+		37B0431D288856E40043E9CB /* NavigationUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationUtil.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,11 +182,16 @@
 				317AE6B528883CEC00FDA57B /* SwfitUIViews */,
 				317AE6862886924100FDA57B /* ViewComponent */,
 				317AE683288690E200FDA57B /* Controller */,
+				37B0431C288856B50043E9CB /* Helper */,
+				37B0431128868DBA0043E9CB /* Views */,
 				37B0427428848F8B0043E9CB /* Model */,
 				37B04219288277E00043E9CB /* AppDelegate.swift */,
-				37B0421B288277E00043E9CB /* SceneDelegate.swift */,
 				37B0421D288277E00043E9CB /* ViewController.swift */,
+				37B0421B288277E00043E9CB /* SceneDelegate.swift */,
+				21977B4B28868E0700BAE020 /* ClassInfoCell.swift */,
+				21977B4D28868E6800BAE020 /* CollectionViewHeader.swift */,
 				211CF4742885A6B300BDE26A /* DesignGuideSystem.swift */,
+				2186376628888C5800F71595 /* TeamInfoView.swift */,
 				211CF4762885AAE100BDE26A /* Fonts */,
 				37B04222288277E20043E9CB /* Assets.xcassets */,
 				37B04224288277E20043E9CB /* LaunchScreen.storyboard */,
@@ -234,6 +255,25 @@
 				37B042CB28854F010043E9CB /* ClassInfo+CoreDataProperties.swift */,
 			);
 			path = ClassInfo;
+			sourceTree = "<group>";
+		};
+		37B0431128868DBA0043E9CB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				37B0431228868DE40043E9CB /* ClassNameView.swift */,
+				37B0431428868DF80043E9CB /* ClassMembersView.swift */,
+				37B0431628868E060043E9CB /* ClassTuitionView.swift */,
+				37B043182887294E0043E9CB /* ClassCheckView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		37B0431C288856B50043E9CB /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				37B0431D288856E40043E9CB /* NavigationUtil.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,6 +350,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				317AE6B828883D1400FDA57B /* ClassDetailView.swift in Sources */,
+				37B0431E288856E40043E9CB /* NavigationUtil.swift in Sources */,
+				37B043192887294E0043E9CB /* ClassCheckView.swift in Sources */,
 				211CF4752885A6B300BDE26A /* DesignGuideSystem.swift in Sources */,
 				37B0421E288277E00043E9CB /* ViewController.swift in Sources */,
 				37B0427628848FC00043E9CB /* DataManager.swift in Sources */,
@@ -323,6 +365,7 @@
 				317AE69228873BCE00FDA57B /* ClassInformationHeaderView.swift in Sources */,
 				317AE6C22888647000FDA57B /* ClassInformationView.swift in Sources */,
 				37B0421A288277E00043E9CB /* AppDelegate.swift in Sources */,
+				21977B4E28868E6800BAE020 /* CollectionViewHeader.swift in Sources */,
 				37B04252288434D50043E9CB /* SueobHaro.xcdatamodeld in Sources */,
 				317AE6BA28883D2700FDA57B /* ClassHeaderComponent.swift in Sources */,
 				37B042B928854A290043E9CB /* ClassIteration+CoreDataProperties.swift in Sources */,
@@ -332,10 +375,18 @@
 				317AE68A2886A25200FDA57B /* ClassDetailHeaderView.swift in Sources */,
 				317AE68C2886EFE700FDA57B /* ClassInformationViewController.swift in Sources */,
 				317AE68E28870DAF00FDA57B /* ProgressUpdateModalViewController.swift in Sources */,
+				37B0431328868DE50043E9CB /* ClassNameView.swift in Sources */,
+				37B042B928854A290043E9CB /* ClassIteration+CoreDataProperties.swift in Sources */,
+				2186376728888C5800F71595 /* TeamInfoView.swift in Sources */,
+				37B042CD28854F010043E9CB /* ClassInfo+CoreDataProperties.swift in Sources */,
+				37B042B428854A290043E9CB /* Schedule+CoreDataClass.swift in Sources */,
+				37B0431728868E060043E9CB /* ClassTuitionView.swift in Sources */,
 				37B042B628854A290043E9CB /* Members+CoreDataClass.swift in Sources */,
 				37B0421C288277E00043E9CB /* SceneDelegate.swift in Sources */,
 				37B042B828854A290043E9CB /* ClassIteration+CoreDataClass.swift in Sources */,
+				37B0431528868DF80043E9CB /* ClassMembersView.swift in Sources */,
 				37B042CC28854F010043E9CB /* ClassInfo+CoreDataClass.swift in Sources */,
+				21977B4C28868E0700BAE020 /* ClassInfoCell.swift in Sources */,
 				37B042B528854A290043E9CB /* Schedule+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -475,7 +526,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = A44U4A2F2G;
+				DEVELOPMENT_TEAM = VT69ZW2DRC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SueobHaro/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -502,7 +553,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = A44U4A2F2G;
+				DEVELOPMENT_TEAM = VT69ZW2DRC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SueobHaro/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
