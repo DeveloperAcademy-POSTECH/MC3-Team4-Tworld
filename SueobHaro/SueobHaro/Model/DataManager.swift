@@ -20,11 +20,10 @@ class DataManager {
     
     
     // MARK: Data
-    var classInfo: [ClassInfo]?
-    var schedule: [Schedule]?
-    var members: [Members]?
-    var classIteration: [ClassIteration]?
-    
+    @Published var classInfo: [ClassInfo]?
+    @Published var schedule: [Schedule]?
+    @Published var members: [Members]?
+    @Published var classIteration: [ClassIteration]?
     
     // MARK: Create
     func addClassInfo(firstDate: Date, tuition: Int32, tuitionPer: Int16, name: String, color: String?, location: String?, day: [String], startTime: [Date], endTime: [Date], memberName: [String], memberPhoneNumber: [String]?) -> Void {

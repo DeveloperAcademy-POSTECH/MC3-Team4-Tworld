@@ -13,6 +13,14 @@ import SwiftUI
 // self.view.backgroundColor = .theme.spLightBlue
 extension UIColor {
     static let theme = ColorTheme()
+    
+    static func rgb(_ rgbValue: Int) -> UIColor! {
+        return UIColor(
+            red: CGFloat((Float((rgbValue & 0xff0000) >> 16)) / 255.0),
+            green: CGFloat((Float((rgbValue & 0x00ff00) >> 8)) / 255.0),
+            blue: CGFloat((Float((rgbValue & 0x0000ff) >> 0)) / 255.0),
+            alpha: 1.0)
+    }
 }
 
 struct ColorTheme {
@@ -20,6 +28,11 @@ struct ColorTheme {
     let spDarkBlue = UIColor(named: "SPDarkBlue")!
     let spLightBlue = UIColor(named: "SPLightBlue")!
     let spTurkeyBlue = UIColor(named: "SPTurkeyBlue")!
+    
+    let spLightGradientLeft = UIColor(named: "SPLightGradient-left")!
+    let spLightGradientRight = UIColor(named: "SPLightGradient-right")!
+    let spDeepGradientLeft = UIColor(named: "SPDeepGradient-left")!
+    let spDeepGradientRight = UIColor(named: "SPDeepGradient-right")!
     
     let greyscale1 = UIColor(named: "Greyscale1")!
     let greyscale2 = UIColor(named: "Greyscale2")!
