@@ -129,10 +129,3 @@ struct TeamInfoView_Previews: PreviewProvider {
     }
 }
 
-//임시
-extension Font {
-    init(uiFont: UIFont) {
-        self = Font(uiFont as CTFont)
-    }
-}
-

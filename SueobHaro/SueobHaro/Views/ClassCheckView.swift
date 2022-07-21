@@ -17,6 +17,7 @@ struct ClassCheckView: View {
     @Binding var tuition: String
     @Binding var tuitionPer: String
     
+    @State private var isNavHidden = true
     
     let dayList: [String] = ["월", "화", "수", "목", "금", "토", "일"]
     let dateFormatter: DateFormatter = {
@@ -26,6 +27,8 @@ struct ClassCheckView: View {
         return dateFormatter
     }()
     @State var classDay: [String] = []
+    
+    var dismissAction: (() -> Void)
     
     // color 랜덤 수정해야함
     private func save() {
@@ -139,7 +142,9 @@ struct ClassCheckView: View {
                     }
                     Button(action: {
                         save()
-                        NavigationUtil.popToRootView()
+//                        NavigationUtil.popToRootView()
+                        isNavHidden = false
+                        dismissAction()
                     }, label: {
                         ZStack(alignment: .center) {
                             Rectangle()
@@ -158,7 +163,7 @@ struct ClassCheckView: View {
         .onAppear {
             classDay = isDayPicked.allKeys(forValue: true)
         }
-        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(isNavHidden)
     }
 }
 

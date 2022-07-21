@@ -14,12 +14,14 @@ struct ClassMembersView: View {
     @Binding var isDayPicked: [String:Bool]
     @Binding var classTimeInfo: [String:[String:Date?]]
     
-    @State var memberNames: [String] = []
-    @State var memberPhoneNumbers: [String] = []
+    @State var memberNames: [String] = [""]
+    @State var memberPhoneNumbers: [String] = [""]
     @State var currentIdx: Int? = nil
     
     @FocusState private var isNameFocused: Bool
     @FocusState private var isPhoneNumberFocused: Bool
+    
+    var dismissAction: (() -> Void)
     
     private func isDone() -> Bool {
         guard !memberNames.isEmpty && !memberPhoneNumbers.isEmpty else {return false}
@@ -139,7 +141,7 @@ struct ClassMembersView: View {
                 .padding(.horizontal, CGFloat.padding.margin)
                 if !isNameFocused && !isPhoneNumberFocused {
                     NavigationLink(destination: {
-                        ClassTuitionView(className: $className, firstClassDate: $firstClassDate, isDayPicked: $isDayPicked, classTimeInfo: $classTimeInfo, memberNames: $memberNames, memberPhoneNumbers: $memberPhoneNumbers)
+                        ClassTuitionView(className: $className, firstClassDate: $firstClassDate, isDayPicked: $isDayPicked, classTimeInfo: $classTimeInfo, memberNames: $memberNames, memberPhoneNumbers: $memberPhoneNumbers, dismissAction: dismissAction)
                     }, label: {
                         ZStack(alignment: .center) {
                             RoundedRectangle(cornerRadius: 10)

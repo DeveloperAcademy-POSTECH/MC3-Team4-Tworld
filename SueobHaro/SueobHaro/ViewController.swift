@@ -78,7 +78,7 @@ class ViewController: UIViewController {
                     snapshot.appendItems(prevSchedules)
                 }
                 
-                self?.dataSource.apply(snapshot, animatingDifferences: true)
+                self?.dataSource.apply(snapshot, animatingDifferences: false)
             }
         }
         .store(in: &cancellables)
@@ -213,12 +213,10 @@ extension ViewController {
     }
 
     @objc private func addSchedule() {
-        DataManager.shared.addClassInfo(firstDate: Date(), tuition: 12, tuitionPer: 12, name: "코딩 영재반", color: "blue", location: "집", day: ["월"], startTime: [Date()], endTime: [Date()], memberName: ["예훈"], memberPhoneNumber: ["010-4170-1111"])
-        DataManager.shared.fetchData(target: .classInfo)
-        if let classInfo = DataManager.shared.classInfo?.first {
-            DataManager.shared.addSchedule(count: 1, endTime: Date(), startTime: Date(), isCanceled: false, progress: "asdfasdf", classInfo: classInfo)
-        }
-        DataManager.shared.fetchData(target: .schedule)
+        self.navigationController?.pushViewController(UIHostingController(rootView: ClassNameView(dismissAction: {
+            self.navigationController?.popToViewController(self, animated: true)
+            DataManager.shared.fetchData(target: .schedule)
+        })), animated: true)
     }
 }
 

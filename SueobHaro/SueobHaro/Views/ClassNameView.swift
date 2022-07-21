@@ -29,6 +29,8 @@ struct ClassNameView: View {
     let dayList: [String] = ["월", "화", "수", "목", "금", "토", "일"]
     let dateFormatter = DateFormatter()
     
+    var dismissAction: (() -> Void)
+    
     private func isDone() -> Bool {
         guard !className.isEmpty else { return false }
         guard Array(isDayPicked.values).contains(true) else { return false }
@@ -183,7 +185,7 @@ struct ClassNameView: View {
                     .padding(.top, CGFloat.padding.toComponents)
                     .padding(.horizontal, CGFloat.padding.margin)
                     NavigationLink(destination: {
-                        ClassMembersView(className: $className, firstClassDate: $firstClassDate, isDayPicked: $isDayPicked, classTimeInfo: $classTimeInfo)
+                        ClassMembersView(className: $className, firstClassDate: $firstClassDate, isDayPicked: $isDayPicked, classTimeInfo: $classTimeInfo, dismissAction: dismissAction)
                     }, label: {
                         ZStack(alignment: .center) {
                             RoundedRectangle(cornerRadius: 10)
@@ -238,11 +240,11 @@ struct ClassNameView: View {
     }
 }
 
-struct ClassNameView_Previews: PreviewProvider {
-    static var previews: some View {
-        ClassNameView()
-    }
-}
+//struct ClassNameView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ClassNameView()
+//    }
+//}
 
 
 extension View {
