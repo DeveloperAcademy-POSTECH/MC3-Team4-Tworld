@@ -12,7 +12,7 @@ import UIKit
 import SwiftUI
 import CoreData
 import Combine
- 
+
 enum Section: Int, Hashable, CaseIterable {
     case next
     case prev
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
     var dayStack: [Date] = []
     
     var cancellables = Set<AnyCancellable>()
-
+    
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -48,42 +48,42 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard DataManager.shared.container != nil else { fatalError("This view needs a persistent container.") 
-        self.view.backgroundColor = .theme.spBlack
-        configureNavbar()
-        configureCollectionView()
-        
-        DataManager.shared.$schedule.sink { [weak self] schedules in
-            if let schedules = schedules {
-                var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
-                
-                var prevSchedules: [Schedule] = []
-                var nextSchedules: [Schedule] = []
-                
-                for schedule in schedules {
-                    if (schedule.endTime ?? Date()) < Date() {
-                        prevSchedules.append(schedule)
-                    } else {
-                        nextSchedules.append(schedule)
+        guard DataManager.shared.container != nil else { fatalError("This view needs a persistent container.") }
+            self.view.backgroundColor = .theme.spBlack
+            configureNavbar()
+            configureCollectionView()
+            
+            DataManager.shared.$schedule.sink { [weak self] schedules in
+                if let schedules = schedules {
+                    var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
+                    
+                    var prevSchedules: [Schedule] = []
+                    var nextSchedules: [Schedule] = []
+                    
+                    for schedule in schedules {
+                        if (schedule.endTime ?? Date()) < Date() {
+                            prevSchedules.append(schedule)
+                        } else {
+                            nextSchedules.append(schedule)
+                        }
                     }
+                    
+                    if !nextSchedules.isEmpty {
+                        snapshot.appendSections([.next])
+                        snapshot.appendItems(nextSchedules)
+                    }
+                    
+                    if !prevSchedules.isEmpty {
+                        snapshot.appendSections([.prev])
+                        snapshot.appendItems(prevSchedules)
+                    }
+                    
+                    self?.dataSource.apply(snapshot, animatingDifferences: false)
                 }
-                
-                if !nextSchedules.isEmpty {
-                    snapshot.appendSections([.next])
-                    snapshot.appendItems(nextSchedules)
-                }
-                
-                if !prevSchedules.isEmpty {
-                    snapshot.appendSections([.prev])
-                    snapshot.appendItems(prevSchedules)
-                }
-                
-                self?.dataSource.apply(snapshot, animatingDifferences: false)
             }
-        }
-        .store(in: &cancellables)
+            .store(in: &cancellables)
     }
-
+    
     private func createLayout() -> UICollectionViewLayout {
         
         let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
@@ -119,6 +119,11 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.navigationController?.pushViewController(UIHostingController(rootView: ClassDetailView()), animated: true)
+    }
+    
     func configureCollectionView() {
         
         view.addSubview(collectionView)
@@ -142,7 +147,7 @@ extension ViewController: UICollectionViewDelegate {
             
             cell.daylabel.text = item.startTime?.todayString() ?? ""
             cell.daySubLabel.text = item.startTime?.toDayOfWeekString() ?? ""
-             
+            
             if indexPath.row > 0, Calendar.current.isDate((DataManager.shared.schedule?[indexPath.row - 1].startTime ?? Date()), inSameDayAs: item.startTime ?? Date()) {
                 cell.dayStackView.alpha = 0
             }
@@ -186,7 +191,7 @@ extension ViewController {
         iconButton.setImage(image, for: .normal)
         iconButton.imageView?.tintColor = .theme.spLightBlue
         iconButton.setTitle("수업 추가하기", for: .normal)
-        iconButton.setTitleColor(.cyan, for: .normal)
+        iconButton.setTitleColor(.theme.spLightBlueViewController, for: .normal)
         iconButton.semanticContentAttribute = .forceRightToLeft
         iconButton.addTarget(self, action: #selector(addSchedule), for: .touchUpInside)
         let leftIconBarItem = UIBarButtonItem(customView: iconButton)
@@ -211,7 +216,7 @@ extension ViewController {
         gradient.frame = uiView.bounds
         uiView.layer.addSublayer(gradient)
     }
-
+    
     @objc private func addSchedule() {
         self.navigationController?.pushViewController(UIHostingController(rootView: ClassNameView(dismissAction: {
             self.navigationController?.popToViewController(self, animated: true)
@@ -246,7 +251,7 @@ extension Date {
             let dayOfTheWeekString = dateFormatter.string(from: date)
             return dayOfTheWeekString
         }
-
+        
     }
 }
 
@@ -260,17 +265,18 @@ struct PreView: PreviewProvider {
 
 extension UIViewController {
     private struct Preview: UIViewControllerRepresentable {
-            let viewController: UIViewController
-
-            func makeUIViewController(context: Context) -> UIViewController {
-                return viewController
-            }
-
-            func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-            }
+        let viewController: UIViewController
+        
+        func makeUIViewController(context: Context) -> UIViewController {
+            return viewController
         }
-
-        func toPreview() -> some View {
-            Preview(viewController: self)
+        
+        func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
         }
+    }
+    
+    func toPreview() -> some View {
+        Preview(viewController: self)
+    }
 }
+

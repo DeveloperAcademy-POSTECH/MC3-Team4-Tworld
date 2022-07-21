@@ -75,7 +75,8 @@ struct ClassInformationView: View {
             
         }
         .toolbar {
-            NavigationLink("EDIT", destination: ClassDetailView())
+            NavigationLink("편집", destination: ClassDetailView())
+                .tint(.spLightBlue)
         }
         .background{
             Color(UIColor.theme.spBlack)
