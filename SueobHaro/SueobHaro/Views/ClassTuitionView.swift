@@ -21,6 +21,8 @@ struct ClassTuitionView: View {
     @FocusState private var isTuitionFocused: Bool
     @FocusState private var isTuitionPerFocused: Bool
     
+    var dismissAction: (() -> Void)
+    
     private func isDone() -> Bool {
         guard !tuition.isEmpty && !tuitionPer.isEmpty else {return false}
         return true
@@ -126,7 +128,7 @@ struct ClassTuitionView: View {
                         }
                     }
                     NavigationLink(destination: {
-                        ClassCheckView(className: $className, firstClassDate: $firstClassDate, isDayPicked: $isDayPicked, classTimeInfo: $classTimeInfo, memberNames: $memberNames, memberPhoneNumbers: $memberPhoneNumbers, tuition: $tuition, tuitionPer: $tuitionPer)
+                        ClassCheckView(className: $className, firstClassDate: $firstClassDate, isDayPicked: $isDayPicked, classTimeInfo: $classTimeInfo, memberNames: $memberNames, memberPhoneNumbers: $memberPhoneNumbers, tuition: $tuition, tuitionPer: $tuitionPer, dismissAction: dismissAction)
                     }, label: {
                         ZStack(alignment: .center) {
                             Rectangle()
