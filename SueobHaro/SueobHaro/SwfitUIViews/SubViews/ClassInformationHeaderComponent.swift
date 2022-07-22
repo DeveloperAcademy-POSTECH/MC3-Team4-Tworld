@@ -12,11 +12,12 @@ struct ClassInformationHeaderComponent: View {
     @Binding var classTitle: String
     @Binding var memberList: [String]
     @State var date: Date = Date()
+    @Binding var classInfo: ClassInfo?
     
     var body: some View {
         VStack(spacing: 0) {
             Text(classTitle)
-                .font(.title2)
+                .font(Font(uiFont: .systemFont(for: .title2)))
                 .foregroundColor(Color(UIColor.theme.greyscale1))
                 .padding(.top, CGFloat.padding.inBox)
                 .padding(.bottom, CGFloat.padding.toText)
@@ -24,11 +25,11 @@ struct ClassInformationHeaderComponent: View {
                 if memberList.count > 0 {
                     ForEach(0..<memberList.count, id: \.self) { i in
                         Text(memberList[i])
-                            .font(.body)
+                            .font(Font(uiFont: .systemFont(for: .body1)))
                             .foregroundColor(Color(UIColor.theme.greyscale3))
                         if i != memberList.count - 1 {
                             Text(", ")
-                                .font(.body)
+                                .font(Font(uiFont: .systemFont(for: .body1)))
                                 .foregroundColor(Color(UIColor.theme.greyscale3))
                         }
                         
@@ -42,12 +43,12 @@ struct ClassInformationHeaderComponent: View {
                 .background(Color(UIColor.theme.greyscale6))
             
             Text("\(getDate(date:date)) 부터 수업을 진행했어요")
-                .font(.body)
+                .font(Font(uiFont: .systemFont(for: .body2)))
                 .foregroundColor(Color(UIColor.theme.greyscale1))
                 .padding(.top, CGFloat.padding.inBox)
                 .padding(.bottom, CGFloat.padding.toText)
-            Text("4회마다 총 300,000원 받아요.")
-                .font(.title3)
+            Text("\(classInfo?.tuitionPer ?? 0)회마다 총 \(classInfo?.tuition ?? 0)원 받아요.")
+                .font(Font(uiFont: .systemFont(for: .title3)))
                 .foregroundColor(Color(UIColor.theme.greyscale1))
                 .padding(.bottom, CGFloat.padding.inBox)
         }

@@ -13,11 +13,11 @@ struct ClassInformationListComponent: View {
     var body: some View {
         HStack(spacing: 0) {
             Text(firstText)
-                .font(.title3)
+                .font(Font(uiFont: .systemFont(for: .title3)))
                 .foregroundColor(Color(UIColor.theme.greyscale1))
                 .padding(.trailing, CGFloat.padding.inBox)
             Text(secondText)
-                .font(.body)
+                .font(Font(uiFont: .systemFont(for: .body2)))
                 .foregroundColor(Color(UIColor.theme.greyscale1))
             Spacer()
         }

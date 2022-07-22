@@ -191,7 +191,7 @@ extension ViewController {
         iconButton.setImage(image, for: .normal)
         iconButton.imageView?.tintColor = .theme.spLightBlue
         iconButton.setTitle("수업 추가하기", for: .normal)
-        iconButton.setTitleColor(.theme.spLightBlueViewController, for: .normal)
+        iconButton.setTitleColor(.theme.spLightBlue, for: .normal)
         iconButton.semanticContentAttribute = .forceRightToLeft
         iconButton.addTarget(self, action: #selector(addSchedule), for: .touchUpInside)
         let leftIconBarItem = UIBarButtonItem(customView: iconButton)

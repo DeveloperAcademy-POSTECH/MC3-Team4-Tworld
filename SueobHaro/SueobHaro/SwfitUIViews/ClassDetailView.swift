@@ -12,12 +12,9 @@ struct ClassDetailView: View {
     // 클래스 정보 받아오기
     @State var classTitle: String = "코딩 영재반"
     // 클래스에 해당하는 멤버 받아오기
-    @State var memberList: [String] = ["사샤", "에반", "린다", "베테브", "엑스"]
-    
+    @State var memberList = ["x", "x", "x"]
     // 클래스에 해당하며, 금일 날짜 기준에 이전 날짜 정보 받아오기
-    @State var progressList: [String] = ["", "UIKit Table View", "UIKit TextField", "UIKit CollectionView", "UIKit TableView Cell"]
     
-    @State var editProgress:String = ""
     @State var selectedIndex: Int = 0
     @State var isPresented: Bool = false
     @State var selectedClass: ClassInfo?
@@ -28,25 +25,25 @@ struct ClassDetailView: View {
     var body: some View {
         ZStack {
             ScrollView(showsIndicators: false) {
-                NavigationLink(destination: ClassInformationView(classTitle: $classTitle, memberList: $memberList)) {
+                NavigationLink(destination: ClassInformationView(classTitle: $classTitle, classInfo: $selectedClass ,memberList: $memberList)) {
                     //수업정보와, 멤버 이름 들어감
-                    ClassHeaderComponent(classTitle: $classTitle, memberList: $memberList)
+                    ClassHeaderComponent(classInfo: $selectedClass, memberList: $members)
                         .padding(.horizontal, 16)
                         .padding(.top, 12)
                 }
                 HStack {
                     Text("수업 노트")
-                        .font(.title3)
+                        .font(Font(uiFont: .systemFont(for: .title3)))
                         .foregroundColor(Color(UIColor.theme.greyscale1))
                         .padding(.top, CGFloat.padding.toDifferentHierarchy)
                         .padding(.bottom, CGFloat.padding.toTextComponents)
                     Spacer()
                 }.padding(.horizontal, 16)
                 
-                if progressList.isEmpty {
+                if classSchedules.isEmpty {
                     VStack {
                         Text("아직 수업을 한번도 진행하지 않았어요!")
-                            .font(.body)
+                            .font(Font(uiFont: .systemFont(for: .body1)))
                             .foregroundColor(Color(UIColor.theme.greyscale3))
                     }
                     .frame(width: UIScreen.main.bounds.size.width - 32, height: 142)
@@ -59,15 +56,15 @@ struct ClassDetailView: View {
                     .padding(.horizontal, 16)
                     
                 } else {
-                    ForEach(Array(progressList.enumerated()), id: \.offset) { index, value in
+                    ForEach(Array($classSchedules.enumerated()), id: \.offset) { index, value in
                         //스케쥴 카드 컴퍼넌트 들어감
-                        ClassScheduleCardComponent(progress: $progressList[index])
+                        ClassScheduleCardComponent(classSchedule: value)
                             .padding(.horizontal, 16)
                             .padding(.bottom, CGFloat.padding.toComponents)
                             .onTapGesture {
                                 withAnimation{
                                     isPresented = true
-                                    editProgress = progressList[index]
+//                                    editProgress = progressList[index]
                                     selectedIndex = index
                                 }
                             }
@@ -79,27 +76,32 @@ struct ClassDetailView: View {
                 Color(UIColor.theme.spBlack)
                     .ignoresSafeArea()
             }
-            ClassUpdateModalView(inputText: $editProgress,selectedIndex: $selectedIndex, progressList: $progressList, isPresente: $isPresented, isChanged: $isChanged)
+            ClassUpdateModalView(selectedIndex: $selectedIndex, isPresente: $isPresented, isChanged: $isChanged, classTitle: $classTitle, classSchedule: $classSchedules)
                 .offset(y: isPresented ? 0 : UIScreen.main.bounds.height + 100)
             
             
         }
         .navigationBarBackButtonHidden(isPresented)
         .onAppear {
+            DataManager.shared.fetchData(target: .classInfo)
             DataManager.shared.fetchData(target: .schedule)
             DataManager.shared.fetchData(target: .members)
-            classSchedules = DataManager.shared.schedule ?? []
-            classSchedules = classSchedules.filter{ $0.classInfo == selectedClass }
-            members = DataManager.shared.members ?? []
-            members = members.filter{ $0.classInfo == selectedClass }
+            selectedClass = DataManager.shared.classInfo?[3]
+            classSchedules = DataManager.shared.getSchedules(classInfo: selectedClass!)
+            members = DataManager.shared.getMembers(classInfo: selectedClass!)
+            classTitle = selectedClass?.name ?? ""
             
         }
         .onChange(of: isChanged) { _ in
-            classSchedules = DataManager.shared.schedule ?? []
-            classSchedules = classSchedules.filter{ $0.classInfo == selectedClass }
+            classSchedules = DataManager.shared.getSchedules(classInfo: selectedClass!)
+        }
+        .onChange(of: classSchedules) { _ in
+            print("Change")
+            
         }
         
     }
+    
 }
 
 struct ClassDetailView_Previews: PreviewProvider {

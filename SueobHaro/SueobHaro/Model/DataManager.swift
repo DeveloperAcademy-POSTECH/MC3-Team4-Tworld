@@ -136,6 +136,33 @@ class DataManager {
         container.viewContext.delete(target as! NSManagedObject)
         try? container.viewContext.save()
     }
+    
+    func getMembers(classInfo: ClassInfo) -> [Members] {
+        let request = Members.fetchRequest()
+        let filter = NSPredicate(format: "classInfo == %@", classInfo)
+        request.predicate = filter
+        var filterMembers:[Members] = []
+        do {
+            filterMembers = try container.viewContext.fetch(request)
+        } catch let error {
+            print("Fetch Error, get Members, \(error)")
+        }
+        return filterMembers
+    }
+    
+    func getSchedules(classInfo: ClassInfo) -> [Schedule] {
+        let request = Schedule.fetchRequest()
+        let filter = NSPredicate(format: "classInfo == %@", classInfo)
+        request.predicate = filter
+        var filterSchedules:[Schedule] = []
+        do {
+            filterSchedules = try container.viewContext.fetch(request)
+            filterSchedules = filterSchedules.filter{ $0.endTime ?? Date() <= Date()}
+        } catch let error {
+            print("Fetch Error, get Members, \(error)")
+        }
+        return filterSchedules
+    }
 }
 
 // MARK: DataModel

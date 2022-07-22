@@ -9,25 +9,25 @@ import SwiftUI
 
 struct ClassHeaderComponent: View {
     
-    @Binding var classTitle: String
-    @Binding var memberList: [String]
+    @Binding var classInfo:ClassInfo?
+    @Binding var memberList: [Members]
     
     var body: some View {
         VStack(spacing: 0) {
-            Text("코딩 영재반")
-                .font(.title2)
+            Text(classInfo?.name ?? "")
+                .font(Font(uiFont: .systemFont(for: .title2)))
                 .foregroundColor(Color(UIColor.theme.greyscale1))
                 .padding(.top, CGFloat.padding.inBox)
                 .padding(.bottom, CGFloat.padding.toText)
             HStack(spacing: 0) {
                 if memberList.count > 0 {
                     ForEach(0..<memberList.count, id: \.self) { i in
-                        Text(memberList[i])
-                            .font(.body)
+                        Text(memberList[i].name ?? "")
+                            .font(Font(uiFont: .systemFont(for: .body1)))
                             .foregroundColor(Color(UIColor.theme.greyscale3))
                         if i != memberList.count - 1 {
                             Text(", ")
-                                .font(.body)
+                                .font(Font(uiFont: .systemFont(for: .body1)))
                                 .foregroundColor(Color(UIColor.theme.greyscale3))
                         }
                         
