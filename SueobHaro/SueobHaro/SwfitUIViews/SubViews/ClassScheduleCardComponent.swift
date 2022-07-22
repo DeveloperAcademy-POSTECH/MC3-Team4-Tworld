@@ -12,7 +12,7 @@ struct ClassScheduleCardComponent: View {
     @State var dateTime: Date = Date()
     @State var time:String = "13:00~15:00"
     @State var count:Int = 4
-    @Binding var progress:String
+    @Binding var classSchedule: Schedule
     
     private let itemFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -24,12 +24,12 @@ struct ClassScheduleCardComponent: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text(getDate(date:dateTime))
-                    .font(.title3)
+                Text(getDate(date:classSchedule.startTime ?? Date()))
+                    .font(Font(uiFont: .systemFont(for: .title3)))
                     .foregroundColor(Color(UIColor.theme.greyscale1))
                 Spacer()
-                Text("\(count)회차")
-                    .font(.caption)
+                Text("\(classSchedule.count)회차")
+                    .font(Font(uiFont: .systemFont(for: .caption)))
                     .foregroundColor(Color(UIColor.theme.greyscale7))
                     .background{
                         Capsule()
@@ -42,9 +42,9 @@ struct ClassScheduleCardComponent: View {
             .padding(.leading, CGFloat.padding.inBox)
 //            .padding(.trailing, CGFloat.padding.inBox)
             HStack {
-                Text(time)
+                Text("\(getTime(date:classSchedule.startTime ?? Date()))~\(getTime(date:classSchedule.endTime ?? Date()))")
                     .foregroundColor(Color(UIColor.theme.greyscale3))
-                    .font(.body)
+                    .font(Font(uiFont: .systemFont(for: .body1)))
                 Spacer()
                 
             }
@@ -58,14 +58,14 @@ struct ClassScheduleCardComponent: View {
                     .resizable()
                     .foregroundColor(Color(UIColor.theme.spLightBlue))
                     .frame(width: 20, height: 20)
-                if progress == "" {
+                if classSchedule.progress == "" {
                     Text("수업의 진행 상황을 입력해주세요.")
                         .foregroundColor(Color(UIColor.theme.spLightBlue))
-                        .font(.body)
+                        .font(Font(uiFont: .systemFont(for: .body2)))
                 } else {
-                    Text(progress)
+                    Text(classSchedule.progress ?? "")
                         .foregroundColor(Color(UIColor.theme.greyscale1))
-                        .font(.body)
+                        .font(Font(uiFont: .systemFont(for: .body2)))
                 }
                 Spacer()
             }
@@ -97,7 +97,7 @@ struct ClassScheduleCardComponent: View {
         let dateFormatter = DateFormatter() // Date 포맷 객체 선언
         dateFormatter.locale = Locale(identifier: "ko") // 한국 지정
         
-        dateFormatter.dateFormat = "kk:mm:ss" // Date 포맷 타입 지정
+        dateFormatter.dateFormat = "kk:mm" // Date 포맷 타입 지정
         let date_string = dateFormatter.string(from: date) // 포맷된 형식 문자열로 반환
 
         return date_string

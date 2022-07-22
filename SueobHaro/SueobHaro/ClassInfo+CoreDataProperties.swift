@@ -26,6 +26,19 @@ extension ClassInfo {
     @NSManaged public var schedule: NSSet?
     @NSManaged public var classIteration: NSSet?
     @NSManaged public var members: NSSet?
+    
+    
+    public var classIterArray: [ClassIteration] {
+        let classIterSet = classIteration as? Set<ClassIteration> ?? []
+        
+        return Array(classIterSet)
+    }
+    
+    public var membersArray: [Members] {
+        let memberSet = members as? Set<Members> ?? []
+        
+        return Array(memberSet)
+    }
 
 }
 
