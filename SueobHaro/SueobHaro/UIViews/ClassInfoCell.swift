@@ -20,6 +20,7 @@ class ClassInfoCell: UICollectionViewCell {
     lazy var durationLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = .systemFont(for: .body1)
+        label.numberOfLines = 3
         label.textColor = .theme.greyscale3
         return label
     }()

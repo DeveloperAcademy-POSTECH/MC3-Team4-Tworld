@@ -32,13 +32,7 @@ class ViewController: UIViewController {
     
     private var nowSection: Section = .next {
         didSet {
-            self.schedules = DataManager.shared.getSchedules(section: nowSection)
-            var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
-            snapshot.appendSections([nowSection])
-            snapshot.appendItems(schedules)
-            if let dataSource = self.dataSource {
-                dataSource.apply(snapshot, animatingDifferences: false)
-            }
+            updateCell()
         }
     }
     
@@ -79,6 +73,7 @@ class ViewController: UIViewController {
             configureNavbar()
             configureSegmentControl()
             configureCollectionView()
+            updateCell()
     }
     
     private func createLayout() -> UICollectionViewLayout {
@@ -182,6 +177,17 @@ extension ViewController {
 
 extension ViewController {
     
+    private func updateCell() {
+        DataManager.shared.fetchData(target: .schedule)
+        self.schedules = DataManager.shared.getSchedules(section: nowSection)
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
+        snapshot.appendSections([nowSection])
+        snapshot.appendItems(schedules)
+        if let dataSource = self.dataSource {
+            dataSource.apply(snapshot, animatingDifferences: false)
+        }
+    }
+    
     private func addGradient(uiView: UIView) {
         let gradient = CAGradientLayer()
         gradient.colors = [UIColor.theme.spBlack.cgColor, UIColor.theme.spLightGradientRight.cgColor]
@@ -199,14 +205,14 @@ extension ViewController {
     @objc private func addSchedule() {
         self.navigationController?.pushViewController(UIHostingController(rootView: ClassNameView(dismissAction: {
             self.navigationController?.popToViewController(self, animated: true)
-            DataManager.shared.fetchData(target: .schedule)
+            self.updateCell()
         })), animated: true)
     }
 }
 
 extension Date {
     func toString() -> String {
-        return self.formatted(date: .omitted, time: .shortened)
+        return self.formatted(date: .complete, time: .shortened)
     }
     
     func todayString() -> String {
