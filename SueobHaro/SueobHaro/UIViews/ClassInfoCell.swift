@@ -78,7 +78,7 @@ class ClassInfoCell: UICollectionViewCell {
         stackView.layer.cornerRadius = 12
         stackView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
         stackView.layer.borderWidth = 1
-        stackView.layer.borderColor = UIColor.theme.spLightBlue.cgColor
+        stackView.layer.borderColor = UIColor.theme.spTurkeyBlue.cgColor
         return stackView
     }()
         
@@ -99,12 +99,34 @@ class ClassInfoCell: UICollectionViewCell {
         return label
     }()
     
+    lazy var titleStackView: UIStackView = {
+        let stackView = UIStackView(frame: .zero)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .center
+        stackView.spacing = 8
+        stackView.axis = .horizontal
+        return stackView
+    }()
+    
     lazy var dayStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .center
         stackView.axis = .vertical
         return stackView
+    }()
+    
+    lazy var schoolIndicator: UIView = {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.theme.greyscale1
+        view.layer.cornerRadius = 4
+        
+        NSLayoutConstraint.activate([
+            view.widthAnchor.constraint(equalToConstant: 8),
+            view.heightAnchor.constraint(equalToConstant: 8),
+        ])
+        return view
     }()
     
     override init(frame: CGRect) {
@@ -207,8 +229,8 @@ extension ClassInfoCell {
         let divider = UIView(frame: .zero)
         divider.translatesAutoresizingMaskIntoConstraints = false
         divider.backgroundColor = .darkGray
-        
-        [titleLabel, durationLabel, teamLabel].forEach{ labelStackView.addArrangedSubview($0) }
+        [schoolIndicator, titleLabel].forEach{ titleStackView.addArrangedSubview($0) }
+        [titleStackView, durationLabel, teamLabel].forEach{ labelStackView.addArrangedSubview($0) }
         [progressIcon, progressInfoLabel].forEach{ progressStackView.addArrangedSubview($0) }
         [labelStackView, divider, progressStackView].forEach{ mainStackView.addArrangedSubview($0) }
         [daySubLabel, daylabel].forEach{ dayStackView.addArrangedSubview($0) }
