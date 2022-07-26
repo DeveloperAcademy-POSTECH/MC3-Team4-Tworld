@@ -26,16 +26,29 @@ enum Section: Int, Hashable, CaseIterable {
 
 class ViewController: UIViewController {
     
-    var dataSource: UICollectionViewDiffableDataSource<Section, Schedule>! = nil
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Schedule>? = nil
     
-    var dayStack: [Date] = []
+    private var dayStack: [Date] = []
     
-    var cancellables = Set<AnyCancellable>()
+    private var nowSection: Section = .next {
+        didSet {
+            self.schedules = DataManager.shared.getSchedules(section: nowSection)
+            var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
+            snapshot.appendSections([nowSection])
+            snapshot.appendItems(schedules)
+            if let dataSource = self.dataSource {
+                dataSource.apply(snapshot, animatingDifferences: false)
+            }
+        }
+    }
+    
+    var schedules: [Schedule] = []
     
     lazy var segmentedControl: UnderlineSegmentedControl = {
         let control = UnderlineSegmentedControl(items: Section.allCases.map{$0.description})
         control.translatesAutoresizingMaskIntoConstraints = false
         control.selectedSegmentIndex = 0
+        self.changeSection(segment: control)
         let font = UIFont.systemFont(for: .title3)
         control.setTitleTextAttributes([
             NSAttributedString.Key.foregroundColor: UIColor.theme.greyscale3,
@@ -66,36 +79,6 @@ class ViewController: UIViewController {
             configureNavbar()
             configureSegmentControl()
             configureCollectionView()
-            
-            DataManager.shared.$schedule.sink { [weak self] schedules in
-                if let schedules = schedules {
-                    var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
-                    
-                    var prevSchedules: [Schedule] = []
-                    var nextSchedules: [Schedule] = []
-                    
-                    for schedule in schedules {
-                        if (schedule.endTime ?? Date()) < Date() {
-                            prevSchedules.append(schedule)
-                        } else {
-                            nextSchedules.append(schedule)
-                        }
-                    }
-                    
-                    if !nextSchedules.isEmpty {
-                        snapshot.appendSections([.next])
-                        snapshot.appendItems(nextSchedules)
-                    }
-                    
-                    if !prevSchedules.isEmpty {
-                        snapshot.appendSections([.prev])
-                        snapshot.appendItems(prevSchedules)
-                    }
-                    
-                    self?.dataSource.apply(snapshot, animatingDifferences: false)
-                }
-            }
-            .store(in: &cancellables)
     }
     
     private func createLayout() -> UICollectionViewLayout {
@@ -161,20 +144,6 @@ extension ViewController: UICollectionViewDelegate {
         dataSource = UICollectionViewDiffableDataSource<Section, Schedule>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
         }
-        
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
-        
-        // 샘플 데이터 추가
-        snapshot.appendSections([.next])
-        DataManager.shared.fetchData(target: .schedule)
-        snapshot.appendItems(
-            DataManager.shared.schedule ?? []
-        )
-        snapshot.appendSections([.prev])
-        snapshot.appendItems([
-        ])
-        
-        dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 
@@ -224,7 +193,7 @@ extension ViewController {
     }
     
     @objc private func changeSection(segment: UISegmentedControl) {
-        
+        self.nowSection = segment.selectedSegmentIndex == 0 ? .next : .prev
     }
     
     @objc private func addSchedule() {
