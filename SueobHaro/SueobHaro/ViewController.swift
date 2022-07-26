@@ -144,7 +144,6 @@ extension ViewController: UICollectionViewDelegate {
             }
         }
         
-        
         dataSource = UICollectionViewDiffableDataSource<Section, Schedule>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
         }
@@ -162,7 +161,9 @@ extension ViewController {
             segmentedControl.heightAnchor.constraint(equalToConstant: 40)
         ])
         segmentedControl.addTarget(self, action: #selector(changeSection(segment:)), for: .valueChanged)
-        
+    }
+    
+    private func configureIndicator() {
         view.addSubview(indicator)
         NSLayoutConstraint.activate([
             indicator.topAnchor.constraint(equalTo: segmentedControl.topAnchor, constant: 8),
@@ -227,6 +228,7 @@ extension ViewController {
     }
 }
 
+// 셀 적용 테스트 위한 코드. 차후 셀 하이파이 확정되면 기존 DateFormatter 코드로 바꿀 예정
 extension Date {
     func toString() -> String {
         return self.formatted(date: .complete, time: .shortened)
