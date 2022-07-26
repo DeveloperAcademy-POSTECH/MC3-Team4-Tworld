@@ -86,7 +86,9 @@ struct ClassDetailView: View {
             DataManager.shared.fetchData(target: .classInfo)
             DataManager.shared.fetchData(target: .schedule)
             DataManager.shared.fetchData(target: .members)
-            selectedClass = DataManager.shared.classInfo?[3]
+            if selectedClass == nil {
+                selectedClass = DataManager.shared.classInfo?[3]
+            }
             classSchedules = DataManager.shared.getSchedules(classInfo: selectedClass!)
             members = DataManager.shared.getMembers(classInfo: selectedClass!)
             classTitle = selectedClass?.name ?? ""

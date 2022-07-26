@@ -5,9 +5,6 @@
 //  Created by leejunmo on 2022/07/16.
 //
 
-//진도입력 탭
-//그레디언트
-
 import UIKit
 import SwiftUI
 import CoreData
@@ -20,9 +17,9 @@ enum Section: Int, Hashable, CaseIterable {
     var description: String {
         switch self {
         case .next:
-            return "다음 수업을 잊지마세요!"
+            return "다음일정"
         case .prev:
-            return "지난 수업을 확인해보세요"
+            return "지난일정"
         }
     }
 }
@@ -35,6 +32,23 @@ class ViewController: UIViewController {
     var dayStack: [Date] = []
     
     var cancellables = Set<AnyCancellable>()
+    
+    lazy var segmentedControl: UnderlineSegmentedControl = {
+        let control = UnderlineSegmentedControl(items: Section.allCases.map{$0.description})
+        control.translatesAutoresizingMaskIntoConstraints = false
+        control.selectedSegmentIndex = 0
+        let font = UIFont.systemFont(for: .title3)
+        control.setTitleTextAttributes([
+            NSAttributedString.Key.foregroundColor: UIColor.theme.greyscale3,
+            NSAttributedString.Key.font: font
+        ], for: .normal)
+        control.setTitleTextAttributes([
+            NSAttributedString.Key.foregroundColor: UIColor.theme.greyscale1,
+            NSAttributedString.Key.font: font
+        ], for: .selected)
+        control.layer.cornerRadius = 0
+        return control
+    }()
     
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
@@ -51,6 +65,7 @@ class ViewController: UIViewController {
         guard DataManager.shared.container != nil else { fatalError("This view needs a persistent container.") }
             self.view.backgroundColor = .theme.spBlack
             configureNavbar()
+            configureSegmentControl()
             configureCollectionView()
             
             DataManager.shared.$schedule.sink { [weak self] schedules in
@@ -128,7 +143,7 @@ extension ViewController: UICollectionViewDelegate {
         
         view.addSubview(collectionView)
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            collectionView.topAnchor.constraint(equalTo: self.segmentedControl.bottomAnchor),
             collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
@@ -185,6 +200,17 @@ extension ViewController: UICollectionViewDelegate {
 }
 
 extension ViewController {
+    
+    private func configureSegmentControl() {
+        view.addSubview(segmentedControl)
+        NSLayoutConstraint.activate([
+            segmentedControl.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            segmentedControl.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            segmentedControl.widthAnchor.constraint(equalToConstant: 180),
+            segmentedControl.heightAnchor.constraint(equalToConstant: 40)
+        ])
+    }
+    
     private func configureNavbar() {
         let iconButton = UIButton(type: .custom)
         let image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 17, weight: .semibold))!
