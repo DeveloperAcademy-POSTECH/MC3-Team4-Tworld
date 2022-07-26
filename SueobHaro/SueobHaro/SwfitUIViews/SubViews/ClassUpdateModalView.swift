@@ -8,146 +8,158 @@
 import SwiftUI
 
 struct ClassUpdateModalView: View {
-    @State var count = 4
-    @Binding var inputText: String
+    @State var inputText: String  = ""
     @Binding var selectedIndex: Int
-    @Binding var progressList: [String]
     @Binding var isPresente: Bool
     @FocusState var isFocused
     @State var isAlertShow: Bool = false
     @Binding var isChanged: Bool
     @State var color: Color = Color(UIColor.theme.spLightBlue)
+    @Binding var classTitle: String
+    @Binding var classSchedule: [Schedule]
+    
+    
     var body: some View {
-        
-        VStack {
-            Color.clear
-            VStack(spacing:0) {
-                HStack {
-                    Text("코딩 영재반")
-                        .foregroundColor(Color(UIColor.theme.greyscale1))
-                        .font(.title2)
-                    Text("\(count)회차")
-                        .font(.caption)
-                        .foregroundColor(Color(UIColor.theme.greyscale7))
-                        .background{
-                            Capsule()
-                                .frame(width: 42, height: 24, alignment: .center)
-                                .foregroundColor(Color(UIColor.theme.spLightBlue))
-                        }
-                        .padding(.leading, 11)
-                    Spacer()
-                }
-                .padding(.top, CGFloat.padding.inBox)
-                HStack {
-                    Text(getDate(date: Date()))
-                        .font(.body)
-                        .foregroundColor(Color(UIColor.theme.greyscale1))
-                        .padding(.trailing, 9)
-                    Text("13:00~15:00")
-                        .font(.body)
-                        .foregroundColor(Color(UIColor.theme.greyscale3))
-                    Spacer()
-                }
-                .padding(.top, CGFloat.padding.toText)
-                .padding(.bottom, CGFloat.padding.inBox)
-                HStack {
-                    Text("진행 상황")
-                        .font(.body)
-                        .foregroundColor(Color(UIColor.theme.greyscale3))
-                        .padding(.bottom, CGFloat.padding.toText)
-                    Spacer()
-                }
-                
-                TextField("", text: $inputText)
-                    .font(.body)
-                    .foregroundColor(Color(UIColor.theme.greyscale1))
-                    .focused($isFocused)
-                    
-                Divider()
-                    .background(color)
-                    .padding(.bottom, 71.58)
-                Button(action: {
-                    if inputText != ""{
-                        isFocused = false
-                        isPresente = false
-                        progressList[selectedIndex] = inputText
-
-                    } else {
-                        isAlertShow = true
-                    }
-                }, label: {
+        if !classSchedule.isEmpty {
+            VStack {
+                Color.clear
+                VStack(spacing:0) {
                     HStack {
-                        Spacer()
-                        Text("저장하기")
-                            .font(.title3)
+                        Text(classTitle)
                             .foregroundColor(Color(UIColor.theme.greyscale1))
+                            .font(Font(uiFont: .systemFont(for: .title2)))
+                        Text("\(classSchedule.count)회차")
+                            .font(Font(uiFont: .systemFont(for: .caption)))
+                            .foregroundColor(Color(UIColor.theme.greyscale7))
+                            .background{
+                                Capsule()
+                                    .frame(width: 42, height: 24, alignment: .center)
+                                    .foregroundColor(Color(UIColor.theme.spLightBlue))
+                            }
+                            .padding(.leading, 11)
                         Spacer()
                     }
-                    .background {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(LinearGradient(colors: inputText != "" ? [Color(UIColor.theme.spLightBlue), Color(UIColor.theme.spDarkBlue)] : [Color(UIColor.theme.greyscale3)], startPoint: .leading, endPoint: .trailing))
-                            .frame(height:52)
-                            
+                    .padding(.top, CGFloat.padding.inBox)
+                    HStack {
+                        Text(getDate(date: classSchedule[selectedIndex].startTime ?? Date()))
+                            .font(Font(uiFont: .systemFont(for: .body1)))
+                            .foregroundColor(Color(UIColor.theme.greyscale1))
+                            .padding(.trailing, 9)
+                        Text("13:00~15:00")
+                            .font(Font(uiFont: .systemFont(for: .body1)))
+                            .foregroundColor(Color(UIColor.theme.greyscale3))
+                        Spacer()
                     }
-                    .padding(.bottom, 20)
+                    .padding(.top, CGFloat.padding.toText)
+                    .padding(.bottom, CGFloat.padding.inBox)
+                    HStack {
+                        Text("진행 상황")
+                            .font(Font(uiFont: .systemFont(for: .body1)))
+                            .foregroundColor(Color(UIColor.theme.greyscale3))
+                            .padding(.bottom, CGFloat.padding.toText)
+                        Spacer()
+                    }
                     
-                    
-                })
-                .alert("수업 진도 입력", isPresented: $isAlertShow) {
-                    Button(role: .cancel) {} label: { Text("확인") }
-                } message: {
-                    Text("수업 진도를 입력해 주세요")
+                    TextField("", text: $inputText)
+                        .font(Font(uiFont: .systemFont(for: .body2)))
+                        .foregroundColor(Color(UIColor.theme.greyscale1))
+                        .focused($isFocused)
+                        
+                    Divider()
+                        .background(color)
+                        .padding(.bottom, 71.58)
+                    Button(action: {
+                        if inputText != ""{
+    //                        progressList[selectedIndex] = inputText
+                            if inputText != classSchedule[selectedIndex].progress ?? "" {
+                                classSchedule[selectedIndex].progress = inputText
+                                DataManager.shared.updateSchedule(target: classSchedule[selectedIndex], count: nil, endTime: nil, startTime: nil, isCanceled: nil, progress: nil)
+                                isChanged.toggle()
+                            }
+                            isFocused = false
+                            isPresente = false
+
+                        } else {
+                            isAlertShow = true
+                        }
+                    }, label: {
+                        HStack {
+                            Spacer()
+                            Text("저장하기")
+                                .font(Font(uiFont: .systemFont(for: .button)))
+                                .foregroundColor(Color(UIColor.theme.greyscale1))
+                            Spacer()
+                        }
+                        .background {
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(LinearGradient(colors: inputText != "" ? [Color(UIColor.theme.spLightBlue), Color(UIColor.theme.spDarkBlue)] : [Color(UIColor.theme.greyscale3)], startPoint: .leading, endPoint: .trailing))
+                                .frame(height:52)
+                                
+                        }
+                        .padding(.bottom, 20)
+                        
+                        
+                    })
+                    .alert("수업 진도 입력", isPresented: $isAlertShow) {
+                        Button(role: .cancel) {} label: { Text("확인") }
+                    } message: {
+                        Text("수업 진도를 입력해 주세요")
+                    }
+                        
                 }
-                    
+                .background{
+                    Rectangle()
+                        .fill(Color(UIColor.theme.greyscale6))
+                        .cornerRadius(radius: 10.0, corners: [.topLeft, .topRight])
+                        .frame(width: UIScreen.main.bounds.size.width)
+                        .ignoresSafeArea(edges: .bottom)
+                        
+                        
+                }.ignoresSafeArea()
+                
             }
-            .background{
-                Rectangle()
-                    .fill(Color(UIColor.theme.greyscale6))
-                    .cornerRadius(radius: 10.0, corners: [.topLeft, .topRight])
-                    .frame(width: UIScreen.main.bounds.size.width)
-                    .ignoresSafeArea(edges: .bottom)
-                    
-                    
-            }.ignoresSafeArea()
-            
-        }
-        .onChange(of: isPresente) { _ in
-            if isPresente {
-                isFocused = true
-            }
-        }
-        .onChange(of: isFocused ) { _ in
-            if isFocused {
-                withAnimation {
-                    color = Color(UIColor.theme.spLightBlue)
+            .onChange(of: isPresente) { _ in
+                if isPresente {
+                    inputText = classSchedule[selectedIndex].progress ?? ""
+                    isFocused = true
                 }
-            } else {
-                if inputText == "" {
+            }
+            .onChange(of: isFocused ) { _ in
+                if isFocused {
                     withAnimation {
-                        color = Color(UIColor.theme.greyscale4)
+                        color = Color(UIColor.theme.spLightBlue)
                     }
                 } else {
-                    withAnimation{
-                        color = Color(UIColor.theme.greyscale1)
+                    if inputText == "" {
+                        withAnimation {
+                            color = Color(UIColor.theme.greyscale4)
+                        }
+                    } else {
+                        withAnimation{
+                            color = Color(UIColor.theme.greyscale1)
+                        }
                     }
                 }
             }
-        }
-        .padding(.horizontal, 16)
-        .background{
-            Color.black.opacity(0.7)
-                .onTapGesture {
-                    if !isFocused {
-                        withAnimation {
-                            isPresente = false
+            .padding(.horizontal, 16)
+            .background{
+                Color.black.opacity(0.7)
+                    .onTapGesture {
+                        if !isFocused {
+                            withAnimation {
+                                isPresente = false
+                            }
+                        } else {
+                            isFocused = false
                         }
-                    } else {
-                        isFocused = false
                     }
-                }
-                .ignoresSafeArea()
-            
+                    .ignoresSafeArea()
+                
+            }
+        } else {
+            Text("비어있으")
         }
+        
         
     }
             
