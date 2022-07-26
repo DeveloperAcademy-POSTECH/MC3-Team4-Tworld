@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct ClassInformationListComponent: View {
-    @State var firstText:String = "수"
-    @State var secondText:String = "13:00-15:00"
+    @State var firstText: String = "수"
+    @State var secondText: String = "13:00-15:00"
+    
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: CGFloat.padding.inBox) {
             Text(firstText)
                 .font(Font(uiFont: .systemFont(for: .title3)))
                 .foregroundColor(Color(UIColor.theme.greyscale1))
-                .padding(.trailing, CGFloat.padding.inBox)
             Text(secondText)
                 .font(Font(uiFont: .systemFont(for: .body2)))
                 .foregroundColor(Color(UIColor.theme.greyscale1))

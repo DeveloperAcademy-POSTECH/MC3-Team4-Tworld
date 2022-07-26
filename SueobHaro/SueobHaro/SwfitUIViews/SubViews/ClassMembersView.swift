@@ -9,19 +9,13 @@ import SwiftUI
 import Combine
 
 struct ClassMembersView: View {
-    @Binding var className: String
-    @Binding var firstClassDate: Date
-    @Binding var isDayPicked: [String:Bool]
-    @Binding var classTimeInfo: [String:[String:Date?]]
-    
-    @State var memberNames: [String] = [""]
-    @State var memberPhoneNumbers: [String] = [""]
+    @Binding var viewMode: AddViewMode
+    @Binding var memberNames: [String]
+    @Binding var memberPhoneNumbers: [String]
     @State var currentIdx: Int? = nil
     
     @FocusState private var isNameFocused: Bool
     @FocusState private var isPhoneNumberFocused: Bool
-    
-    var dismissAction: (() -> Void)
     
     private func isDone() -> Bool {
         guard !memberNames.isEmpty && !memberPhoneNumbers.isEmpty else {return false}
@@ -37,19 +31,6 @@ struct ClassMembersView: View {
         ZStack {
             Color.spBlack.ignoresSafeArea()
             VStack(alignment: .leading, spacing: 0) {
-                VStack(alignment: .leading, spacing: CGFloat.padding.toComponents) {
-                    HStack {
-                        Text("참여자 등록하기")
-                            .font(Font(uiFont: .systemFont(for: .title1)))
-                            .foregroundColor(.greyscale1)
-                            .padding(.top, CGFloat.padding.toComponents)
-                            .padding(.horizontal, CGFloat.padding.margin)
-                        Spacer()
-                    }
-                    Rectangle()
-                        .foregroundColor(.spLightBlue)
-                        .frame(width: UIScreen.main.bounds.width*2/3, height: CGFloat(3), alignment: .leading)
-                }
                 Text("참여자 정보를 입력해주세요")
                     .font(Font(uiFont: .systemFont(for: .title3)))
                     .foregroundColor(.greyscale1)
@@ -140,8 +121,10 @@ struct ClassMembersView: View {
                 .padding(.top, CGFloat.padding.toTextComponents)
                 .padding(.horizontal, CGFloat.padding.margin)
                 if !isNameFocused && !isPhoneNumberFocused {
-                    NavigationLink(destination: {
-                        ClassTuitionView(className: $className, firstClassDate: $firstClassDate, isDayPicked: $isDayPicked, classTimeInfo: $classTimeInfo, memberNames: $memberNames, memberPhoneNumbers: $memberPhoneNumbers, dismissAction: dismissAction)
+                    Button(action: {
+                        withAnimation() {
+                            viewMode = .tuition
+                        }
                     }, label: {
                         ZStack(alignment: .center) {
                             RoundedRectangle(cornerRadius: 10)

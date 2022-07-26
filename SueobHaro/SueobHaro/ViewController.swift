@@ -218,7 +218,8 @@ extension ViewController {
     }
     
     @objc private func addSchedule() {
-        self.navigationController?.pushViewController(UIHostingController(rootView: ClassNameView(dismissAction: {
+        self.navigationController?.pushViewController(UIHostingController(rootView: ClassAddView(dismissAction: {
+            self.navigationController?.setNavigationBarHidden(false, animated: false)
             self.navigationController?.popToViewController(self, animated: true)
             DataManager.shared.fetchData(target: .schedule)
         })), animated: true)
