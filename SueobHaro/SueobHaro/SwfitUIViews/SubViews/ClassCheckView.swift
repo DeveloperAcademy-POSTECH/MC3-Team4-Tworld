@@ -58,7 +58,6 @@ struct ClassCheckView: View {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
                             .strokeBorder(Color.spTurkeyBlue, lineWidth: 1)
-                            .frame(maxHeight: CGFloat(92))
                             .background(Color.spBlack)
                         HStack(spacing: 0) {
                             Spacer()
@@ -69,9 +68,15 @@ struct ClassCheckView: View {
                                 Text(memberNames.joined(separator: ", "))
                                     .font(Font(uiFont: .systemFont(for: .body1)))
                                     .foregroundColor(Color.greyscale3)
-                            }.padding(.vertical, CGFloat.padding.inBox)
+                                Divider()
+                                    .foregroundColor(Color.greyscale4)
+                                Text("\(tuitionPer)회마다 총 \(tuition)원 받아요.")
+                                    .font(Font(uiFont: .systemFont(for: .title3)))
+                                    .foregroundColor(Color(UIColor.theme.greyscale1))
+                                    .padding(.vertical, CGFloat.padding.inBox - CGFloat.padding.toText)
+                            }
                             Spacer()
-                        }
+                        }.padding(.vertical, CGFloat.padding.inBox)
                     }.padding(.top, CGFloat.padding.toTextComponents)
                     Text("수업 일정")
                         .font(Font(uiFont: .systemFont(for: .title3)))
@@ -85,15 +90,7 @@ struct ClassCheckView: View {
                         VStack(spacing: CGFloat.padding.inBox) {
                             ForEach(classDay, id: \.self) { day in
                                 if isDayPicked[day]! {
-                                    HStack(spacing: CGFloat.padding.inBox) {
-                                        Text(day)
-                                            .font(Font(uiFont: .systemFont(for: .title3)))
-                                            .foregroundColor(Color.greyscale1)
-                                        Text("\(dateFormatter.string(from: classTimeInfo[day]!["start"]!!)) ~ \(dateFormatter.string(from: classTimeInfo[day]!["end"]!!))")
-                                            .font(Font(uiFont: .systemFont(for: .body2)))
-                                            .foregroundColor(Color.greyscale1)
-                                        Spacer()
-                                    }.padding(.horizontal, CGFloat.padding.inBox)
+                                    ClassInformationListComponent(firstText: day, secondText: "\(dateFormatter.string(from: classTimeInfo[day]!["start"]!!)) ~ \(dateFormatter.string(from: classTimeInfo[day]!["end"]!!))")
                                     if day != classDay.last {
                                         Rectangle()
                                             .frame(height: 1)
@@ -114,16 +111,7 @@ struct ClassCheckView: View {
                             .background(Color.spBlack)
                         VStack(spacing: CGFloat.padding.inBox) {
                             ForEach(memberNames.indices, id: \.self) { idx in
-                                HStack(spacing: CGFloat.padding.inBox) {
-                                    Text(memberNames[idx])
-                                        .font(Font(uiFont: .systemFont(for: .title3)))
-                                        .foregroundColor(Color.greyscale1)
-                                        .frame(width: 60)
-                                    Text(memberPhoneNumbers[idx])
-                                        .font(Font(uiFont: .systemFont(for: .body2)))
-                                        .foregroundColor(Color.greyscale1)
-                                    Spacer()
-                                }.padding(.horizontal, CGFloat.padding.inBox)
+                                ClassInformationListComponent(firstText: memberNames[idx], secondText: memberPhoneNumbers[idx])
                                 if idx != memberNames.count - 1 {
                                     Rectangle()
                                         .frame(height: 1)
