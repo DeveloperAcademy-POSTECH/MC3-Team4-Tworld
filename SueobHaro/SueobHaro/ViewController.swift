@@ -66,6 +66,15 @@ class ViewController: UIViewController {
         return collectionView
     }()
     
+    lazy var indicator: UIView = {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 4
+        view.backgroundColor = .theme.spLightBlue
+        
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         guard DataManager.shared.container != nil else { fatalError("This view needs a persistent container.") }
@@ -153,6 +162,14 @@ extension ViewController {
             segmentedControl.heightAnchor.constraint(equalToConstant: 40)
         ])
         segmentedControl.addTarget(self, action: #selector(changeSection(segment:)), for: .valueChanged)
+        
+        view.addSubview(indicator)
+        NSLayoutConstraint.activate([
+            indicator.topAnchor.constraint(equalTo: segmentedControl.topAnchor, constant: 8),
+            indicator.trailingAnchor.constraint(equalTo: segmentedControl.trailingAnchor),
+            indicator.widthAnchor.constraint(equalToConstant: 8),
+            indicator.heightAnchor.constraint(equalToConstant: 8),
+        ])
     }
     
     private func configureNavbar() {
