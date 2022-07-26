@@ -26,7 +26,6 @@ enum Section: Int, Hashable, CaseIterable {
 
 class ViewController: UIViewController {
     
-    static let sectionHeaderElementKind = "section-header-element-kind"
     var dataSource: UICollectionViewDiffableDataSource<Section, Schedule>! = nil
     
     var dayStack: [Date] = []
@@ -116,16 +115,6 @@ class ViewController: UIViewController {
             section.interGroupSpacing = .padding.toComponents
             section.contentInsets = NSDirectionalEdgeInsets(top: .padding.toTextComponents, leading: 0, bottom: .padding.toDifferentHierarchy, trailing: 0)
             
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                    heightDimension: .estimated(34))
-            
-            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: headerSize,
-                elementKind: ViewController.sectionHeaderElementKind,
-                alignment: .top)
-            
-            section.boundarySupplementaryItems = [sectionHeader]
-            
             return section
         }
         let layout = UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
@@ -168,19 +157,9 @@ extension ViewController: UICollectionViewDelegate {
             }
         }
         
-        let headerRegistration = UICollectionView.SupplementaryRegistration
-        <TitleHeaderSupplementaryView>(elementKind: ViewController.sectionHeaderElementKind) {
-            (supplementaryView, string, indexPath) in
-            supplementaryView.label.text = Section(rawValue: indexPath.section)?.description
-        }
         
         dataSource = UICollectionViewDiffableDataSource<Section, Schedule>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
-        }
-        
-        dataSource.supplementaryViewProvider = { (view, kind, index) in
-            return self.collectionView.dequeueConfiguredReusableSupplementary(
-                using: headerRegistration, for: index)
         }
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
@@ -205,10 +184,11 @@ extension ViewController {
         view.addSubview(segmentedControl)
         NSLayoutConstraint.activate([
             segmentedControl.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            segmentedControl.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            segmentedControl.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             segmentedControl.widthAnchor.constraint(equalToConstant: 180),
             segmentedControl.heightAnchor.constraint(equalToConstant: 40)
         ])
+        segmentedControl.addTarget(self, action: #selector(changeSection(segment:)), for: .valueChanged)
     }
     
     private func configureNavbar() {
@@ -241,6 +221,10 @@ extension ViewController {
         gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
         gradient.frame = uiView.bounds
         uiView.layer.addSublayer(gradient)
+    }
+    
+    @objc private func changeSection(segment: UISegmentedControl) {
+        
     }
     
     @objc private func addSchedule() {
