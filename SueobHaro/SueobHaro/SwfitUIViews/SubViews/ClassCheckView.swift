@@ -20,8 +20,6 @@ struct ClassCheckView: View {
     @State private var isNavHidden = true
     @State var classDay: [String] = []
     
-    let dayList: [String] = ["월", "화", "수", "목", "금", "토", "일"]
-    
     var dismissAction: (() -> Void)
     
     // color 랜덤 수정해야함
@@ -36,7 +34,6 @@ struct ClassCheckView: View {
             DataManager.shared.addClassInfo(firstDate: firstClassDate, tuition: Int32(tuition)!, tuitionPer: Int16(tuitionPer)!, name: className, color: nil, location: nil, day: classDay, startTime: startTimes, endTime: endTimes, memberName: memberNames, memberPhoneNumber: memberPhoneNumbers)
         }
     }
-    
     
     var body: some View {
         ZStack {
