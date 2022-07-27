@@ -40,7 +40,6 @@ struct ClassCheckView: View {
         }
         DispatchQueue.main.async {
             DataManager.shared.addClassInfo(firstDate: firstClassDate, tuition: Int32(tuition)!, tuitionPer: Int16(tuitionPer)!, name: className, color: nil, location: nil, day: classDay, startTime: startTimes, endTime: endTimes, memberName: memberNames, memberPhoneNumber: memberPhoneNumbers)
-            dismissAction()
         }
     }
     
@@ -144,6 +143,7 @@ struct ClassCheckView: View {
                     Button(action: {
                         save()
 //                        NavigationUtil.popToRootView()
+                        dismissAction()
                         isNavHidden = false
                     }, label: {
                         ZStack(alignment: .center) {
