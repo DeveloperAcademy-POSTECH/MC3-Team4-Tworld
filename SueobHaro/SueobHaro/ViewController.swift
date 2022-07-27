@@ -10,7 +10,7 @@ import SwiftUI
 import CoreData
 import Combine
 
-enum Section: Int, Hashable, CaseIterable {
+enum Section: Int, Hashable, CaseIterable, CustomStringConvertible {
     case next
     case prev
     
@@ -19,7 +19,7 @@ enum Section: Int, Hashable, CaseIterable {
         case .next:
             return "다음일정"
         case .prev:
-            return "지난일정"
+            return "빠른노트"
         }
     }
 }
@@ -125,7 +125,7 @@ extension ViewController: UICollectionViewDelegate {
             collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
         
-        let cellRegistration = UICollectionView.CellRegistration<ClassInfoCell, Schedule> { (cell, indexPath, item) in
+        let nextCellRegistration = UICollectionView.CellRegistration<NextClassInfoCell, Schedule> { (cell, indexPath, item) in
             cell.titleLabel.text = item.classInfo?.name ?? ""
             cell.durationLabel.text = "\((item.startTime ?? Date()).toString())~\((item.endTime ?? Date()).toString())"
             let members = item.classInfo?.members?.allObjects as? [Members] ?? []
@@ -144,8 +144,23 @@ extension ViewController: UICollectionViewDelegate {
             }
         }
         
+        let prevCellRegistration = UICollectionView.CellRegistration<PrevClassInfoCell, Schedule> { (cell, indexPath, item) in
+            cell.titleLabel.text = item.classInfo?.name ?? ""
+            cell.durationLabel.text = "\((item.startTime ?? Date()).toString())~\((item.endTime ?? Date()).toString())"
+            cell.progressInfoLabel.text = item.progress ?? ""
+            
+            var container = AttributeContainer()
+            container.font = .systemFont(for: .caption)
+            cell.progressCountLabel.label.text = "\(item.count)회차"
+        }
+        
         dataSource = UICollectionViewDiffableDataSource<Section, Schedule>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
-            return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
+            switch self.nowSection {
+            case .next:
+                return collectionView.dequeueConfiguredReusableCell(using: nextCellRegistration, for: indexPath, item: item)
+            case .prev:
+                return collectionView.dequeueConfiguredReusableCell(using: prevCellRegistration, for: indexPath, item: item)
+            }
         }
     }
 }
@@ -200,6 +215,7 @@ extension ViewController {
         self.schedules = DataManager.shared.fetchSchedules(section: nowSection)
         var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
         snapshot.appendSections([nowSection])
+        print(nowSection)
         snapshot.appendItems(schedules)
         if let dataSource = self.dataSource {
             dataSource.apply(snapshot, animatingDifferences: false)

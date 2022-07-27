@@ -1,5 +1,5 @@
 //
-//  ClassInfoCell.swift
+//  NextClassInfoCell.swift
 //  SueobHaro
 //
 //  Created by 김예훈 on 2022/07/18.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-class ClassInfoCell: UICollectionViewCell {
-    static let identifier = "ClassInfoCell"
+class NextClassInfoCell: UICollectionViewCell {
+    static let identifier = "NextClassInfoCell"
     
     lazy var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
@@ -46,31 +46,12 @@ class ClassInfoCell: UICollectionViewCell {
     
     lazy var progressCountLabel = GradientCapsuleLabel(frame: .zero)
     
-    lazy var progressIcon: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        let image = UIImage(systemName: "highlighter", withConfiguration: UIImage.SymbolConfiguration(pointSize: 15, weight: .semibold))!
-        imageView.tintColor = .theme.spLightBlue
-        imageView.image = image
-        
-        return imageView
-    }()
-    
-    lazy var progressInfoLabel: ProgressLabel = {
-        let label = ProgressLabel(frame: .zero)
+    lazy var progressInfoLabel: PrevProgressLabel = {
+        let label = PrevProgressLabel(frame: .zero)
         label.font = .systemFont(for: .body2)
         label.numberOfLines = 0
         
         return label
-    }()
-    
-    lazy var progressStackView: UIStackView = {
-        let stackView = UIStackView(frame: .zero)
-        stackView.axis = .horizontal
-        stackView.alignment = .top
-        stackView.spacing = 14
-        
-        return stackView
-        
     }()
     
     lazy var mainStackView: UIStackView = {
@@ -213,16 +194,16 @@ class GradientCapsuleLabel: UIView {
     }
 }
 
-class ProgressLabel: UILabel {
+class PrevProgressLabel: UILabel {
     
-    let placeHolder = "진행한 진도를 입력해주세요."
+    let placeHolder = "지난 수업의 진도를 기록하지 않았어요..."
     
     override var text: String? {
         didSet {
             if let text = text {
                 if text == "" {
                     self.text = placeHolder
-                    self.textColor = .cyan
+                    self.textColor = .theme.spTurkeyBlue
                 } else {
                     self.textColor = .white
                 }
@@ -238,15 +219,14 @@ class ProgressLabel: UILabel {
     }
 }
 
-extension ClassInfoCell {
+extension NextClassInfoCell {
     func configure() {
         let divider = UIView(frame: .zero)
         divider.translatesAutoresizingMaskIntoConstraints = false
         divider.backgroundColor = .darkGray
         [schoolIndicator, titleLabel].forEach{ titleStackView.addArrangedSubview($0) }
         [titleStackView, durationLabel, teamLabel].forEach{ labelStackView.addArrangedSubview($0) }
-        [progressIcon, progressInfoLabel].forEach{ progressStackView.addArrangedSubview($0) }
-        [labelStackView, divider, progressStackView].forEach{ mainStackView.addArrangedSubview($0) }
+        [labelStackView, divider, progressInfoLabel].forEach{ mainStackView.addArrangedSubview($0) }
         [daySubLabel, daylabel].forEach{ dayStackView.addArrangedSubview($0) }
         self.addSubview(dayStackView)
         self.addSubview(mainStackView)
