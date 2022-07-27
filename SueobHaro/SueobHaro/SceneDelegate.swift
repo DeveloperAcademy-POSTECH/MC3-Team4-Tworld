@@ -27,7 +27,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UINavigationBar.appearance().tintColor = .theme.spLightBlue
         let navViewController = UINavigationController(rootViewController: viewController)
         navViewController.navigationBar.standardAppearance = navigationApperance
-        window?.rootViewController = navViewController
+        let tabViewController = MainTabBarController()
+        window?.rootViewController = tabViewController
         window?.makeKeyAndVisible()
     }
     

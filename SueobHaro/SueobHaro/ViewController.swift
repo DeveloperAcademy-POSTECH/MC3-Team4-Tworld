@@ -82,6 +82,7 @@ class ViewController: UIViewController {
             configureNavbar()
             configureSegmentControl()
             configureCollectionView()
+            configureIndicator()
             updateCell()
     }
     
