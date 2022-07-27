@@ -11,9 +11,12 @@
 		211CF47A2885AB2700BDE26A /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 211CF4772885AB2700BDE26A /* Pretendard-Medium.otf */; };
 		211CF47B2885AB2700BDE26A /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 211CF4782885AB2700BDE26A /* Pretendard-Light.otf */; };
 		211CF47C2885AB2700BDE26A /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 211CF4792885AB2700BDE26A /* Pretendard-Bold.otf */; };
+		214707DF288FBDF9004E49D9 /* UnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214707DE288FBDF9004E49D9 /* UnderlineSegmentedControl.swift */; };
 		2186376728888C5800F71595 /* TeamInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2186376628888C5800F71595 /* TeamInfoView.swift */; };
-		21977B4C28868E0700BAE020 /* ClassInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21977B4B28868E0700BAE020 /* ClassInfoCell.swift */; };
+		21977B4C28868E0700BAE020 /* NextClassInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21977B4B28868E0700BAE020 /* NextClassInfoCell.swift */; };
 		21977B4E28868E6800BAE020 /* CollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21977B4D28868E6800BAE020 /* CollectionViewHeader.swift */; };
+		21BC991E28910A12000C5FCF /* PrevClassInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BC991D28910A12000C5FCF /* PrevClassInfoCell.swift */; };
+		21BC992028911245000C5FCF /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BC991F28911245000C5FCF /* MainTabBarController.swift */; };
 		317AE6852886919200FDA57B /* ClassDeatilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6842886919200FDA57B /* ClassDeatilViewController.swift */; };
 		317AE6882886927400FDA57B /* ClassDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6872886927400FDA57B /* ClassDetailTableViewCell.swift */; };
 		317AE68A2886A25200FDA57B /* ClassDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6892886A25200FDA57B /* ClassDetailHeaderView.swift */; };
@@ -58,9 +61,12 @@
 		211CF4772885AB2700BDE26A /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		211CF4782885AB2700BDE26A /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		211CF4792885AB2700BDE26A /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		214707DE288FBDF9004E49D9 /* UnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineSegmentedControl.swift; sourceTree = "<group>"; };
 		2186376628888C5800F71595 /* TeamInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInfoView.swift; sourceTree = "<group>"; };
-		21977B4B28868E0700BAE020 /* ClassInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInfoCell.swift; sourceTree = "<group>"; };
+		21977B4B28868E0700BAE020 /* NextClassInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextClassInfoCell.swift; sourceTree = "<group>"; };
 		21977B4D28868E6800BAE020 /* CollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeader.swift; sourceTree = "<group>"; };
+		21BC991D28910A12000C5FCF /* PrevClassInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrevClassInfoCell.swift; sourceTree = "<group>"; };
+		21BC991F28911245000C5FCF /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		317AE6842886919200FDA57B /* ClassDeatilViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassDeatilViewController.swift; sourceTree = "<group>"; };
 		317AE6872886927400FDA57B /* ClassDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassDetailTableViewCell.swift; sourceTree = "<group>"; };
 		317AE6892886A25200FDA57B /* ClassDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassDetailHeaderView.swift; sourceTree = "<group>"; };
@@ -121,6 +127,16 @@
 				211CF4772885AB2700BDE26A /* Pretendard-Medium.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		214707DD288FBDC7004E49D9 /* UIViews */ = {
+			isa = PBXGroup;
+			children = (
+				21977B4B28868E0700BAE020 /* NextClassInfoCell.swift */,
+				21BC991D28910A12000C5FCF /* PrevClassInfoCell.swift */,
+				21977B4D28868E6800BAE020 /* CollectionViewHeader.swift */,
+			);
+			path = UIViews;
 			sourceTree = "<group>";
 		};
 		317AE683288690E200FDA57B /* Controller */ = {
@@ -196,11 +212,12 @@
 				317AE683288690E200FDA57B /* Controller */,
 				37B0431C288856B50043E9CB /* Helper */,
 				37B0427428848F8B0043E9CB /* Model */,
-				37B04219288277E00043E9CB /* AppDelegate.swift */,
+				214707DD288FBDC7004E49D9 /* UIViews */,
+				37B042BE28854A480043E9CB /* ClassIteration */,
 				37B0421D288277E00043E9CB /* ViewController.swift */,
+				37B04219288277E00043E9CB /* AppDelegate.swift */,
 				37B0421B288277E00043E9CB /* SceneDelegate.swift */,
-				21977B4B28868E0700BAE020 /* ClassInfoCell.swift */,
-				21977B4D28868E6800BAE020 /* CollectionViewHeader.swift */,
+				21BC991F28911245000C5FCF /* MainTabBarController.swift */,
 				211CF4742885A6B300BDE26A /* DesignGuideSystem.swift */,
 				2186376628888C5800F71595 /* TeamInfoView.swift */,
 				211CF4762885AAE100BDE26A /* Fonts */,
@@ -217,7 +234,6 @@
 			children = (
 				37B042BC28854A350043E9CB /* Schedule */,
 				37B042BD28854A3C0043E9CB /* Members */,
-				37B042BE28854A480043E9CB /* ClassIteration */,
 				37B042BF28854A570043E9CB /* ClassInfo */,
 			);
 			path = DataModels;
@@ -253,6 +269,7 @@
 		37B042BE28854A480043E9CB /* ClassIteration */ = {
 			isa = PBXGroup;
 			children = (
+				214707DE288FBDF9004E49D9 /* UnderlineSegmentedControl.swift */,
 				37B042B028854A290043E9CB /* ClassIteration+CoreDataClass.swift */,
 				37B042B128854A290043E9CB /* ClassIteration+CoreDataProperties.swift */,
 			);
@@ -355,6 +372,7 @@
 				37B043192887294E0043E9CB /* ClassCheckView.swift in Sources */,
 				211CF4752885A6B300BDE26A /* DesignGuideSystem.swift in Sources */,
 				37B0421E288277E00043E9CB /* ViewController.swift in Sources */,
+				21BC991E28910A12000C5FCF /* PrevClassInfoCell.swift in Sources */,
 				37B0427628848FC00043E9CB /* DataManager.swift in Sources */,
 				317AE6C42888648B00FDA57B /* ClassInformationHeaderComponent.swift in Sources */,
 				317AE6BE28883D4700FDA57B /* ClassScheduleCardComponent.swift in Sources */,
@@ -373,6 +391,7 @@
 				317AE6BA28883D2700FDA57B /* ClassHeaderComponent.swift in Sources */,
 				37B042B928854A290043E9CB /* ClassIteration+CoreDataProperties.swift in Sources */,
 				317AE6C028884E9D00FDA57B /* ClassUpdateModalView.swift in Sources */,
+				214707DF288FBDF9004E49D9 /* UnderlineSegmentedControl.swift in Sources */,
 				37B042CD28854F010043E9CB /* ClassInfo+CoreDataProperties.swift in Sources */,
 				37B042B428854A290043E9CB /* Schedule+CoreDataClass.swift in Sources */,
 				317AE68A2886A25200FDA57B /* ClassDetailHeaderView.swift in Sources */,
@@ -388,8 +407,9 @@
 				37B0421C288277E00043E9CB /* SceneDelegate.swift in Sources */,
 				37B042B828854A290043E9CB /* ClassIteration+CoreDataClass.swift in Sources */,
 				37B0431528868DF80043E9CB /* ClassMembersView.swift in Sources */,
+				21BC992028911245000C5FCF /* MainTabBarController.swift in Sources */,
 				37B042CC28854F010043E9CB /* ClassInfo+CoreDataClass.swift in Sources */,
-				21977B4C28868E0700BAE020 /* ClassInfoCell.swift in Sources */,
+				21977B4C28868E0700BAE020 /* NextClassInfoCell.swift in Sources */,
 				37B042B528854A290043E9CB /* Schedule+CoreDataProperties.swift in Sources */,
 				372B0EDC288FBA9B00482730 /* ClassAddView.swift in Sources */,
 			);
@@ -530,7 +550,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = A44U4A2F2G;
+				DEVELOPMENT_TEAM = VT69ZW2DRC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SueobHaro/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -557,7 +577,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = A44U4A2F2G;
+				DEVELOPMENT_TEAM = VT69ZW2DRC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SueobHaro/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

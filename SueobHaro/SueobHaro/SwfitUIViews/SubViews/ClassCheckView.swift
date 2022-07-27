@@ -122,8 +122,8 @@ struct ClassCheckView: View {
                     Button(action: {
                         save()
 //                        NavigationUtil.popToRootView()
-                        isNavHidden = false
                         dismissAction()
+                        isNavHidden = false
                     }, label: {
                         ZStack(alignment: .center) {
                             Rectangle()

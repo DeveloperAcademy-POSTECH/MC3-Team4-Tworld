@@ -1,5 +1,5 @@
 //
-//  ClassInfoCell.swift
+//  NextClassInfoCell.swift
 //  SueobHaro
 //
 //  Created by 김예훈 on 2022/07/18.
@@ -7,20 +7,23 @@
 
 import UIKit
 
-class ClassInfoCell: UICollectionViewCell {
-    static let identifier = "ClassInfoCell"
+class NextClassInfoCell: UICollectionViewCell {
+    static let identifier = "NextClassInfoCell"
     
     lazy var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = .systemFont(for: .title3)
         label.textColor = .theme.greyscale1
+        
         return label
     }()
     
     lazy var durationLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = .systemFont(for: .body1)
+        label.numberOfLines = 3
         label.textColor = .theme.greyscale3
+        
         return label
     }()
     
@@ -28,6 +31,7 @@ class ClassInfoCell: UICollectionViewCell {
         let label = UILabel(frame: .zero)
         label.font = .systemFont(for: .body1)
         label.textColor = .theme.greyscale3
+        
         return label
     }()
     
@@ -36,33 +40,18 @@ class ClassInfoCell: UICollectionViewCell {
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.spacing = .padding.toText
+        
         return stackView
     }()
     
     lazy var progressCountLabel = GradientCapsuleLabel(frame: .zero)
     
-    lazy var progressIcon: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        let image = UIImage(systemName: "highlighter", withConfiguration: UIImage.SymbolConfiguration(pointSize: 15, weight: .semibold))!
-        imageView.tintColor = .theme.spLightBlue
-        imageView.image = image
-        return imageView
-    }()
-    
-    lazy var progressInfoLabel: ProgressLabel = {
-        let label = ProgressLabel(frame: .zero)
+    lazy var progressInfoLabel: PrevProgressLabel = {
+        let label = PrevProgressLabel(frame: .zero)
         label.font = .systemFont(for: .body2)
         label.numberOfLines = 0
-        return label
-    }()
-    
-    lazy var progressStackView: UIStackView = {
-        let stackView = UIStackView(frame: .zero)
-        stackView.axis = .horizontal
-        stackView.alignment = .top
-        stackView.spacing = 14
-        return stackView
         
+        return label
     }()
     
     lazy var mainStackView: UIStackView = {
@@ -77,7 +66,8 @@ class ClassInfoCell: UICollectionViewCell {
         stackView.layer.cornerRadius = 12
         stackView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
         stackView.layer.borderWidth = 1
-        stackView.layer.borderColor = UIColor.theme.spLightBlue.cgColor
+        stackView.layer.borderColor = UIColor.theme.spTurkeyBlue.cgColor
+        
         return stackView
     }()
         
@@ -86,6 +76,7 @@ class ClassInfoCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(for: .title3)
         label.textColor = .theme.greyscale1
+        
         return label
     }()
     
@@ -95,7 +86,18 @@ class ClassInfoCell: UICollectionViewCell {
         label.font = .systemFont(for: .caption)
         label.text = "내일"
         label.textColor = .theme.greyscale3
+        
         return label
+    }()
+    
+    lazy var titleStackView: UIStackView = {
+        let stackView = UIStackView(frame: .zero)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .center
+        stackView.spacing = 8
+        stackView.axis = .horizontal
+        
+        return stackView
     }()
     
     lazy var dayStackView: UIStackView = {
@@ -103,7 +105,22 @@ class ClassInfoCell: UICollectionViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .center
         stackView.axis = .vertical
+        
         return stackView
+    }()
+    
+    lazy var schoolIndicator: UIView = {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.theme.greyscale1
+        view.layer.cornerRadius = 4
+        
+        NSLayoutConstraint.activate([
+            view.widthAnchor.constraint(equalToConstant: 8),
+            view.heightAnchor.constraint(equalToConstant: 8),
+        ])
+        
+        return view
     }()
     
     override init(frame: CGRect) {
@@ -138,6 +155,7 @@ class GradientCapsuleLabel: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .theme.spBlack
         label.font = .systemFont(for: .caption)
+        
         return label
     }()
     
@@ -176,16 +194,16 @@ class GradientCapsuleLabel: UIView {
     }
 }
 
-class ProgressLabel: UILabel {
+class PrevProgressLabel: UILabel {
     
-    let placeHolder = "진행한 진도를 입력해주세요."
+    let placeHolder = "지난 수업의 진도를 기록하지 않았어요..."
     
     override var text: String? {
         didSet {
             if let text = text {
                 if text == "" {
                     self.text = placeHolder
-                    self.textColor = .cyan
+                    self.textColor = .theme.spTurkeyBlue
                 } else {
                     self.textColor = .white
                 }
@@ -201,15 +219,14 @@ class ProgressLabel: UILabel {
     }
 }
 
-extension ClassInfoCell {
+extension NextClassInfoCell {
     func configure() {
         let divider = UIView(frame: .zero)
         divider.translatesAutoresizingMaskIntoConstraints = false
         divider.backgroundColor = .darkGray
-        
-        [titleLabel, durationLabel, teamLabel].forEach{ labelStackView.addArrangedSubview($0) }
-        [progressIcon, progressInfoLabel].forEach{ progressStackView.addArrangedSubview($0) }
-        [labelStackView, divider, progressStackView].forEach{ mainStackView.addArrangedSubview($0) }
+        [schoolIndicator, titleLabel].forEach{ titleStackView.addArrangedSubview($0) }
+        [titleStackView, durationLabel, teamLabel].forEach{ labelStackView.addArrangedSubview($0) }
+        [labelStackView, divider, progressInfoLabel].forEach{ mainStackView.addArrangedSubview($0) }
         [daySubLabel, daylabel].forEach{ dayStackView.addArrangedSubview($0) }
         self.addSubview(dayStackView)
         self.addSubview(mainStackView)

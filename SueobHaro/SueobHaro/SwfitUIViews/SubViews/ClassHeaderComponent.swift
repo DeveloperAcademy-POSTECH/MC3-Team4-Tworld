@@ -18,7 +18,7 @@ struct ClassHeaderComponent: View {
                 .font(Font(uiFont: .systemFont(for: .title2)))
                 .foregroundColor(Color(UIColor.theme.greyscale1))
                 .padding(.top, CGFloat.padding.inBox)
-                .padding(.bottom, CGFloat.padding.toText)
+                .padding(.bottom, .padding.toText)
             HStack(spacing: 0) {
                 if memberList.count > 0 {
                     ForEach(0..<memberList.count, id: \.self) { i in
