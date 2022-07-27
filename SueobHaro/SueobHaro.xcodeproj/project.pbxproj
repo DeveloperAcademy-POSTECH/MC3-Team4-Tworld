@@ -15,6 +15,7 @@
 		2186376728888C5800F71595 /* TeamInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2186376628888C5800F71595 /* TeamInfoView.swift */; };
 		21977B4C28868E0700BAE020 /* NextClassInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21977B4B28868E0700BAE020 /* NextClassInfoCell.swift */; };
 		21977B4E28868E6800BAE020 /* CollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21977B4D28868E6800BAE020 /* CollectionViewHeader.swift */; };
+		21B86DC128918826009B7643 /* MonthCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B86DC028918826009B7643 /* MonthCalendar.swift */; };
 		21BC991E28910A12000C5FCF /* PrevClassInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BC991D28910A12000C5FCF /* PrevClassInfoCell.swift */; };
 		21BC992028911245000C5FCF /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BC991F28911245000C5FCF /* MainTabBarController.swift */; };
 		317AE6852886919200FDA57B /* ClassDeatilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6842886919200FDA57B /* ClassDeatilViewController.swift */; };
@@ -65,6 +66,7 @@
 		2186376628888C5800F71595 /* TeamInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInfoView.swift; sourceTree = "<group>"; };
 		21977B4B28868E0700BAE020 /* NextClassInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextClassInfoCell.swift; sourceTree = "<group>"; };
 		21977B4D28868E6800BAE020 /* CollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeader.swift; sourceTree = "<group>"; };
+		21B86DC028918826009B7643 /* MonthCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendar.swift; sourceTree = "<group>"; };
 		21BC991D28910A12000C5FCF /* PrevClassInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrevClassInfoCell.swift; sourceTree = "<group>"; };
 		21BC991F28911245000C5FCF /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		317AE6842886919200FDA57B /* ClassDeatilViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassDeatilViewController.swift; sourceTree = "<group>"; };
@@ -139,6 +141,14 @@
 			path = UIViews;
 			sourceTree = "<group>";
 		};
+		21B86DBF28918819009B7643 /* MonthCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				21B86DC028918826009B7643 /* MonthCalendar.swift */,
+			);
+			path = MonthCalendar;
+			sourceTree = "<group>";
+		};
 		317AE683288690E200FDA57B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +173,7 @@
 		317AE6B528883CEC00FDA57B /* SwfitUIViews */ = {
 			isa = PBXGroup;
 			children = (
+				21B86DBF28918819009B7643 /* MonthCalendar */,
 				317AE6B628883CFC00FDA57B /* SubViews */,
 				317AE6B728883D1400FDA57B /* ClassDetailView.swift */,
 				317AE6C12888647000FDA57B /* ClassInformationView.swift */,
@@ -393,6 +404,7 @@
 				317AE6C028884E9D00FDA57B /* ClassUpdateModalView.swift in Sources */,
 				214707DF288FBDF9004E49D9 /* UnderlineSegmentedControl.swift in Sources */,
 				37B042CD28854F010043E9CB /* ClassInfo+CoreDataProperties.swift in Sources */,
+				21B86DC128918826009B7643 /* MonthCalendar.swift in Sources */,
 				37B042B428854A290043E9CB /* Schedule+CoreDataClass.swift in Sources */,
 				317AE68A2886A25200FDA57B /* ClassDetailHeaderView.swift in Sources */,
 				317AE68C2886EFE700FDA57B /* ClassInformationViewController.swift in Sources */,

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class MainTabBarController: UITabBarController {
     
@@ -20,7 +21,7 @@ class MainTabBarController: UITabBarController {
         self.tabBar.scrollEdgeAppearance = tabBar.standardAppearance
         
         let firstNC = UINavigationController(rootViewController: ViewController())
-        let secondNC = UINavigationController.init(rootViewController: UIViewController())
+        let secondNC = UINavigationController.init(rootViewController: UIHostingController(rootView: ContentView()))
         let thirdNC = UINavigationController.init(rootViewController: UIViewController())
         
         self.viewControllers = [firstNC, secondNC, thirdNC]
