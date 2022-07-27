@@ -44,12 +44,16 @@ struct ClassAddView: View {
                                 }
                             }, label: {
                                 HStack(spacing: 0) {
-                                    Image(systemName: "chevron.backward")
-                                        .font(.headline)
-                                        .foregroundColor(.spLightBlue)
-                                    Text(" 뒤로 가기")
-                                        .font(.body)
-                                        .foregroundColor(.spLightBlue)
+                                    Label {
+                                        Text("뒤로 가기")
+                                            .font(.body)
+                                            .foregroundColor(.spLightBlue)
+                                            .padding(-5)
+                                    } icon: {
+                                        Image(systemName: "chevron.backward")
+                                            .font(.headline)
+                                            .foregroundColor(.spLightBlue)
+                                    }
                                 }
                             })
                             .padding([.top, .leading], 8)

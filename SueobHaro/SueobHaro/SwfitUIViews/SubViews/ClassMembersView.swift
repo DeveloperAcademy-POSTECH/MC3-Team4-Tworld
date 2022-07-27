@@ -122,7 +122,7 @@ struct ClassMembersView: View {
                 .padding(.horizontal, CGFloat.padding.margin)
                 if !isNameFocused && !isPhoneNumberFocused {
                     Button(action: {
-                        withAnimation() {
+                        withAnimation(.spring()) {
                             viewMode = .tuition
                         }
                     }, label: {

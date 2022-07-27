@@ -138,7 +138,7 @@ struct ClassNameView: View {
                     .padding(.top, CGFloat.padding.toComponents)
                     .padding(.horizontal, CGFloat.padding.margin)
                     Button(action: {
-                        withAnimation() {
+                        withAnimation(.spring()) {
                             viewMode = .members
                         }
                     }, label: {

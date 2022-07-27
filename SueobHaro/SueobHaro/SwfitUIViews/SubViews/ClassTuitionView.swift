@@ -49,12 +49,12 @@ struct ClassTuitionView: View {
                                 .foregroundColor(.greyscale1)
                                 .padding(.bottom, CGFloat.padding.toComponents)
                                 .onAppear {
-                                    withAnimation() {
+                                    withAnimation(.spring()) {
                                         tuitionPageDone = true
                                     }
                                 }
                                 .onDisappear {
-                                    withAnimation() {
+                                    withAnimation(.spring()) {
                                         tuitionPageDone = false
                                     }
                                 }
@@ -62,7 +62,7 @@ struct ClassTuitionView: View {
                         }
                     }
                     Button(action: {
-                        withAnimation() {
+                        withAnimation(.spring()) {
                             viewMode = .check
                         }
                     }, label: {

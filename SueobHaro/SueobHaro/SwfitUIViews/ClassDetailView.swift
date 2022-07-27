@@ -62,7 +62,7 @@ struct ClassDetailView: View {
                             .padding(.horizontal, 16)
                             .padding(.bottom, CGFloat.padding.toComponents)
                             .onTapGesture {
-                                withAnimation{
+                                withAnimation(.spring()) {
                                     isPresented = true
 //                                    editProgress = progressList[index]
                                     selectedIndex = index

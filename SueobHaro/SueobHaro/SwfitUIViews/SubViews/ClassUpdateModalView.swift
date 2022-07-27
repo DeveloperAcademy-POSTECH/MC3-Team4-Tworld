@@ -126,16 +126,16 @@ struct ClassUpdateModalView: View {
             }
             .onChange(of: isFocused ) { _ in
                 if isFocused {
-                    withAnimation {
+                    withAnimation(.spring()){
                         color = Color(UIColor.theme.spLightBlue)
                     }
                 } else {
                     if inputText == "" {
-                        withAnimation {
+                        withAnimation(.spring()) {
                             color = Color(UIColor.theme.greyscale4)
                         }
                     } else {
-                        withAnimation{
+                        withAnimation(.spring()) {
                             color = Color(UIColor.theme.greyscale1)
                         }
                     }
@@ -146,7 +146,7 @@ struct ClassUpdateModalView: View {
                 Color.black.opacity(0.7)
                     .onTapGesture {
                         if !isFocused {
-                            withAnimation {
+                            withAnimation(.spring()) {
                                 isPresente = false
                             }
                         } else {
