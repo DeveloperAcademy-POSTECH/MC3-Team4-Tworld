@@ -5,36 +5,55 @@
 //  Created by leejunmo on 2022/07/16.
 //
 
-//진도입력 탭
-//그레디언트
-
 import UIKit
 import SwiftUI
 import CoreData
 import Combine
 
-enum Section: Int, Hashable, CaseIterable {
+enum Section: Int, Hashable, CaseIterable, CustomStringConvertible {
     case next
     case prev
     
     var description: String {
         switch self {
         case .next:
-            return "다음 수업을 잊지마세요!"
+            return "다음일정"
         case .prev:
-            return "지난 수업을 확인해보세요"
+            return "빠른노트"
         }
     }
 }
 
 class ViewController: UIViewController {
     
-    static let sectionHeaderElementKind = "section-header-element-kind"
-    var dataSource: UICollectionViewDiffableDataSource<Section, Schedule>! = nil
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Schedule>? = nil
+    private var dayStack: [Date] = []
+    private var nowSection: Section = .next {
+        didSet {
+            updateCell()
+        }
+    }
     
-    var dayStack: [Date] = []
+    var schedules: [Schedule] = []
     
-    var cancellables = Set<AnyCancellable>()
+    lazy var segmentedControl: UnderlineSegmentedControl = {
+        let control = UnderlineSegmentedControl(items: Section.allCases.map{$0.description})
+        control.translatesAutoresizingMaskIntoConstraints = false
+        control.selectedSegmentIndex = 0
+        self.changeSection(segment: control)
+        let font = UIFont.systemFont(for: .title3)
+        control.setTitleTextAttributes([
+            NSAttributedString.Key.foregroundColor: UIColor.theme.greyscale3,
+            NSAttributedString.Key.font: font
+        ], for: .normal)
+        control.setTitleTextAttributes([
+            NSAttributedString.Key.foregroundColor: UIColor.theme.greyscale1,
+            NSAttributedString.Key.font: font
+        ], for: .selected)
+        control.layer.cornerRadius = 0
+        
+        return control
+    }()
     
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
@@ -43,7 +62,17 @@ class ViewController: UIViewController {
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
         collectionView.layer.cornerRadius = 20
+        
         return collectionView
+    }()
+    
+    lazy var indicator: UIView = {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 4
+        view.backgroundColor = .theme.spLightBlue
+        
+        return view
     }()
     
     override func viewDidLoad() {
@@ -51,37 +80,10 @@ class ViewController: UIViewController {
         guard DataManager.shared.container != nil else { fatalError("This view needs a persistent container.") }
             self.view.backgroundColor = .theme.spBlack
             configureNavbar()
+            configureSegmentControl()
             configureCollectionView()
-            
-            DataManager.shared.$schedule.sink { [weak self] schedules in
-                if let schedules = schedules {
-                    var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
-                    
-                    var prevSchedules: [Schedule] = []
-                    var nextSchedules: [Schedule] = []
-                    
-                    for schedule in schedules {
-                        if (schedule.endTime ?? Date()) < Date() {
-                            prevSchedules.append(schedule)
-                        } else {
-                            nextSchedules.append(schedule)
-                        }
-                    }
-                    
-                    if !nextSchedules.isEmpty {
-                        snapshot.appendSections([.next])
-                        snapshot.appendItems(nextSchedules)
-                    }
-                    
-                    if !prevSchedules.isEmpty {
-                        snapshot.appendSections([.prev])
-                        snapshot.appendItems(prevSchedules)
-                    }
-                    
-                    self?.dataSource.apply(snapshot, animatingDifferences: false)
-                }
-            }
-            .store(in: &cancellables)
+            configureIndicator()
+            updateCell()
     }
     
     private func createLayout() -> UICollectionViewLayout {
@@ -101,16 +103,6 @@ class ViewController: UIViewController {
             section.interGroupSpacing = .padding.toComponents
             section.contentInsets = NSDirectionalEdgeInsets(top: .padding.toTextComponents, leading: 0, bottom: .padding.toDifferentHierarchy, trailing: 0)
             
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                    heightDimension: .estimated(34))
-            
-            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: headerSize,
-                elementKind: ViewController.sectionHeaderElementKind,
-                alignment: .top)
-            
-            section.boundarySupplementaryItems = [sectionHeader]
-            
             return section
         }
         let layout = UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
@@ -128,13 +120,13 @@ extension ViewController: UICollectionViewDelegate {
         
         view.addSubview(collectionView)
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            collectionView.topAnchor.constraint(equalTo: self.segmentedControl.bottomAnchor),
             collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
         
-        let cellRegistration = UICollectionView.CellRegistration<ClassInfoCell, Schedule> { (cell, indexPath, item) in
+        let nextCellRegistration = UICollectionView.CellRegistration<NextClassInfoCell, Schedule> { (cell, indexPath, item) in
             cell.titleLabel.text = item.classInfo?.name ?? ""
             cell.durationLabel.text = "\((item.startTime ?? Date()).toString())~\((item.endTime ?? Date()).toString())"
             let members = item.classInfo?.members?.allObjects as? [Members] ?? []
@@ -153,38 +145,50 @@ extension ViewController: UICollectionViewDelegate {
             }
         }
         
-        let headerRegistration = UICollectionView.SupplementaryRegistration
-        <TitleHeaderSupplementaryView>(elementKind: ViewController.sectionHeaderElementKind) {
-            (supplementaryView, string, indexPath) in
-            supplementaryView.label.text = Section(rawValue: indexPath.section)?.description
+        let prevCellRegistration = UICollectionView.CellRegistration<PrevClassInfoCell, Schedule> { (cell, indexPath, item) in
+            cell.titleLabel.text = item.classInfo?.name ?? ""
+            cell.durationLabel.text = "\((item.startTime ?? Date()).toString())~\((item.endTime ?? Date()).toString())"
+            cell.progressInfoLabel.text = item.progress ?? ""
+            
+            var container = AttributeContainer()
+            container.font = .systemFont(for: .caption)
+            cell.progressCountLabel.label.text = "\(item.count)회차"
         }
         
         dataSource = UICollectionViewDiffableDataSource<Section, Schedule>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
-            return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
+            switch self.nowSection {
+            case .next:
+                return collectionView.dequeueConfiguredReusableCell(using: nextCellRegistration, for: indexPath, item: item)
+            case .prev:
+                return collectionView.dequeueConfiguredReusableCell(using: prevCellRegistration, for: indexPath, item: item)
+            }
         }
-        
-        dataSource.supplementaryViewProvider = { (view, kind, index) in
-            return self.collectionView.dequeueConfiguredReusableSupplementary(
-                using: headerRegistration, for: index)
-        }
-        
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
-        
-        // 샘플 데이터 추가
-        snapshot.appendSections([.next])
-        DataManager.shared.fetchData(target: .schedule)
-        snapshot.appendItems(
-            DataManager.shared.schedule ?? []
-        )
-        snapshot.appendSections([.prev])
-        snapshot.appendItems([
-        ])
-        
-        dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 
 extension ViewController {
+    
+    private func configureSegmentControl() {
+        view.addSubview(segmentedControl)
+        NSLayoutConstraint.activate([
+            segmentedControl.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            segmentedControl.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            segmentedControl.widthAnchor.constraint(equalToConstant: 180),
+            segmentedControl.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        segmentedControl.addTarget(self, action: #selector(changeSection(segment:)), for: .valueChanged)
+    }
+    
+    private func configureIndicator() {
+        view.addSubview(indicator)
+        NSLayoutConstraint.activate([
+            indicator.topAnchor.constraint(equalTo: segmentedControl.topAnchor, constant: 8),
+            indicator.trailingAnchor.constraint(equalTo: segmentedControl.trailingAnchor),
+            indicator.widthAnchor.constraint(equalToConstant: 8),
+            indicator.heightAnchor.constraint(equalToConstant: 8),
+        ])
+    }
+    
     private func configureNavbar() {
         let iconButton = UIButton(type: .custom)
         let image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 17, weight: .semibold))!
@@ -207,6 +211,18 @@ extension ViewController {
 
 extension ViewController {
     
+    private func updateCell() {
+        DataManager.shared.fetchData(target: .schedule)
+        self.schedules = DataManager.shared.fetchSchedules(section: nowSection)
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
+        snapshot.appendSections([nowSection])
+        print(nowSection)
+        snapshot.appendItems(schedules)
+        if let dataSource = self.dataSource {
+            dataSource.apply(snapshot, animatingDifferences: false)
+        }
+    }
+    
     private func addGradient(uiView: UIView) {
         let gradient = CAGradientLayer()
         gradient.colors = [UIColor.theme.spBlack.cgColor, UIColor.theme.spLightGradientRight.cgColor]
@@ -217,18 +233,23 @@ extension ViewController {
         uiView.layer.addSublayer(gradient)
     }
     
+    @objc private func changeSection(segment: UISegmentedControl) {
+        self.nowSection = segment.selectedSegmentIndex == 0 ? .next : .prev
+    }
+    
     @objc private func addSchedule() {
         self.navigationController?.pushViewController(UIHostingController(rootView: ClassAddView(dismissAction: {
             self.navigationController?.setNavigationBarHidden(false, animated: false)
             self.navigationController?.popToViewController(self, animated: true)
-            DataManager.shared.fetchData(target: .schedule)
+            self.updateCell()
         })), animated: true)
     }
 }
 
+// 셀 적용 테스트 위한 코드. 차후 셀 하이파이 확정되면 기존 DateFormatter 코드로 바꿀 예정
 extension Date {
     func toString() -> String {
-        return self.formatted(date: .omitted, time: .shortened)
+        return self.formatted(date: .complete, time: .shortened)
     }
     
     func todayString() -> String {

@@ -163,6 +163,26 @@ class DataManager {
         }
         return filterSchedules
     }
+    
+    func fetchSchedules(section: Section) -> [Schedule] {
+        let request = Schedule.fetchRequest()
+        let filter = NSPredicate(format: section == .next ? "endTime > %@" : "endTime < %@" , Date() as NSDate)
+        var sort = NSSortDescriptor(keyPath: \Schedule.startTime, ascending: true)
+        if section == .prev {
+            sort = NSSortDescriptor(keyPath: \Schedule.endTime, ascending: false)
+        }
+        request.predicate = filter
+        request.sortDescriptors = [sort]
+        var filterSchedules:[Schedule]? = []
+        filterSchedules = try? container.viewContext.fetch(request)
+        
+        if let filterSchedules = filterSchedules {
+            return filterSchedules
+        } else {
+            return []
+        }
+    }
+
 }
 
 // MARK: DataModel
