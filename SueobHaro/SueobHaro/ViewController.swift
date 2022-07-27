@@ -53,6 +53,7 @@ class ViewController: UIViewController {
             NSAttributedString.Key.font: font
         ], for: .selected)
         control.layer.cornerRadius = 0
+        
         return control
     }()
     
@@ -63,6 +64,7 @@ class ViewController: UIViewController {
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
         collectionView.layer.cornerRadius = 20
+        
         return collectionView
     }()
     

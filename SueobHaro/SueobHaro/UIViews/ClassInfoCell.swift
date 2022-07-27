@@ -14,6 +14,7 @@ class ClassInfoCell: UICollectionViewCell {
         let label = UILabel(frame: .zero)
         label.font = .systemFont(for: .title3)
         label.textColor = .theme.greyscale1
+        
         return label
     }()
     
@@ -22,6 +23,7 @@ class ClassInfoCell: UICollectionViewCell {
         label.font = .systemFont(for: .body1)
         label.numberOfLines = 3
         label.textColor = .theme.greyscale3
+        
         return label
     }()
     
@@ -29,6 +31,7 @@ class ClassInfoCell: UICollectionViewCell {
         let label = UILabel(frame: .zero)
         label.font = .systemFont(for: .body1)
         label.textColor = .theme.greyscale3
+        
         return label
     }()
     
@@ -37,6 +40,7 @@ class ClassInfoCell: UICollectionViewCell {
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.spacing = .padding.toText
+        
         return stackView
     }()
     
@@ -47,6 +51,7 @@ class ClassInfoCell: UICollectionViewCell {
         let image = UIImage(systemName: "highlighter", withConfiguration: UIImage.SymbolConfiguration(pointSize: 15, weight: .semibold))!
         imageView.tintColor = .theme.spLightBlue
         imageView.image = image
+        
         return imageView
     }()
     
@@ -54,6 +59,7 @@ class ClassInfoCell: UICollectionViewCell {
         let label = ProgressLabel(frame: .zero)
         label.font = .systemFont(for: .body2)
         label.numberOfLines = 0
+        
         return label
     }()
     
@@ -62,6 +68,7 @@ class ClassInfoCell: UICollectionViewCell {
         stackView.axis = .horizontal
         stackView.alignment = .top
         stackView.spacing = 14
+        
         return stackView
         
     }()
@@ -79,6 +86,7 @@ class ClassInfoCell: UICollectionViewCell {
         stackView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
         stackView.layer.borderWidth = 1
         stackView.layer.borderColor = UIColor.theme.spTurkeyBlue.cgColor
+        
         return stackView
     }()
         
@@ -87,6 +95,7 @@ class ClassInfoCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(for: .title3)
         label.textColor = .theme.greyscale1
+        
         return label
     }()
     
@@ -96,6 +105,7 @@ class ClassInfoCell: UICollectionViewCell {
         label.font = .systemFont(for: .caption)
         label.text = "내일"
         label.textColor = .theme.greyscale3
+        
         return label
     }()
     
@@ -105,6 +115,7 @@ class ClassInfoCell: UICollectionViewCell {
         stackView.alignment = .center
         stackView.spacing = 8
         stackView.axis = .horizontal
+        
         return stackView
     }()
     
@@ -113,6 +124,7 @@ class ClassInfoCell: UICollectionViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .center
         stackView.axis = .vertical
+        
         return stackView
     }()
     
@@ -126,6 +138,7 @@ class ClassInfoCell: UICollectionViewCell {
             view.widthAnchor.constraint(equalToConstant: 8),
             view.heightAnchor.constraint(equalToConstant: 8),
         ])
+        
         return view
     }()
     
@@ -161,6 +174,7 @@ class GradientCapsuleLabel: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .theme.spBlack
         label.font = .systemFont(for: .caption)
+        
         return label
     }()
     

@@ -15,6 +15,7 @@ class TitleHeaderSupplementaryView: UICollectionReusableView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(for: .title1)
         label.textColor = .theme.greyscale1
+        
         return label
     }()
     

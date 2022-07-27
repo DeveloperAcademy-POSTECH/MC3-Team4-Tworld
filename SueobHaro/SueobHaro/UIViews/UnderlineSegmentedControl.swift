@@ -41,6 +41,7 @@ class UnderlineSegmentedControl: UISegmentedControl {
         let view = UIView(frame: frame)
         view.backgroundColor = .white
         self.addSubview(view)
+        
         return view
     }()
     
