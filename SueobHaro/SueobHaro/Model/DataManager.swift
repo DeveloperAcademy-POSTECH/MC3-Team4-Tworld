@@ -164,7 +164,7 @@ class DataManager {
         return filterSchedules
     }
     
-    func getSchedules(section: Section) -> [Schedule] {
+    func fetchSchedules(section: Section) -> [Schedule] {
         let request = Schedule.fetchRequest()
         let filter = NSPredicate(format: section == .next ? "endTime > %@" : "endTime < %@" , Date() as NSDate)
         var sort = NSSortDescriptor(keyPath: \Schedule.startTime, ascending: true)
