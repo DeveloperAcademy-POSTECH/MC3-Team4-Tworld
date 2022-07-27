@@ -197,7 +197,7 @@ extension ViewController {
     
     private func updateCell() {
         DataManager.shared.fetchData(target: .schedule)
-        self.schedules = DataManager.shared.getSchedules(section: nowSection)
+        self.schedules = DataManager.shared.fetchSchedules(section: nowSection)
         var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
         snapshot.appendSections([nowSection])
         snapshot.appendItems(schedules)
