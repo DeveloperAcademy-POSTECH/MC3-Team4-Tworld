@@ -8,16 +8,12 @@
 import SwiftUI
 
 struct ClassNameView: View {
-    @State var className: String = ""
-    @State var firstClassDate = Date()
-    @State var isDayPicked: [String:Bool] = ["월":false, "화":false, "수":false, "목":false, "금":false, "토":false, "일":false]
-    @State var classTimeInfo: [String:[String:Date?]] = ["월":["start":nil, "end":nil],
-                                                         "화":["start":nil, "end":nil],
-                                                         "수":["start":nil, "end":nil],
-                                                         "목":["start":nil, "end":nil],
-                                                         "금":["start":nil, "end":nil],
-                                                         "토":["start":nil, "end":nil],
-                                                         "일":["start":nil, "end":nil]]
+    @Binding var viewMode: AddViewMode
+    @Binding var className: String
+    @Binding var firstClassDate: Date
+    @Binding var isDayPicked: [String:Bool]
+    @Binding var classTimeInfo: [String:[String:Date?]]
+    
     @State var halfModal: Bool = false
     @State var selectedDay: String? = nil
     @State var firsthalfModal: Bool = true
@@ -28,8 +24,6 @@ struct ClassNameView: View {
     
     let dayList: [String] = ["월", "화", "수", "목", "금", "토", "일"]
     let dateFormatter = DateFormatter()
-    
-    var dismissAction: (() -> Void)
     
     private func isDone() -> Bool {
         guard !className.isEmpty else { return false }
@@ -46,20 +40,6 @@ struct ClassNameView: View {
         ZStack {
             Color.spBlack.ignoresSafeArea()
             VStack(alignment: .leading, spacing: 0) {
-                VStack(alignment: .leading, spacing: CGFloat.padding.toComponents) {
-                    HStack(spacing: 0) {
-                        Text("수업 추가하기")
-                            .font(Font(uiFont: .systemFont(for: .title1)))
-                            .foregroundColor(.greyscale1)
-                            .padding(.top, CGFloat.padding.toComponents)
-                            .padding(.horizontal, CGFloat.padding.margin)
-                        Spacer()
-                    }
-                    Rectangle()
-                        .foregroundColor(.spLightBlue)
-                        .frame(width: UIScreen.main.bounds.width/3, height: CGFloat(3), alignment: .leading)
-                }
-                
                 Text("수업명")
                     .font(Font(uiFont: .systemFont(for: .title3)))
                     .foregroundColor(.greyscale1)
@@ -67,34 +47,7 @@ struct ClassNameView: View {
                     .padding(.top, CGFloat.padding.toDifferentHierarchy)
                     .padding(.bottom, CGFloat.padding.toText)
                 
-                ZStack {
-                    VStack(spacing: 4) {
-                        TextField("", text: $className)
-                            .placeholder(when: className.isEmpty) {
-                                Text("수업명을 입력하세요")
-                                    .foregroundColor(.greyscale4)
-                                    .font(Font(uiFont: .systemFont(for: .body2)))
-                            }
-                            .focused($isFocused)
-                            .foregroundColor(.greyscale1)
-                            .padding(.leading, CGFloat.padding.margin)
-                        Rectangle()
-                            .foregroundColor(isFocused ? .spLightBlue : (className.isEmpty ? .greyscale4 : .greyscale1))
-                            .frame(height: CGFloat(1))
-                            .padding(.horizontal, CGFloat.padding.margin)
-                    }
-                    HStack(spacing: 0) {
-                        Spacer()
-                        Button(action: {
-                            className = ""
-                        }, label: {
-                            Image(systemName: "xmark")
-                                .foregroundColor(.greyscale3)
-                                .padding(.trailing, CGFloat.padding.margin)
-                                .padding(.bottom, 2)
-                        })
-                    }
-                }
+                ClassTextField(content: $className, isFocused: $isFocused, testFieldName: "수업명을 입력하세요.")
                 
                 Text("언제부터 진행하나요?")
                     .font(Font(uiFont: .systemFont(for: .title3)))
@@ -184,8 +137,10 @@ struct ClassNameView: View {
                     }
                     .padding(.top, CGFloat.padding.toComponents)
                     .padding(.horizontal, CGFloat.padding.margin)
-                    NavigationLink(destination: {
-                        ClassMembersView(className: $className, firstClassDate: $firstClassDate, isDayPicked: $isDayPicked, classTimeInfo: $classTimeInfo, dismissAction: dismissAction)
+                    Button(action: {
+                        withAnimation(.spring()) {
+                            viewMode = .members
+                        }
                     }, label: {
                         ZStack(alignment: .center) {
                             RoundedRectangle(cornerRadius: 10)

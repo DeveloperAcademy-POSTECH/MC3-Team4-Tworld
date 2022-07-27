@@ -8,26 +8,20 @@
 import SwiftUI
 
 struct ClassInformationListComponent: View {
-    @State var firstText:String = "수"
-    @State var secondText:String = "13:00-15:00"
+    let firstText: String
+    let secondText: String
+    
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: CGFloat.padding.inBox) {
             Text(firstText)
                 .font(Font(uiFont: .systemFont(for: .title3)))
-                .foregroundColor(Color(UIColor.theme.greyscale1))
-                .padding(.trailing, CGFloat.padding.inBox)
+                .foregroundColor(Color.greyscale1)
+                .frame(width: 45)
             Text(secondText)
                 .font(Font(uiFont: .systemFont(for: .body2)))
-                .foregroundColor(Color(UIColor.theme.greyscale1))
+                .foregroundColor(Color.greyscale1)
             Spacer()
         }
-        .padding(.vertical, CGFloat.padding.inBox)
-        .padding(.leading, CGFloat.padding.inBox)
-    }
-}
-
-struct ClassInformationSheduleComponent_Previews: PreviewProvider {
-    static var previews: some View {
-        ClassInformationListComponent()
+        .padding(.horizontal, CGFloat.padding.inBox)
     }
 }
