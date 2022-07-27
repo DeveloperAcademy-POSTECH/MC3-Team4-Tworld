@@ -27,9 +27,7 @@ enum Section: Int, Hashable, CaseIterable {
 class ViewController: UIViewController {
     
     private var dataSource: UICollectionViewDiffableDataSource<Section, Schedule>? = nil
-    
     private var dayStack: [Date] = []
-    
     private var nowSection: Section = .next {
         didSet {
             updateCell()
