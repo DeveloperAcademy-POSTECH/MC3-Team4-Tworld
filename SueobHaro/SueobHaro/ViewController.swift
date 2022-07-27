@@ -26,6 +26,7 @@ enum Section: Int, Hashable, CaseIterable, CustomStringConvertible {
 
 class ViewController: UIViewController {
     
+    static let sectionHeaderElementKind = "titleHeader-supplementary-reuse-identifier"
     private var dataSource: UICollectionViewDiffableDataSource<Section, Schedule>? = nil
     private var dayStack: [Date] = []
     private var nowSection: Section = .next {
@@ -103,6 +104,18 @@ class ViewController: UIViewController {
             section.interGroupSpacing = .padding.toComponents
             section.contentInsets = NSDirectionalEdgeInsets(top: .padding.toTextComponents, leading: 0, bottom: .padding.toDifferentHierarchy, trailing: 0)
             
+            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                    heightDimension: .estimated(60))
+            
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: ViewController.sectionHeaderElementKind,
+                alignment: .top)
+            
+            if self.nowSection == .prev {
+                section.boundarySupplementaryItems = [sectionHeader]
+            }
+            
             return section
         }
         let layout = UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
@@ -155,6 +168,11 @@ extension ViewController: UICollectionViewDelegate {
             cell.progressCountLabel.label.text = "\(item.count)회차"
         }
         
+        let headerRegistration = UICollectionView.SupplementaryRegistration
+        <TitleHeaderSupplementaryView>(elementKind: ViewController.sectionHeaderElementKind) {
+            (supplementaryView, string, indexPath) in
+        }
+                
         dataSource = UICollectionViewDiffableDataSource<Section, Schedule>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             switch self.nowSection {
             case .next:
@@ -162,6 +180,14 @@ extension ViewController: UICollectionViewDelegate {
             case .prev:
                 return collectionView.dequeueConfiguredReusableCell(using: prevCellRegistration, for: indexPath, item: item)
             }
+        }
+        
+        dataSource?.supplementaryViewProvider = { (view, kind, index) in
+            if kind == ViewController.sectionHeaderElementKind {
+                return self.collectionView.dequeueConfiguredReusableSupplementary(
+                using: headerRegistration, for: index)
+            }
+            return nil
         }
     }
 }
@@ -216,7 +242,6 @@ extension ViewController {
         self.schedules = DataManager.shared.fetchSchedules(section: nowSection)
         var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
         snapshot.appendSections([nowSection])
-        print(nowSection)
         snapshot.appendItems(schedules)
         if let dataSource = self.dataSource {
             dataSource.apply(snapshot, animatingDifferences: false)
