@@ -18,15 +18,9 @@ struct ClassCheckView: View {
     @Binding var tuitionPer: String
     
     @State private var isNavHidden = true
+    @State var classDay: [String] = []
     
     let dayList: [String] = ["월", "화", "수", "목", "금", "토", "일"]
-    let dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:MM"
-        
-        return dateFormatter
-    }()
-    @State var classDay: [String] = []
     
     var dismissAction: (() -> Void)
     
@@ -90,7 +84,7 @@ struct ClassCheckView: View {
                         VStack(spacing: CGFloat.padding.inBox) {
                             ForEach(classDay, id: \.self) { day in
                                 if isDayPicked[day]! {
-                                    ClassInformationListComponent(firstText: day, secondText: "\(dateFormatter.string(from: classTimeInfo[day]!["start"]!!)) ~ \(dateFormatter.string(from: classTimeInfo[day]!["end"]!!))")
+                                    ClassInformationListComponent(firstText: day, secondText: "\(DateFormatUtil.classTimeFormatter(time: classTimeInfo[day]!["start"]!!)) ~ \(DateFormatUtil.classTimeFormatter(time: classTimeInfo[day]!["end"]!!))")
                                     if day != classDay.last {
                                         Rectangle()
                                             .frame(height: 1)
