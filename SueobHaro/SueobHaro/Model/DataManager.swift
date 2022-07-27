@@ -173,13 +173,14 @@ class DataManager {
         }
         request.predicate = filter
         request.sortDescriptors = [sort]
-        var filterSchedules:[Schedule] = []
-        do {
-            filterSchedules = try container.viewContext.fetch(request)
-        } catch let error {
-            print("Fetch Error, get Members, \(error)")
+        var filterSchedules:[Schedule]? = []
+        filterSchedules = try? container.viewContext.fetch(request)
+        
+        if let filterSchedules = filterSchedules {
+            return filterSchedules
+        } else {
+            return []
         }
-        return filterSchedules
     }
 
 }
