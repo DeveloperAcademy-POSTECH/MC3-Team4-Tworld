@@ -178,7 +178,7 @@ struct ClassNameView: View {
                         Spacer()
                         Text("수업 시작시간")
                         Spacer()
-                    }
+                    }.padding(.vertical, .padding.toComponents)
                 }
                 .onTapGesture {
                     withAnimation(.spring()) {
@@ -195,7 +195,7 @@ struct ClassNameView: View {
                         Spacer()
                         Text("수업 종료시간")
                         Spacer()
-                    }
+                    }.padding(.vertical, .padding.toComponents)
                 }
                 .onTapGesture {
                     withAnimation(.spring()) {
