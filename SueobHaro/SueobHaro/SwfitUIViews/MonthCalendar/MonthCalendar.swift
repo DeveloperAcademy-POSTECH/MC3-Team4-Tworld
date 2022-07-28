@@ -1,42 +1,127 @@
-//Orginal code from: https://gist.github.com/mecid/f8859ea4bdbd02cf5d440d58e936faec
-//I just made some modification in appearnce, show monthly navigator and weekdays.
 
 import SwiftUI
+
+enum Quadrant: String, CaseIterable {
+    case first
+    case second
+    case third
+    case fourth
+    
+    var area: CGPoint {
+        switch self {
+        case .first:
+            return .init(x: 1, y: 1)
+        case .second:
+            return .init(x: -1, y: 1)
+        case .third:
+            return .init(x: -1, y: -1)
+        case .fourth:
+            return .init(x: 1, y: -1)
+        }
+    }
+}
 
 struct ContentView: View {
     
     @Environment(\.calendar) var calendar
-    
+    @State private var standardDate = Date()
+    @State private var selectedDate = Date()
     var body: some View {
-        VStack{
-            CalendarView { date in
-                VStack {
-                    Text(String(self.calendar.component(.day, from: date)))
-                        .foregroundColor(Color.white)
-                    
-                    VStack {
-                        HStack {
-                            Circle()
-                                .fill(Color.blue)
-                                .frame(width: 8, height: 8)
-                            Circle()
-                                .fill(Color.blue)
-                                .frame(width: 8, height: 8)
+        ZStack {
+            Color.spBlack.ignoresSafeArea()
+            
+            VStack(spacing: 0){
+                header
+                    .padding(.bottom, 2)
+                    .padding(.horizontal, 16)
+                    .background(Color.spBlack)
+                    .overlay(alignment: .bottom) {
+                        Rectangle()
+                            .fill(Color.greyscale5)
+                            .frame(height: 1)
+                    }
+                
+                CalendarView(now: $standardDate) { date in
+                    ZStack(alignment: .top) {
+                        Button {
+                            selectedDate = date
+                        } label: {
+                            VStack(spacing: 0) {
+                                Text(String(calendar.component(.day, from: date)))
+                                    .font(Font(uiFont: .systemFont(for: .body1)))
+                                    .foregroundColor(
+                                        Calendar.current.isDate(selectedDate, inSameDayAs: date) ? .greyscale7 : .greyscale1
+                                    )
+                                    .padding(.vertical, 2)
+                                    .frame(width: 32)
+                                    .background(
+                                        ZStack {
+                                            if Calendar.current.isDate(selectedDate, inSameDayAs: date) {
+                                                Capsule()
+                                                    .fill(
+                                                        LinearGradient(gradient: Gradient(colors: [Color.spLightGradientLeft, Color.spLightGradientRight]), startPoint: .topTrailing, endPoint: .bottomLeading)
+                                                    )
+                                            } else {
+                                                EmptyView()
+                                            }
+                                        }
+                                    )
+                                    .foregroundColor(.greyscale1)
+                                ZStack {
+                                    ForEach(Quadrant.allCases, id: \.rawValue) { q in
+                                        Circle()
+                                            .fill()
+                                            .frame(width: 8, height: 8)
+                                            .offset(x: q.area.x * 6.5, y: q.area.y * 6.5)
+                                    }
+                                }
+                                .frame(width: 6.5+6.5+4+4, height: 6.5+6.5+4+4)
+                                .padding(.vertical, .padding.toText)
+                            }
+                            .frame(maxWidth: .infinity)
                         }
-                        HStack {
-                            Circle()
-                                .fill(Color.blue)
-                                .frame(width: 8, height: 8)
-                            Circle()
-                                .fill(Color.blue)
-                                .frame(width: 8, height: 8)
-                        }
+                        .buttonStyle(.plain)
+                        
+                        Circle()
+                            .fill(Color.spLightBlue)
+                            .frame(width: 6, height: 6)
+                            .offset(y: -8)
+                            .opacity(Calendar.current.isDate(Date(), inSameDayAs: date) ? 1 : 0)
                     }
                 }
-                .padding(.vertical, 10)
-                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 20)
+                .background(.black)
+                
+                Spacer()
             }
-            Spacer()
+
+        }
+    }
+    
+    private var header: some View {
+        let month = calendar.component(.month, from: standardDate)
+        let year = calendar.component(.year, from: standardDate)
+
+        func getWeekDaysSorted() -> [String]{
+            ["일","월","화","수","목","금","토"]
+        }
+        
+        return VStack(spacing: 20) {
+            HStack{
+                Text("\(String(year))년 \(month)월")
+                    .font(Font(uiFont: .systemFont(for: .title2)))
+                Spacer()
+            }
+            
+            HStack{
+                ForEach(0..<7, id: \.self) {index in
+                    Text(getWeekDaysSorted()[index])
+                        .font(Font(uiFont: .systemFont(for: .caption)))
+                        .foregroundColor(.greyscale3)
+                        .frame(maxWidth: .infinity)
+                }
+            }
         }
     }
 }
@@ -45,6 +130,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .preferredColorScheme(.dark)
             .environment(\.locale, .init(identifier: "ko"))
     }
 }
@@ -129,16 +215,13 @@ struct WeekView<DateView>: View where DateView: View {
 }
 
 struct CalendarView<DateView>: View where DateView: View {
-    @Environment(\.calendar) var calendar
     
-    @State private var now: Date
+    @Environment(\.calendar) var calendar
+    @Binding var now: Date
     let content: (Date) -> DateView
     
-    init(
-        now: Date = Date(),
-        @ViewBuilder content: @escaping (Date) -> DateView
-    ) {
-        self._now = State(initialValue: now)
+    init(now: Binding<Date>, @ViewBuilder content: @escaping (Date) -> DateView) {
+        self._now = now
         self.content = content
     }
     
@@ -150,41 +233,12 @@ struct CalendarView<DateView>: View where DateView: View {
             matching: DateComponents(hour: 0, minute: 0, second: 0, weekday: calendar.firstWeekday)
         )
     }
-    
-    func changeDateBy(_ months: Int) {
-        if let date = Calendar.current.date(byAdding: .month, value: months, to: now) {
-            self.now = date
-        }
-    }
-    
-    private var header: some View {
-        let component = calendar.component(.month, from: now)
-        let formatter = component == 1 ? DateFormatter.monthAndYear : .month
-        formatter.dateFormat = "L"
-        return HStack{
-            Text(now, format: .dateTime)
-                .padding(.leading)
-            Spacer()
-        }
-    }
-    
+            
     var body: some View {
         VStack(spacing: 20) {
-            header
-            HStack{
-                ForEach(0..<7, id: \.self) {index in
-                    Text(getWeekDaysSorted()[index])
-                        .frame(maxWidth: .infinity)
-                }
-            }
-            
             ForEach(weeks, id: \.self) { week in
                 WeekView(week: week, content: self.content)
             }
         }
-    }
-    
-    func getWeekDaysSorted() -> [String]{
-        ["일","월","화","수","목","금","토"]
     }
 }
