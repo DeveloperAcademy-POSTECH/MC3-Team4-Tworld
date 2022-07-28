@@ -83,6 +83,10 @@ struct ClassNameView: View {
                                     .foregroundColor(isDayPicked[day]! ? Color.spLightBlue : Color.greyscale3)
                             }.onTapGesture {
                                 isDayPicked[day]?.toggle()
+                                selectedDay = day
+                                withAnimation(.spring()){
+                                    halfModal.toggle()
+                                }
                             }
                         }
                     }
@@ -165,11 +169,53 @@ struct ClassNameView: View {
         }
         .customSheet(isPresented: $halfModal) {
             HStack(spacing: 0) {
-                Text(firsthalfModal ? "수업 시작시간" : "수업 종료시간")
+                ZStack {
+                    Rectangle()
+                        .cornerRadius(20, corners: [.topLeft])
+                        .foregroundColor(firsthalfModal ? Color.greyscale6 : Color.spBlack)
+                        .frame(maxHeight: 52)
+                    HStack(spacing: 0) {
+                        Spacer()
+                        Text("수업 시작시간")
+                        Spacer()
+                    }
+                }
+                .onTapGesture {
+                    withAnimation(.spring()) {
+                        firsthalfModal = true
+                    }
+                }
+                .padding([.leading, .top], -20)
+                ZStack {
+                    Rectangle()
+                        .cornerRadius(20, corners: [.topRight])
+                        .foregroundColor(firsthalfModal ? .spBlack : .greyscale6)
+                        .frame(maxHeight: 52)
+                    HStack(spacing: 0) {
+                        Spacer()
+                        Text("수업 종료시간")
+                        Spacer()
+                    }
+                }
+                .onTapGesture {
+                    withAnimation(.spring()) {
+                        firsthalfModal = false
+                    }
+                }
+                .padding([.top, .trailing], -20)
+            }.padding(.bottom, CGFloat.padding.toComponents)
+            HStack(spacing: 0) {
+                Text("\(selectedDay!) \(DateFormatUtil.classTimeFormatter(time: startTime)) - \(DateFormatUtil.classTimeFormatter(time: endTime))")
                     .font(Font(uiFont: .systemFont(for: .title3)))
-                    .foregroundColor(Color.greyscale1)
                 Spacer()
-                Button(action: {
+            }
+            DatePicker("", selection: firsthalfModal ? $startTime : $endTime, displayedComponents: .hourAndMinute)
+                .datePickerStyle(WheelDatePickerStyle())
+                .labelsHidden()
+                .padding(.top, CGFloat.padding.toDifferentHierarchy)
+                .padding(.bottom, CGFloat.padding.toDifferentHierarchy)
+            Button(action: {
+                withAnimation(.spring()) {
                     if firsthalfModal {
                         firsthalfModal.toggle()
                     } else {
@@ -178,17 +224,18 @@ struct ClassNameView: View {
                         halfModal.toggle()
                         firsthalfModal = true
                     }
-                }, label: {
-                    Text(firsthalfModal ? "다음" : "완료")
-                        .font(Font(uiFont: .systemFont(for: .body2)))
-                        .foregroundColor(Color.spLightBlue)
-                })
-            }
-            DatePicker("", selection: firsthalfModal ? $startTime : $endTime, displayedComponents: .hourAndMinute)
-                .datePickerStyle(WheelDatePickerStyle())
-                .labelsHidden()
-                .padding(.top, CGFloat.padding.toDifferentHierarchy)
-                .padding(.bottom, CGFloat.padding.toDifferentHierarchy)
+                }
+            }, label: {
+                ZStack(alignment: .center) {
+                    RoundedRectangle(cornerRadius: 10)
+                        .foregroundColor(.spDarkBlue)
+                    Text("다음")
+                        .font(Font(uiFont: .systemFont(for: .button)))
+                        .foregroundColor(.greyscale1)
+                }
+                .frame(maxHeight: 52)
+            })
+            .padding(.bottom, CGFloat.padding.toComponents)
         }
     }
 }
@@ -255,8 +302,23 @@ struct CustomSheetViewModifier<InnerContent: View>: ViewModifier {
     }
 }
 
+struct RoundedCorner: Shape {
+
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
+    }
+}
+
 extension View {
     func customSheet<Content: View>(isPresented: Binding<Bool>, @ViewBuilder content: @escaping () -> Content) -> some View {
         self.modifier(CustomSheetViewModifier(isPresented: isPresented, content: content))
+    }
+    
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape( RoundedCorner(radius: radius, corners: corners) )
     }
 }

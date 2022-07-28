@@ -131,7 +131,7 @@ struct PaddingTheme {
     let toText = CGFloat(8)
     let inBox = CGFloat(18)
     let toBox = CGFloat(18)
-    let toTextComponents = CGFloat(26)
+    let toTextComponents = CGFloat(20)
     let toDifferentHierarchy = CGFloat(36)
     let margin = CGFloat(16)
 }

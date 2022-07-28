@@ -16,10 +16,11 @@ struct ClassMembersView: View {
     @State var currentIdx: Int? = nil
     
     @FocusState private var isNameFocused: Bool
+    @FocusState private var isScoolFocused: Bool
     @FocusState private var isPhoneNumberFocused: Bool
     
     private func isDone() -> Bool {
-        guard !memberNames.isEmpty && !memberPhoneNumbers.isEmpty else {return false}
+        guard !memberNames.isEmpty && !memberPhoneNumbers.isEmpty && !memberSchools.isEmpty else {return false}
         for idx in 0..<memberNames.count {
             if memberNames[idx].isEmpty {
                 return false
@@ -41,45 +42,64 @@ struct ClassMembersView: View {
                     LazyVStack(spacing: CGFloat.padding.toComponents) {
                         ForEach(memberNames.indices, id: \.self) { idx in
                             ZStack {
-                                HStack(spacing: 0) {
-                                    TextField("", text: $memberNames[idx])
-                                        .placeholder(when: memberNames[idx].isEmpty) {
-                                            Text("이름")
+                                VStack(spacing: 0) {
+                                    HStack(spacing: 0) {
+                                        TextField("", text: $memberNames[idx])
+                                            .placeholder(when: memberNames[idx].isEmpty) {
+                                                Text("이름")
+                                                    .foregroundColor(.greyscale4)
+                                                    .font(Font(uiFont: .systemFont(for: .title3)))
+                                            }
+                                            .focused($isNameFocused)
+                                            .font(Font(uiFont: .systemFont(for: .title3)))
+                                            .foregroundColor(.greyscale1)
+                                            .onReceive(Just(memberNames[idx]), perform: { _ in
+                                                if 3 < memberNames[idx].count {
+                                                    memberNames[idx] = String(memberNames[idx].prefix(3))
+                                                }
+                                            })
+                                        Spacer()
+                                        Image(systemName: "trash")
+                                            .foregroundColor(.white)
+                                            .font(Font(uiFont: .systemFont(for: .body2)))
+                                            .onTapGesture {
+                                                memberNames.remove(at: idx)
+                                                memberSchools.remove(at: idx)
+                                                memberPhoneNumbers.remove(at: idx)
+                                            }
+                                    }
+                                    .padding(.bottom, .padding.toTextComponents)
+                                    TextField("", text: $memberSchools[idx])
+                                        .placeholder(when: memberSchools[idx].isEmpty) {
+                                            Text("학교를 입력해주세요. (선택)")
                                                 .foregroundColor(.greyscale4)
                                                 .font(Font(uiFont: .systemFont(for: .body2)))
                                         }
-                                        .focused($isNameFocused)
+                                        .focused($isScoolFocused)
+                                        .font(Font(uiFont: .systemFont(for: .body2)))
                                         .foregroundColor(.greyscale1)
-                                        .padding(.trailing, CGFloat.padding.inBox)
-                                        .frame(maxWidth:63)
-                                        .onReceive(Just(memberNames[idx]), perform: { _ in
-                                            if 3 < memberNames[idx].count {
-                                                memberNames[idx] = String(memberNames[idx].prefix(3))
+                                        .keyboardType(.numberPad)
+                                        .onReceive(Just(memberSchools[idx]), perform: { _ in
+                                            if 11 < memberSchools[idx].count {
+                                                memberSchools[idx] = String(memberSchools[idx].prefix(11))
                                             }
                                         })
+                                        .padding(.bottom, .padding.toText)
                                     TextField("", text: $memberPhoneNumbers[idx])
                                         .placeholder(when: memberPhoneNumbers[idx].isEmpty) {
-                                            Text("연락처를 입력해주세요.")
+                                            Text("번호를 입력해주세요. (선택)")
                                                 .foregroundColor(.greyscale4)
                                                 .font(Font(uiFont: .systemFont(for: .body2)))
                                         }
                                         .focused($isPhoneNumberFocused)
+                                        .font(Font(uiFont: .systemFont(for: .body2)))
                                         .foregroundColor(.greyscale1)
-                                        .frame(maxWidth:150)
                                         .keyboardType(.numberPad)
                                         .onReceive(Just(memberPhoneNumbers[idx]), perform: { _ in
                                             if 11 < memberPhoneNumbers[idx].count {
                                                 memberPhoneNumbers[idx] = String(memberPhoneNumbers[idx].prefix(11))
                                             }
                                         })
-                                    Spacer()
-                                    Image(systemName: "trash")
-                                        .foregroundColor(.white)
-                                        .font(Font(uiFont: .systemFont(for: .body2)))
-                                        .onTapGesture {
-                                            memberNames.remove(at: idx)
-                                            memberPhoneNumbers.remove(at: idx)
-                                        }
                                 }
                                 .padding(CGFloat.padding.inBox)
                                 .background(
@@ -87,7 +107,7 @@ struct ClassMembersView: View {
                                         RoundedRectangle(cornerRadius: 10)
                                             .fill(Color.greyscale7)
                                         RoundedRectangle(cornerRadius: 10)
-                                            .strokeBorder(currentIdx == idx ? Color.spLightBlue : ((memberNames[idx].isEmpty || memberPhoneNumbers[idx].isEmpty) ? Color.greyscale5 : Color.greyscale1), lineWidth: 1)
+                                            .strokeBorder(currentIdx == idx ? Color.spLightBlue : ((memberNames[idx].isEmpty || memberPhoneNumbers[idx].isEmpty || memberSchools[idx].isEmpty) ? Color.greyscale5 : Color.greyscale1), lineWidth: 1)
                                     }
                                 )
                             }
@@ -97,6 +117,7 @@ struct ClassMembersView: View {
                         }
                         Button(action: {
                             memberNames.append("")
+                            memberSchools.append("")
                             memberPhoneNumbers.append("")
                         }, label: {
                             ZStack {
@@ -121,7 +142,7 @@ struct ClassMembersView: View {
                 }
                 .padding(.top, CGFloat.padding.toTextComponents)
                 .padding(.horizontal, CGFloat.padding.margin)
-                if !isNameFocused && !isPhoneNumberFocused {
+                if !isNameFocused && !isPhoneNumberFocused && !isScoolFocused {
                     Button(action: {
                         withAnimation(.spring()) {
                             viewMode = .tuition
@@ -143,6 +164,7 @@ struct ClassMembersView: View {
             }
         }.onTapGesture {
             isNameFocused = false
+            isScoolFocused = false
             isPhoneNumberFocused = false
             currentIdx = nil
         }
