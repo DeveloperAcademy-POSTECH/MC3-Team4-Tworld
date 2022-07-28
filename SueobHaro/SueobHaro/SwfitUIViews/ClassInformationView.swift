@@ -14,7 +14,7 @@ struct ClassInformationView: View {
     @Binding var classInfo: ClassInfo?
     
     // 클래스에 해당하는 멤버 받아오기
-    @Binding var memberList: [String]
+    @Binding var memberList: [Members]
     
     @State var iterClass: [[String]] = [["수", "13:00"], ["토", "16:00"]]
     @State var members: [[String]] = [["최세영", "010-4444-4444"], ["최세영", "010-4444-4444"],["최세영", ""],["최세영", "010-4444-4444"],["최세영", "010-4444-4444"]]
@@ -33,21 +33,28 @@ struct ClassInformationView: View {
             .padding(.top, CGFloat.padding.toDifferentHierarchy)
             .padding(.bottom, CGFloat.padding.toTextComponents)
             .padding(.horizontal, 16)
-            
-            VStack(spacing: 0) {
-                ForEach(Array((classInfo?.classIterArray ?? []).enumerated()), id: \.offset) { index, value in
-                    ClassInformationListComponent(firstText: value.day ?? "", secondText: (getTime(date: value.startTime ?? Date()) + "-" + getTime(date: value.endTime ?? Date())))
-                    if index != (classInfo?.classIterArray.count ?? 1) - 1 {
-                        Divider()
-                            .background(Color(UIColor.theme.greyscale3))
-                    }
-                }
-            }
-            .background{
+            ZStack {
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color(UIColor.theme.greyscale3), lineWidth: 1)
+                    .strokeBorder(Color.greyscale6, lineWidth: 1)
+                    .background(Color.spBlack)
+                VStack(spacing: CGFloat.padding.inBox) {
+                    ForEach(Array((classInfo?.classIterArray ?? []).enumerated()), id: \.offset) { index, value in
+                        ClassInformationListComponent(firstText: value.day ?? "", secondText: (getTime(date: value.startTime ?? Date()) + "-" + getTime(date: value.endTime ?? Date())))
+                        if index != (classInfo?.classIterArray.count ?? 1) - 1 {
+                            Rectangle()
+                                .frame(height: 1)
+                                .foregroundColor(Color.greyscale6)
+                        }
+                    }
+                }.padding(.vertical, CGFloat.padding.inBox)
             }
             .padding(.horizontal, 16)
+            
+//            .background{
+//                RoundedRectangle(cornerRadius: 10)
+//                    .stroke(Color(UIColor.theme.greyscale3), lineWidth: 1)
+//            }
+//
             
             HStack {
                 Text("참여자")
@@ -60,12 +67,13 @@ struct ClassInformationView: View {
             .padding(.bottom, CGFloat.padding.toTextComponents)
             .padding(.horizontal, 16)
             
-            VStack(spacing: 0) {
+            VStack(spacing: CGFloat.padding.inBox) {
                 ForEach(Array((classInfo?.membersArray ?? []).enumerated()), id: \.offset) { index, value in
                     ClassInformationListComponent(firstText: value.name ?? "", secondText: value.phoneNumber ?? "")
                     if index != (classInfo?.membersArray.count ?? 1) - 1 {
-                        Divider()
-                            .background(Color(UIColor.theme.greyscale3))
+                        Rectangle()
+                            .frame(height: 1)
+                            .foregroundColor(Color.greyscale6)
                     }
                 }
             }

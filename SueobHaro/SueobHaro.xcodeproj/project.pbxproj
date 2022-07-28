@@ -31,6 +31,7 @@
 		317AE6C22888647000FDA57B /* ClassInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6C12888647000FDA57B /* ClassInformationView.swift */; };
 		317AE6C42888648B00FDA57B /* ClassInformationHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6C32888648B00FDA57B /* ClassInformationHeaderComponent.swift */; };
 		317AE6C62888649B00FDA57B /* ClassInformationListComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6C52888649B00FDA57B /* ClassInformationListComponent.swift */; };
+		31EBB7FE2891920700502441 /* KeyboardHeightHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EBB7FD2891920700502441 /* KeyboardHeightHelper.swift */; };
 		372B0EDC288FBA9B00482730 /* ClassAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EDB288FBA9B00482730 /* ClassAddView.swift */; };
 		372B0EDE288FD76400482730 /* ClassTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EDD288FD76400482730 /* ClassTextField.swift */; };
 		372B0EE0289106F500482730 /* DateFormatUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EDF289106F500482730 /* DateFormatUtil.swift */; };
@@ -81,6 +82,7 @@
 		317AE6C12888647000FDA57B /* ClassInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationView.swift; sourceTree = "<group>"; };
 		317AE6C32888648B00FDA57B /* ClassInformationHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationHeaderComponent.swift; sourceTree = "<group>"; };
 		317AE6C52888649B00FDA57B /* ClassInformationListComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationListComponent.swift; sourceTree = "<group>"; };
+		31EBB7FD2891920700502441 /* KeyboardHeightHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightHelper.swift; sourceTree = "<group>"; };
 		372B0EDB288FBA9B00482730 /* ClassAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassAddView.swift; sourceTree = "<group>"; };
 		372B0EDD288FD76400482730 /* ClassTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassTextField.swift; sourceTree = "<group>"; };
 		372B0EDF289106F500482730 /* DateFormatUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatUtil.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 			children = (
 				37B0431D288856E40043E9CB /* NavigationUtil.swift */,
 				372B0EDF289106F500482730 /* DateFormatUtil.swift */,
+				31EBB7FD2891920700502441 /* KeyboardHeightHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				37B0421E288277E00043E9CB /* ViewController.swift in Sources */,
 				21BC991E28910A12000C5FCF /* PrevClassInfoCell.swift in Sources */,
 				37B0427628848FC00043E9CB /* DataManager.swift in Sources */,
+				31EBB7FE2891920700502441 /* KeyboardHeightHelper.swift in Sources */,
 				317AE6C42888648B00FDA57B /* ClassInformationHeaderComponent.swift in Sources */,
 				317AE6BE28883D4700FDA57B /* ClassScheduleCardComponent.swift in Sources */,
 				37B042B728854A290043E9CB /* Members+CoreDataProperties.swift in Sources */,
@@ -550,7 +554,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VT69ZW2DRC;
+				DEVELOPMENT_TEAM = A44U4A2F2G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SueobHaro/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -577,7 +581,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VT69ZW2DRC;
+				DEVELOPMENT_TEAM = A44U4A2F2G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SueobHaro/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

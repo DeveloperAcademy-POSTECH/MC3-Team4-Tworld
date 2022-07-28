@@ -152,11 +152,16 @@ class DataManager {
     
     func getSchedules(classInfo: ClassInfo) -> [Schedule] {
         let request = Schedule.fetchRequest()
+        //해당 클래스 만
         let filter = NSPredicate(format: "classInfo == %@", classInfo)
+        //날짜 순 정렬
+        let sort = NSSortDescriptor(keyPath: \Schedule.endTime, ascending: false)
         request.predicate = filter
+        request.sortDescriptors = [sort]
         var filterSchedules:[Schedule] = []
         do {
             filterSchedules = try container.viewContext.fetch(request)
+            //오늘 이전 날짜 필터
             filterSchedules = filterSchedules.filter{ $0.endTime ?? Date() <= Date()}
         } catch let error {
             print("Fetch Error, get Members, \(error)")
