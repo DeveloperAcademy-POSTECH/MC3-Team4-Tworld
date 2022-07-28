@@ -11,6 +11,7 @@ import Combine
 struct ClassMembersView: View {
     @Binding var viewMode: AddViewMode
     @Binding var memberNames: [String]
+    @Binding var memberSchools: [String]
     @Binding var memberPhoneNumbers: [String]
     @State var currentIdx: Int? = nil
     

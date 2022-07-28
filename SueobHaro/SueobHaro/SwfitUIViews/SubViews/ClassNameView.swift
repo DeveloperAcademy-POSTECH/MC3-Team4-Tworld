@@ -56,9 +56,7 @@ struct ClassNameView: View {
                     .padding(.top, CGFloat.padding.toDifferentHierarchy)
                 
                 HStack(spacing: 0) {
-                    DatePicker("", selection: $firstClassDate, in: Date()..., displayedComponents: .date)
-                        .changeTextColor(.spLightBlue)
-                        .labelsHidden()
+                    DatePickerView(date: $firstClassDate)
                     Text("부터 수업을 진행해요.")
                         .font(Font(uiFont: .systemFont(for: .body2)))
                         .foregroundColor(.greyscale1)
@@ -195,33 +193,6 @@ struct ClassNameView: View {
     }
 }
 
-//struct ClassNameView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ClassNameView()
-//    }
-//}
-
-
-extension View {
-    func placeholder<Content: View>(
-        when shouldShow: Bool,
-        alignment: Alignment = .leading,
-        @ViewBuilder placeholder: () -> Content) -> some View {
-            
-            ZStack(alignment: alignment) {
-                placeholder().opacity(shouldShow ? 1 : 0)
-                self
-            }
-        }
-    
-    @ViewBuilder func changeTextColor(_ color: Color) -> some View {
-        if UITraitCollection.current.userInterfaceStyle == .light {
-            self.colorInvert().colorMultiply(color)
-        } else {
-            self.colorMultiply(color)
-        }
-    }
-}
 
 struct CustomSheet<Content: View>: View {
     

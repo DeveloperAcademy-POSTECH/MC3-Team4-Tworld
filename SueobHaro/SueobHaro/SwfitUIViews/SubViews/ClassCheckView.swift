@@ -13,6 +13,7 @@ struct ClassCheckView: View {
     @Binding var isDayPicked: [String:Bool]
     @Binding var classTimeInfo: [String:[String:Date?]]
     @Binding var memberNames: [String]
+    @Binding var memberSchools: [String]
     @Binding var memberPhoneNumbers: [String]
     @Binding var tuition: String
     @Binding var tuitionPer: String
@@ -137,7 +138,8 @@ struct ClassCheckView: View {
                         .frame(height: 52)
                     })
                 }
-            }.padding(.horizontal, CGFloat.padding.margin)
+            }
+            .padding(.horizontal, CGFloat.padding.margin)
         }
         .onAppear {
             classDay = isDayPicked.allKeys(forValue: true)
