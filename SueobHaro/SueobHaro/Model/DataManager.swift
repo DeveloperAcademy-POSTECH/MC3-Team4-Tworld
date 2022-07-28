@@ -128,6 +128,8 @@ class DataManager {
             members = try? container.viewContext.fetch(Members.fetchRequest())
         case .classIteration:
             classIteration = try? container.viewContext.fetch(ClassIteration.fetchRequest())
+        case .school:
+            schools = try? container.viewContext.fetch(School.fetchRequest())
         }
     }
     
@@ -152,12 +154,6 @@ class DataManager {
         try? container.viewContext.save()
     }
     
-    func updateMember(target: Members, name: String?, phoneNumber: String?) -> Void {
-        if let name = name { target.name = name }
-        if let phoneNumber = phoneNumber { target.phoneNumber = phoneNumber }
-        try? container.viewContext.save()
-    }
-    
     func updateClassIteration(target: ClassIteration, day: String?, startTime: Date?, endTime: Date?) -> Void {
         if let day = day { target.day = day }
         if let startTime = startTime { target.startTime = startTime }
@@ -172,6 +168,7 @@ class DataManager {
         try? container.viewContext.save()
     }
     
+    // MARK: Get
     func getMembers(classInfo: ClassInfo) -> [Members] {
         let request = Members.fetchRequest()
         let filter = NSPredicate(format: "classInfo == %@", classInfo)
@@ -199,6 +196,7 @@ class DataManager {
         return filterSchedules
     }
     
+    // MARK: Fetch
     func fetchSchedules(section: Section) -> [Schedule] {
         let request = Schedule.fetchRequest()
         let filter = NSPredicate(format: section == .next ? "endTime > %@" : "endTime < %@" , Date() as NSDate)
@@ -217,6 +215,21 @@ class DataManager {
             return []
         }
     }
+    
+    func fetchExams(school: School) -> [Exam] {
+        let request = Exam.fetchRequest()
+        let filter = NSPredicate(format: "school == %@", school)
+        let sort = NSSortDescriptor(keyPath: \Exam.startDate, ascending: true)
+        request.predicate = filter
+        request.sortDescriptors = [sort]
+        let exams = try? container.viewContext.fetch(request)
+        
+        if let exams = exams {
+            return exams
+        } else {
+            return []
+        }
+    }
 
 }
 
@@ -226,4 +239,5 @@ enum DataModel {
     case schedule
     case members
     case classIteration
+    case school
 }
