@@ -263,11 +263,14 @@ extension ViewController {
     }
     
     @objc private func addSchedule() {
-        self.navigationController?.pushViewController(UIHostingController(rootView: ClassAddView(dismissAction: {
+        let controller = UIHostingController(rootView: ClassAddView(dismissAction: {
             self.navigationController?.setNavigationBarHidden(false, animated: false)
             self.navigationController?.popToViewController(self, animated: true)
             self.updateCell()
-        })), animated: true)
+        }))
+        controller.hidesBottomBarWhenPushed = true
+
+        self.navigationController?.pushViewController((controller), animated: true)
     }
 }
 
