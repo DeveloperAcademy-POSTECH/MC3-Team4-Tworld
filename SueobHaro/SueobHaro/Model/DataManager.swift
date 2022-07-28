@@ -96,13 +96,24 @@ class DataManager {
         return newSchool
     }
     
-    func addExam(name: String, start startDate: Date, end endDate: Date, school: School) {
-        let newExam = Exam(context: container.viewContext)
-        newExam.id = UUID()
-        newExam.name = name
-        newExam.startDate = startDate
-        newExam.endDate = endDate
-        newExam.school = school
+    func addExamPeriod(name: String, start startDate: Date, end endDate: Date, infos: [String] = [], school: School) {
+        let newExamPeriod = ExamPeriod(context: container.viewContext)
+        newExamPeriod.id = UUID()
+        newExamPeriod.name = name
+        let dates = Calendar.current.generateDates(inside: DateInterval(start: startDate, end: endDate),
+                                       matching: DateComponents(hour: 0, minute: 0, second: 0))
+        for (i, date) in dates.enumerated() {
+            addExamInfo(examPeriod: newExamPeriod, date: date, text: infos[i])
+        }
+        newExamPeriod.school = school
+        try? container.viewContext.save()
+    }
+    
+    func addExamInfo(examPeriod: ExamPeriod, date: Date, text: String) -> Void {
+        let newExamInfo = ExamInfo(context: container.viewContext)
+        newExamInfo.id = UUID()
+        newExamInfo.text = text
+        newExamInfo.examPeriod = examPeriod
         try? container.viewContext.save()
     }
     
@@ -216,16 +227,16 @@ class DataManager {
         }
     }
     
-    func fetchExams(school: School) -> [Exam] {
-        let request = Exam.fetchRequest()
+    func fetchExamPeriods(school: School) -> [ExamPeriod] {
+        let request = ExamPeriod.fetchRequest()
         let filter = NSPredicate(format: "school == %@", school)
-        let sort = NSSortDescriptor(keyPath: \Exam.startDate, ascending: true)
+        let sort = NSSortDescriptor(keyPath: \ExamPeriod.startDate, ascending: true)
         request.predicate = filter
         request.sortDescriptors = [sort]
-        let exams = try? container.viewContext.fetch(request)
+        let examPeriods = try? container.viewContext.fetch(request)
         
-        if let exams = exams {
-            return exams
+        if let examPeriods = examPeriods {
+            return examPeriods
         } else {
             return []
         }

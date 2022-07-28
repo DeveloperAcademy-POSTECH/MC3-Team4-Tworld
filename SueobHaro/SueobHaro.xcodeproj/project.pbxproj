@@ -12,6 +12,7 @@
 		211CF47A2885AB2700BDE26A /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 211CF4772885AB2700BDE26A /* Pretendard-Medium.otf */; };
 		211CF47B2885AB2700BDE26A /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 211CF4782885AB2700BDE26A /* Pretendard-Light.otf */; };
 		211CF47C2885AB2700BDE26A /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 211CF4792885AB2700BDE26A /* Pretendard-Bold.otf */; };
+		211D244F289276EB0012F8C7 /* CalendarUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211D244E289276EB0012F8C7 /* CalendarUtil.swift */; };
 		214707DF288FBDF9004E49D9 /* UnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214707DE288FBDF9004E49D9 /* UnderlineSegmentedControl.swift */; };
 		2186376728888C5800F71595 /* TeamInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2186376628888C5800F71595 /* TeamInfoView.swift */; };
 		21977B4C28868E0700BAE020 /* NextScheduleInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21977B4B28868E0700BAE020 /* NextScheduleInfoCell.swift */; };
@@ -64,6 +65,7 @@
 		211CF4772885AB2700BDE26A /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		211CF4782885AB2700BDE26A /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		211CF4792885AB2700BDE26A /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		211D244E289276EB0012F8C7 /* CalendarUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarUtil.swift; sourceTree = "<group>"; };
 		214707DE288FBDF9004E49D9 /* UnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineSegmentedControl.swift; sourceTree = "<group>"; };
 		2186376628888C5800F71595 /* TeamInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInfoView.swift; sourceTree = "<group>"; };
 		21977B4B28868E0700BAE020 /* NextScheduleInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextScheduleInfoCell.swift; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 			children = (
 				37B0431D288856E40043E9CB /* NavigationUtil.swift */,
 				372B0EDF289106F500482730 /* DateFormatUtil.swift */,
+				211D244E289276EB0012F8C7 /* CalendarUtil.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				37B043192887294E0043E9CB /* ClassCheckView.swift in Sources */,
 				211CF4752885A6B300BDE26A /* DesignGuideSystem.swift in Sources */,
 				37B0421E288277E00043E9CB /* ViewController.swift in Sources */,
+				211D244F289276EB0012F8C7 /* CalendarUtil.swift in Sources */,
 				21BC991E28910A12000C5FCF /* PrevScheduleInfoCell.swift in Sources */,
 				37B0427628848FC00043E9CB /* DataManager.swift in Sources */,
 				317AE6C42888648B00FDA57B /* ClassInformationHeaderComponent.swift in Sources */,
