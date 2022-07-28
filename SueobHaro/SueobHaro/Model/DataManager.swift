@@ -230,9 +230,7 @@ class DataManager {
     func fetchExamPeriods(school: School) -> [ExamPeriod] {
         let request = ExamPeriod.fetchRequest()
         let filter = NSPredicate(format: "school == %@", school)
-        let sort = NSSortDescriptor(keyPath: \ExamPeriod.startDate, ascending: true)
         request.predicate = filter
-        request.sortDescriptors = [sort]
         let examPeriods = try? container.viewContext.fetch(request)
         
         if let examPeriods = examPeriods {
