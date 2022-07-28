@@ -26,77 +26,109 @@ struct ContentView: View {
     @Environment(\.calendar) var calendar
     @State private var standardDate = Date()
     @State private var selectedDate = Date()
+    
     var body: some View {
         ZStack {
             Color.spBlack.ignoresSafeArea()
-            
-            VStack(spacing: 0){
-                header
-                    .padding(.bottom, 2)
-                    .padding(.horizontal, 16)
-                    .background(Color.spBlack)
-                    .overlay(alignment: .bottom) {
-                        Rectangle()
-                            .fill(Color.greyscale5)
-                            .frame(height: 1)
-                    }
-                
-                CalendarView(now: $standardDate) { date in
-                    ZStack(alignment: .top) {
-                        Button {
-                            selectedDate = date
-                        } label: {
-                            VStack(spacing: 0) {
-                                Text(String(calendar.component(.day, from: date)))
-                                    .font(Font(uiFont: .systemFont(for: .body1)))
-                                    .foregroundColor(
-                                        Calendar.current.isDate(selectedDate, inSameDayAs: date) ? .greyscale7 : .greyscale1
-                                    )
-                                    .padding(.vertical, 2)
-                                    .frame(width: 32)
-                                    .background(
-                                        ZStack {
-                                            if Calendar.current.isDate(selectedDate, inSameDayAs: date) {
-                                                Capsule()
-                                                    .fill(
-                                                        LinearGradient(gradient: Gradient(colors: [Color.spLightGradientLeft, Color.spLightGradientRight]), startPoint: .topTrailing, endPoint: .bottomLeading)
-                                                    )
-                                            } else {
-                                                EmptyView()
-                                            }
-                                        }
-                                    )
-                                    .foregroundColor(.greyscale1)
-                                ZStack {
-                                    ForEach(Quadrant.allCases, id: \.rawValue) { q in
-                                        Circle()
-                                            .fill()
-                                            .frame(width: 8, height: 8)
-                                            .offset(x: q.area.x * 6.5, y: q.area.y * 6.5)
-                                    }
-                                }
-                                .frame(width: 6.5+6.5+4+4, height: 6.5+6.5+4+4)
-                                .padding(.vertical, .padding.toText)
-                            }
-                            .frame(maxWidth: .infinity)
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 0) {
+                    header
+                        .padding(.bottom, 2)
+                        .padding(.horizontal, 16)
+                        .background(Color.spBlack)
+                        .overlay(alignment: .bottom) {
+                            Rectangle()
+                                .fill(Color.greyscale5)
+                                .frame(height: 1)
                         }
-                        .buttonStyle(.plain)
-                        
-                        Circle()
-                            .fill(Color.spLightBlue)
-                            .frame(width: 6, height: 6)
-                            .offset(y: -8)
-                            .opacity(Calendar.current.isDate(Date(), inSameDayAs: date) ? 1 : 0)
+                    
+                    CalendarView(now: $standardDate) { date in
+                        ZStack(alignment: .top) {
+                            Button {
+                                selectedDate = date
+                            } label: {
+                                cell(date: date)
+                            }
+                            .buttonStyle(.plain)
+                            
+                            todayIndicator(date: date)
+                        }
                     }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 20)
+                    .background(.black)
+                    
+                    Spacer()
+                        .frame(height: .padding.toDifferentHierarchy)
+                    
+                    plan(date: selectedDate)
+                        .padding(.bottom, .padding.toDifferentHierarchy)
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 20)
-                .background(.black)
-                
-                Spacer()
             }
-
         }
+    }
+    
+    private func plan(date: Date) -> some View {
+        let month = calendar.component(.month, from: selectedDate)
+        let day = calendar.component(.day, from: selectedDate)
+        
+        return VStack(spacing: 20) {
+            Text("\(month)월 \(day)일 일정")
+                .font(Font(uiFont: .systemFont(for: .title2)))
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading, 16)
+            
+            VStack(spacing: .padding.toComponents) {
+                ForEach(0..<3) { i in
+                    ScheduleInfoView()
+                }
+            }
+        }
+    }
+    
+    private func todayIndicator(date: Date) -> some View {
+        Circle()
+            .fill(Color.spLightBlue)
+            .frame(width: 6, height: 6)
+            .offset(y: -8)
+            .opacity(Calendar.current.isDate(Date(), inSameDayAs: date) ? 1 : 0)
+    }
+    
+    private func cell(date: Date) -> some View {
+        return VStack(spacing: 0) {
+            Text(String(calendar.component(.day, from: date)))
+                .font(Font(uiFont: .systemFont(for: .body1)))
+                .foregroundColor(
+                    Calendar.current.isDate(selectedDate, inSameDayAs: date) ? .greyscale7 : .greyscale1
+                )
+                .padding(.vertical, 2)
+                .frame(width: 32)
+                .background(
+                    ZStack {
+                        if Calendar.current.isDate(selectedDate, inSameDayAs: date) {
+                            Capsule()
+                                .fill(
+                                    LinearGradient(gradient: Gradient(colors: [Color.spLightGradientLeft, Color.spLightGradientRight]), startPoint: .topTrailing, endPoint: .bottomLeading)
+                                )
+                        } else {
+                            EmptyView()
+                        }
+                    }
+                )
+                .foregroundColor(.greyscale1)
+            ZStack {
+                ForEach(Quadrant.allCases, id: \.rawValue) { q in
+                    Circle()
+                        .fill()
+                        .frame(width: 8, height: 8)
+                        .offset(x: q.area.x * 6.5, y: q.area.y * 6.5)
+                }
+            }
+            .frame(width: 6.5+6.5+4+4, height: 6.5+6.5+4+4)
+            .padding(.vertical, .padding.toText)
+        }
+        .frame(maxWidth: .infinity)
+
     }
     
     private var header: some View {

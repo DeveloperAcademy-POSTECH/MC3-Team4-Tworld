@@ -139,7 +139,7 @@ extension ViewController: UICollectionViewDelegate {
             collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
         
-        let nextCellRegistration = UICollectionView.CellRegistration<NextClassInfoCell, Schedule> { (cell, indexPath, item) in
+        let nextCellRegistration = UICollectionView.CellRegistration<NextScheduleInfoCell, Schedule> { (cell, indexPath, item) in
             cell.titleLabel.text = item.classInfo?.name ?? ""
             cell.durationLabel.text = "\((item.startTime ?? Date()).toString())~\((item.endTime ?? Date()).toString())"
             let members = item.classInfo?.members?.allObjects as? [Members] ?? []
@@ -158,7 +158,7 @@ extension ViewController: UICollectionViewDelegate {
             }
         }
         
-        let prevCellRegistration = UICollectionView.CellRegistration<PrevClassInfoCell, Schedule> { (cell, indexPath, item) in
+        let prevCellRegistration = UICollectionView.CellRegistration<PrevScheduleInfoCell, Schedule> { (cell, indexPath, item) in
             cell.titleLabel.text = item.classInfo?.name ?? ""
             cell.durationLabel.text = "\((item.startTime ?? Date()).toString())~\((item.endTime ?? Date()).toString())"
             cell.progressInfoLabel.text = item.progress ?? ""
