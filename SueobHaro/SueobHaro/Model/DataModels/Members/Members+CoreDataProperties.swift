@@ -20,6 +20,7 @@ extension Members {
     @NSManaged public var name: String?
     @NSManaged public var phoneNumber: String?
     @NSManaged public var classInfo: ClassInfo?
+    @NSManaged public var school: School?
 
 }
 
