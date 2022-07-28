@@ -47,6 +47,7 @@ class DataManager {
         }
         for idx in 0..<day.count {
             addSchedule(count: 1, endTime: endTime[idx], startTime: startTime[idx], isCanceled: false, progress: "", classInfo: newClassInfo)
+            
         }
     }
     
