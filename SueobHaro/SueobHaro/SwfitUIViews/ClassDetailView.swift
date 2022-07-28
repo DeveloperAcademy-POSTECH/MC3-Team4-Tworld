@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ClassDetailView: View {
     
-    @ObservedObject var keyboardHelper = UIKeyboardHeightHelper()
+//    @ObservedObject var keyboardHelper = UIKeyboardHeightHelper()
     
     // OnAppear 에서 선택된 클래스에 대한 타이틀값을 할당 받는다
     @State var classTitle: String = "코딩 영재반"
@@ -87,7 +87,7 @@ struct ClassDetailView: View {
                         .onChange(of: selectedIndex) { _ in
                             if let scrollIndex = selectedIndex {
                                 // 시간 순서에 따라 렌더에 영향을 주지 않게 하기 위해 시간 차이를 준다
-                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) {
                                     withAnimation{
                                         // 데이터가 적을 시 스크롤이 되지 않는 문제를 해결하기 위해 바텀 패딩을 준다
                                         bottomPadding = 260
@@ -129,7 +129,7 @@ struct ClassDetailView: View {
                     if $0 > 60 {
                         withAnimation {
                             isNavigationTitle = true
-                            print(isNavigationTitle)
+//                            print(isNavigationTitle)
                         }
                     } else {
                         withAnimation{
@@ -173,12 +173,13 @@ struct ClassDetailView: View {
                             
                             
                         } else {
-                            print("값을 입력한 후 저장해 주세요")
+//                            print("값을 입력한 후 저장해 주세요")
                         }
                     }
                     
                    
                 }, label: {
+                    
                     Text("저장하기")
                         .font(Font(uiFont: .systemFont(for: .button)))
                         .foregroundColor(.white)
@@ -189,6 +190,8 @@ struct ClassDetailView: View {
                                 .fill(LinearGradient(gradient: Gradient(colors: [Color(UIColor.theme.spLightBlue), Color(UIColor.theme.spDarkBlue)]), startPoint: .topLeading, endPoint: .bottomTrailing))
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                         }
+                
+                    
                 })
             }
         }
@@ -214,7 +217,7 @@ struct ClassDetailView: View {
             classSchedules = DataManager.shared.getSchedules(classInfo: selectedClass!)
         }
         .onChange(of: classSchedules) { _ in
-            print("Change")
+//            print("Change")
             
         }
         

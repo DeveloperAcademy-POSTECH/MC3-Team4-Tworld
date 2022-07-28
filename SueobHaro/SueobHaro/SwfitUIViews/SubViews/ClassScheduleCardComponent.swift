@@ -16,7 +16,7 @@ struct ClassScheduleCardComponent: View {
     @State var myIndex: Int = 0
     @Binding var selectedIndex: Int?
     @State var inputText: String = ""
-    @FocusState var isFocusing: Bool
+    @FocusState var isFocused: Bool
     @Binding var scheduleList: [Schedule]
     @State var isAlertShowing: Bool = false
     @State var originalProgress: String = ""
@@ -66,17 +66,17 @@ struct ClassScheduleCardComponent: View {
                         if inputText.isEmpty {
                             Image(systemName: "highlighter")
                                 .resizable()
-                                .foregroundColor(isFocusing ? .greyscale4 : Color(UIColor.theme.spLightBlue))
+                                .foregroundColor(isFocused ? .greyscale4 : Color(UIColor.theme.spLightBlue))
                                 .frame(width: 20, height: 20)
                         }
-                        Text(inputText.isEmpty ? "수업의 진행 상황을 입력해주세요." : isFocusing ? "" : inputText)
-                            .foregroundColor(isFocusing ? .greyscale4 : inputText.isEmpty ? Color(UIColor.theme.spLightBlue) : selectedIndex == myIndex ? Color.clear : Color(UIColor.theme.greyscale1))
+                        Text(inputText.isEmpty ? "수업의 진행 상황을 입력해주세요." : isFocused ? "" : inputText)
+                            .foregroundColor(isFocused ? .greyscale4 : inputText.isEmpty ? Color(UIColor.theme.spLightBlue) : selectedIndex == myIndex ? Color.clear : Color(UIColor.theme.greyscale1))
                             .font(Font(uiFont: .systemFont(for: .body2)))
                         
                         Spacer()
                     }
-                    .padding(.top , isFocusing ? 7 : 0)
-                    .padding(.horizontal , isFocusing ? 7 : 0)
+                    .padding(.top , isFocused ? 7 : 0)
+                    .padding(.horizontal , isFocused ? 7 : 0)
                     Spacer()
                     
                 }
@@ -86,8 +86,8 @@ struct ClassScheduleCardComponent: View {
                 .padding(.bottom, CGFloat.padding.inBox)
                 
                 TextEditor(text: $inputText)
-                    .foregroundColor(isFocusing ? .greyscale1 : selectedIndex == myIndex ? .greyscale1 : Color.clear)
-                    .focused($isFocusing)
+                    .foregroundColor(isFocused ? .greyscale1 : selectedIndex == myIndex ? .greyscale1 : Color.clear)
+                    .focused($isFocused)
 //                    .background(isFocusing ? .greyscale7 : Color.clear)
                     .frame(height: myIndex == selectedIndex ? 146.34 : 0)
                     .padding(.horizontal, CGFloat.padding.inBox)
@@ -105,9 +105,9 @@ struct ClassScheduleCardComponent: View {
             .onChange(of: selectedIndex, perform: { i in
                 if myIndex == selectedIndex {
                     // selectedIndex가 해당 카드의 인덱스 값과 같은 경우, 텍스트 에디터에 포커싱을 준다
-                    isFocusing = true
+                    isFocused = true
                 } else {
-                    isFocusing = false
+                    isFocused = false
                 }
             })
             .onChange(of: inputText, perform: { _ in
@@ -127,8 +127,7 @@ struct ClassScheduleCardComponent: View {
             }
             
         } message: {
-            Text("작성한 내용을 저장하지 않은 상태로 나가면 이 정보는 남아있지 않아요")
-            Image(systemName: "smile")
+            Text("작성한 내용을 저장하지 않은 상태로 나가면 이 정보는 남아있지 않아요🥲")
         }
       
         .background {
