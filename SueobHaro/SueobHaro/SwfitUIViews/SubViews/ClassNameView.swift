@@ -47,7 +47,7 @@ struct ClassNameView: View {
                     .padding(.top, CGFloat.padding.toDifferentHierarchy)
                     .padding(.bottom, CGFloat.padding.toText)
                 
-                ClassTextField(content: $className, isFocused: $isFocused, testFieldName: "수업명을 입력하세요.")
+                ClassTextField(content: $className, isFocused: $isFocused, placeholder: "수업명을 입력하세요.")
                 
                 Text("언제부터 진행하나요?")
                     .font(Font(uiFont: .systemFont(for: .title3)))

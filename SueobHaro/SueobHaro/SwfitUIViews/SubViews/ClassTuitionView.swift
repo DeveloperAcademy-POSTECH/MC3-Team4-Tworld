@@ -31,14 +31,14 @@ struct ClassTuitionView: View {
                     .padding(.top, CGFloat.padding.toDifferentHierarchy)
                     .padding(.leading, CGFloat.padding.margin)
                     .padding(.bottom, CGFloat.padding.toText)
-                ClassTextField(content: $tuitionPer, isFocused: $isTuitionPerFocused, testFieldName: "회차를 입력하세요.")
+                ClassTextField(content: $tuitionPer, isFocused: $isTuitionPerFocused, placeholder: "회차를 입력하세요.")
                 Text("수업료는 얼마씩 받나요?")
                     .font(Font(uiFont: .systemFont(for: .title3)))
                     .foregroundColor(.greyscale1)
                     .padding(.top, CGFloat.padding.toDifferentHierarchy)
                     .padding(.leading, CGFloat.padding.margin)
                     .padding(.bottom, CGFloat.padding.toText)
-                ClassTextField(content: $tuition, isFocused: $isTuitionFocused, testFieldName: "수업료를 입력하세요.")
+                ClassTextField(content: $tuition, isFocused: $isTuitionFocused, placeholder: "수업료를 입력하세요.")
                 Spacer()
                 if !isTuitionFocused && !isTuitionPerFocused {
                     if !tuition.isEmpty && !tuitionPer.isEmpty {
