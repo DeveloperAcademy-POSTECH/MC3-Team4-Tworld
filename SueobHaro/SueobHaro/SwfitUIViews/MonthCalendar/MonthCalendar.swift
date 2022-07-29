@@ -21,66 +21,70 @@ enum Quadrant: String, CaseIterable {
     }
 }
 
-struct ContentView: View {
+struct MonthCalendarView: View {
     
     @Environment(\.calendar) var calendar
     @State private var standardDate = Date()
-    @State private var selectedDate = Date()
+    @ObservedObject var vm: PlanViewModel
     
     var body: some View {
-        ZStack {
-            Color.spBlack.ignoresSafeArea()
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 0) {
-                    header
-                        .padding(.bottom, 2)
-                        .padding(.horizontal, 16)
-                        .background(Color.spBlack)
-                        .overlay(alignment: .bottom) {
-                            Rectangle()
-                                .fill(Color.greyscale5)
-                                .frame(height: 1)
-                        }
-                    
-                    CalendarView(now: $standardDate) { date in
-                        ZStack(alignment: .top) {
-                            Button {
-                                selectedDate = date
-                            } label: {
-                                cell(date: date)
-                            }
-                            .buttonStyle(.plain)
-                            
-                            todayIndicator(date: date)
-                        }
-                    }
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 0) {
+                header
+                    .padding(.bottom, 2)
                     .padding(.horizontal, 16)
-                    .padding(.vertical, 20)
-                    .background(.black)
-                    
-                    Spacer()
-                        .frame(height: .padding.toDifferentHierarchy)
-                    
-                    plan(date: selectedDate)
-                        .padding(.bottom, .padding.toDifferentHierarchy)
+                    .background(Color.spBlack)
+                    .overlay(alignment: .bottom) {
+                        Rectangle()
+                            .fill(Color.greyscale5)
+                            .frame(height: 1)
+                    }
+                
+                MonthView(now: $standardDate) { date in
+                    ZStack(alignment: .top) {
+                        Button {
+                            withAnimation(.spring()) {
+                                vm.selectedDate = date
+                            }
+                        } label: {
+                            cell(date: date)
+                        }
+                        .buttonStyle(.plain)
+                        
+                        todayIndicator(date: date)
+                    }
                 }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 20)
+                .background(.black)
+                
+                Spacer()
+                    .frame(height: .padding.toDifferentHierarchy)
+                
+                plan(date: vm.selectedDate)
+                    .padding(.bottom, .padding.toDifferentHierarchy)
             }
+        }
+        .onChange(of: vm.selectedDate) { date in
+            vm.fetchSchedule(date: date)
+            vm.fetchExamPeriod(date: date)
         }
     }
     
     private func plan(date: Date) -> some View {
-        let month = calendar.component(.month, from: selectedDate)
-        let day = calendar.component(.day, from: selectedDate)
+        let year = String(calendar.component(.year, from: vm.selectedDate))
+        let month = calendar.component(.month, from: vm.selectedDate)
+        let day = calendar.component(.day, from: vm.selectedDate)
         
         return VStack(spacing: 20) {
-            Text("\(month)월 \(day)일 일정")
+            Text("\(year)년 \(month)월 \(day)일 일정")
                 .font(Font(uiFont: .systemFont(for: .title2)))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, 16)
             
             VStack(spacing: .padding.toComponents) {
-                ForEach(0..<3) { i in
-                    ScheduleInfoView()
+                ForEach(vm.schedule) { schedule in
+                    ScheduleInfoView(schedule: schedule)
                 }
             }
         }
@@ -99,19 +103,25 @@ struct ContentView: View {
             Text(String(calendar.component(.day, from: date)))
                 .font(Font(uiFont: .systemFont(for: .body1)))
                 .foregroundColor(
-                    Calendar.current.isDate(selectedDate, inSameDayAs: date) ? .greyscale7 : .greyscale1
+                    Calendar.current.isDate(vm.selectedDate, inSameDayAs: date) ? .greyscale7 : .greyscale1
                 )
                 .padding(.vertical, 2)
-                .frame(width: 32)
+                .frame(maxWidth: .infinity)
                 .background(
                     ZStack {
-                        if Calendar.current.isDate(selectedDate, inSameDayAs: date) {
+                        if Calendar.current.isDate(vm.selectedDate, inSameDayAs: date) {
                             Capsule()
                                 .fill(
                                     LinearGradient(gradient: Gradient(colors: [Color.spLightGradientLeft, Color.spLightGradientRight]), startPoint: .topTrailing, endPoint: .bottomLeading)
                                 )
+                                .padding(.horizontal, 8)
                         } else {
                             EmptyView()
+                        }
+                        
+                        if vm.examInfos.filter({ $0.date == date }).count != 0 {
+                            Rectangle()
+                                .fill(Color.spLightBlue.opacity(0.3))
                         }
                     }
                 )
@@ -122,12 +132,14 @@ struct ContentView: View {
                         .fill()
                         .frame(width: 8, height: 8)
                         .offset(x: q.area.x * 6.5, y: q.area.y * 6.5)
+                        .opacity(0)
                 }
             }
             .frame(width: 6.5+6.5+4+4, height: 6.5+6.5+4+4)
             .padding(.vertical, .padding.toText)
         }
         .frame(maxWidth: .infinity)
+        .contentShape(Rectangle())
 
     }
     
@@ -157,18 +169,6 @@ struct ContentView: View {
         }
     }
 }
-
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-            .preferredColorScheme(.dark)
-            .environment(\.locale, .init(identifier: "ko"))
-    }
-}
-
-
-
 
 fileprivate extension DateFormatter {
     static var month: DateFormatter {
@@ -206,7 +206,7 @@ struct WeekView<DateView>: View where DateView: View {
     }
     
     var body: some View {
-        HStack {
+        HStack(spacing: 0) {
             ForEach(days, id: \.self) { date in
                 HStack {
                     if self.calendar.isDate(self.week, equalTo: date, toGranularity: .month) {
@@ -220,7 +220,7 @@ struct WeekView<DateView>: View where DateView: View {
     }
 }
 
-struct CalendarView<DateView>: View where DateView: View {
+struct MonthView<DateView>: View where DateView: View {
     
     @Environment(\.calendar) var calendar
     @Binding var now: Date
