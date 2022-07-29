@@ -67,6 +67,7 @@ struct MonthCalendarView: View {
         }
         .onChange(of: vm.selectedDate) { date in
             vm.fetchSchedule(date: date)
+            vm.fetchExamPeriod(date: date)
         }
     }
     
@@ -105,7 +106,7 @@ struct MonthCalendarView: View {
                     Calendar.current.isDate(vm.selectedDate, inSameDayAs: date) ? .greyscale7 : .greyscale1
                 )
                 .padding(.vertical, 2)
-                .frame(width: 32)
+                .frame(maxWidth: .infinity)
                 .background(
                     ZStack {
                         if Calendar.current.isDate(vm.selectedDate, inSameDayAs: date) {
@@ -113,8 +114,14 @@ struct MonthCalendarView: View {
                                 .fill(
                                     LinearGradient(gradient: Gradient(colors: [Color.spLightGradientLeft, Color.spLightGradientRight]), startPoint: .topTrailing, endPoint: .bottomLeading)
                                 )
+                                .padding(.horizontal, 8)
                         } else {
                             EmptyView()
+                        }
+                        
+                        if vm.examInfos.filter({ $0.date == date }).count != 0 {
+                            Rectangle()
+                                .fill(Color.spLightBlue.opacity(0.3))
                         }
                     }
                 )
@@ -199,7 +206,7 @@ struct WeekView<DateView>: View where DateView: View {
     }
     
     var body: some View {
-        HStack {
+        HStack(spacing: 0) {
             ForEach(days, id: \.self) { date in
                 HStack {
                     if self.calendar.isDate(self.week, equalTo: date, toGranularity: .month) {

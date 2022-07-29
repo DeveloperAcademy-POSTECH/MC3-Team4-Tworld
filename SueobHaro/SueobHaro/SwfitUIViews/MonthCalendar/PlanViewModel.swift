@@ -13,6 +13,7 @@ class PlanViewModel: ObservableObject {
     
     @Published var selectedDate = Date()
     @Published var schedule: [Schedule] = []
+    @Published var examInfos: [ExamInfo] = []
     
     func fetchSchedule(date: Date) {
         let request = Schedule.fetchRequest()
@@ -23,6 +24,20 @@ class PlanViewModel: ObservableObject {
         do {
             let result = try manager.container.viewContext.fetch(request)
             schedule = result
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchExamPeriod(date: Date) {
+        let request = ExamPeriod.fetchRequest()
+//        guard let monthInterval = Calendar.current.dateInterval(of: .month, for: date) else { return }
+        do {
+            let results = try manager.container.viewContext.fetch(request)
+            for result in results {
+                guard let infos = result.examInfos?.allObjects as? [ExamInfo] else { return }
+                examInfos.append(contentsOf: infos)
+            }
         } catch {
             print(error)
         }
