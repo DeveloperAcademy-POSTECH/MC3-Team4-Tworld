@@ -113,7 +113,13 @@ class ViewController: UIViewController {
 extension ViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.navigationController?.pushViewController(UIHostingController(rootView: ClassDetailView()), animated: true)
+        if nowSection == .next {
+            print(schedules[indexPath.row])
+            self.navigationController?.pushViewController(UIHostingController(rootView: ClassDetailView(selectedClass: schedules[indexPath.row].classInfo)), animated: true)
+        } else {
+            self.navigationController?.pushViewController(UIHostingController(rootView: ClassDetailView(selectedClass: schedules[indexPath.row].classInfo, selectedSchedule: schedules[indexPath.row])), animated: true)
+        }
+        
     }
     
     func configureCollectionView() {
