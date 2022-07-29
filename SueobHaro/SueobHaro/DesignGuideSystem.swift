@@ -50,6 +50,11 @@ extension Color {
     static let spLightBlue = Color("SPLightBlue")
     static let spTurkeyBlue = Color("SPTurkeyBlue")
     
+    static let spLightGradientLeft = Color("SPLightGradient-left")
+    static let spLightGradientRight = Color("SPLightGradient-right")
+    static let spDeepGradientLeft = Color("SPDeepGradient-left")
+    static let spDeepGradientRight = Color("SPDeepGradient-right")
+    
     static let greyscale1 = Color("Greyscale1")
     static let greyscale2 = Color("Greyscale2")
     static let greyscale3 = Color("Greyscale3")

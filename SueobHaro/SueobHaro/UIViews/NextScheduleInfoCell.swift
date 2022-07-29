@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NextClassInfoCell: UICollectionViewCell {
+class NextScheduleInfoCell: UICollectionViewCell {
     static let identifier = "NextClassInfoCell"
     
     lazy var titleLabel: UILabel = {
@@ -219,7 +219,7 @@ class PrevProgressLabel: UILabel {
     }
 }
 
-extension NextClassInfoCell {
+extension NextScheduleInfoCell {
     func configure() {
         let divider = UIView(frame: .zero)
         divider.translatesAutoresizingMaskIntoConstraints = false

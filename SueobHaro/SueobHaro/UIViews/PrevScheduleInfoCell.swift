@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PrevClassInfoCell: UICollectionViewCell {
+class PrevScheduleInfoCell: UICollectionViewCell {
     static let identifier = "PrevClassInfoCell"
     
     lazy var titleLabel: UILabel = {
@@ -75,9 +75,8 @@ class PrevClassInfoCell: UICollectionViewCell {
         stackView.layoutMargins = UIEdgeInsets(top: 18, left: 18, bottom: 18, right: 18)
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layer.cornerRadius = 12
-        stackView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
         stackView.layer.borderWidth = 1
-        stackView.layer.borderColor = UIColor.theme.greyscale6.cgColor
+        stackView.layer.borderColor = UIColor.theme.spTurkeyBlue.cgColor
         
         return stackView
     }()
@@ -140,7 +139,7 @@ class ProgressLabel: UILabel {
     }
 }
 
-extension PrevClassInfoCell {
+extension PrevScheduleInfoCell {
     func configure() {
         let divider = UIView(frame: .zero)
         divider.translatesAutoresizingMaskIntoConstraints = false
@@ -154,13 +153,13 @@ extension PrevClassInfoCell {
         
         NSLayoutConstraint.activate([
             mainStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            mainStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 1),
+            mainStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             mainStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             mainStackView.topAnchor.constraint(equalTo: self.topAnchor),
             divider.heightAnchor.constraint(equalToConstant: 1),
             divider.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
             
-            progressCountLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -17),
+            progressCountLabel.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -16),
             progressCountLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: .padding.toBox)
         ])
     }
