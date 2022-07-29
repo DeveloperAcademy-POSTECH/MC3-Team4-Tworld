@@ -15,6 +15,7 @@ enum CalendarCase: String {
 struct PlanView: View {
     
     @State private var calendarCase: CalendarCase = .month
+    @State private var selectedDate = Date()
     
     var body: some View {
         ZStack {
@@ -33,7 +34,7 @@ struct PlanView: View {
                 if calendarCase == .week {
                     Spacer()
                 } else {
-                    MonthCalendarView()
+                    MonthCalendarView(selectedDate: $selectedDate)
                 }
             }
         }

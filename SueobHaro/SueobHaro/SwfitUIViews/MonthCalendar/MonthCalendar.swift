@@ -25,7 +25,7 @@ struct MonthCalendarView: View {
     
     @Environment(\.calendar) var calendar
     @State private var standardDate = Date()
-    @State private var selectedDate = Date()
+    @Binding var selectedDate: Date
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -66,18 +66,19 @@ struct MonthCalendarView: View {
     }
     
     private func plan(date: Date) -> some View {
+        let year = String(calendar.component(.year, from: selectedDate))
         let month = calendar.component(.month, from: selectedDate)
         let day = calendar.component(.day, from: selectedDate)
         
         return VStack(spacing: 20) {
-            Text("\(month)월 \(day)일 일정")
+            Text("\(year)년 \(month)월 \(day)일 일정")
                 .font(Font(uiFont: .systemFont(for: .title2)))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, 16)
             
             VStack(spacing: .padding.toComponents) {
                 ForEach(0..<3) { i in
-                    ScheduleInfoView()
+                    ScheduleInfoView(schedule: )
                 }
             }
         }
@@ -119,12 +120,14 @@ struct MonthCalendarView: View {
                         .fill()
                         .frame(width: 8, height: 8)
                         .offset(x: q.area.x * 6.5, y: q.area.y * 6.5)
+                        .opacity(0)
                 }
             }
             .frame(width: 6.5+6.5+4+4, height: 6.5+6.5+4+4)
             .padding(.vertical, .padding.toText)
         }
         .frame(maxWidth: .infinity)
+        .contentShape(Rectangle())
 
     }
     
@@ -158,7 +161,7 @@ struct MonthCalendarView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MonthCalendarView()
+        MonthCalendarView(selectedDate: .constant(Date()))
             .preferredColorScheme(.dark)
             .environment(\.locale, .init(identifier: "ko"))
     }
