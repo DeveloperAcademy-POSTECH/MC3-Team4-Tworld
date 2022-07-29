@@ -164,9 +164,9 @@
 		21B86DBF28918819009B7643 /* MonthCalendar */ = {
 			isa = PBXGroup;
 			children = (
-				21B86DC028918826009B7643 /* MonthCalendar.swift */,
 				21ABDA7F2893BC7F00F0DB4F /* PlanViewModel.swift */,
 				21ABDA7D2893AB3F00F0DB4F /* PlanView.swift */,
+				21B86DC028918826009B7643 /* MonthCalendar.swift */,
 				2118206A289252DC00F2BA8E /* ScheduleInfoView.swift */,
 			);
 			path = MonthCalendar;

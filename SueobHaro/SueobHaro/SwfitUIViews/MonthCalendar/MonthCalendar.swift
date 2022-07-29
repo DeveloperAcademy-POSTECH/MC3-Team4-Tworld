@@ -25,7 +25,7 @@ struct MonthCalendarView: View {
     
     @Environment(\.calendar) var calendar
     @State private var standardDate = Date()
-    @Binding var selectedDate: Date
+    @ObservedObject var vm: PlanViewModel
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -43,7 +43,9 @@ struct MonthCalendarView: View {
                 MonthView(now: $standardDate) { date in
                     ZStack(alignment: .top) {
                         Button {
-                            selectedDate = date
+                            withAnimation(.spring()) {
+                                vm.selectedDate = date
+                            }
                         } label: {
                             cell(date: date)
                         }
@@ -59,16 +61,19 @@ struct MonthCalendarView: View {
                 Spacer()
                     .frame(height: .padding.toDifferentHierarchy)
                 
-                plan(date: selectedDate)
+                plan(date: vm.selectedDate)
                     .padding(.bottom, .padding.toDifferentHierarchy)
             }
+        }
+        .onChange(of: vm.selectedDate) { date in
+            vm.fetchSchedule(date: date)
         }
     }
     
     private func plan(date: Date) -> some View {
-        let year = String(calendar.component(.year, from: selectedDate))
-        let month = calendar.component(.month, from: selectedDate)
-        let day = calendar.component(.day, from: selectedDate)
+        let year = String(calendar.component(.year, from: vm.selectedDate))
+        let month = calendar.component(.month, from: vm.selectedDate)
+        let day = calendar.component(.day, from: vm.selectedDate)
         
         return VStack(spacing: 20) {
             Text("\(year)년 \(month)월 \(day)일 일정")
@@ -77,8 +82,8 @@ struct MonthCalendarView: View {
                 .padding(.leading, 16)
             
             VStack(spacing: .padding.toComponents) {
-                ForEach(0..<3) { i in
-                    ScheduleInfoView(schedule: )
+                ForEach(vm.schedule) { schedule in
+                    ScheduleInfoView(schedule: schedule)
                 }
             }
         }
@@ -97,13 +102,13 @@ struct MonthCalendarView: View {
             Text(String(calendar.component(.day, from: date)))
                 .font(Font(uiFont: .systemFont(for: .body1)))
                 .foregroundColor(
-                    Calendar.current.isDate(selectedDate, inSameDayAs: date) ? .greyscale7 : .greyscale1
+                    Calendar.current.isDate(vm.selectedDate, inSameDayAs: date) ? .greyscale7 : .greyscale1
                 )
                 .padding(.vertical, 2)
                 .frame(width: 32)
                 .background(
                     ZStack {
-                        if Calendar.current.isDate(selectedDate, inSameDayAs: date) {
+                        if Calendar.current.isDate(vm.selectedDate, inSameDayAs: date) {
                             Capsule()
                                 .fill(
                                     LinearGradient(gradient: Gradient(colors: [Color.spLightGradientLeft, Color.spLightGradientRight]), startPoint: .topTrailing, endPoint: .bottomLeading)
@@ -157,18 +162,6 @@ struct MonthCalendarView: View {
         }
     }
 }
-
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        MonthCalendarView(selectedDate: .constant(Date()))
-            .preferredColorScheme(.dark)
-            .environment(\.locale, .init(identifier: "ko"))
-    }
-}
-
-
-
 
 fileprivate extension DateFormatter {
     static var month: DateFormatter {

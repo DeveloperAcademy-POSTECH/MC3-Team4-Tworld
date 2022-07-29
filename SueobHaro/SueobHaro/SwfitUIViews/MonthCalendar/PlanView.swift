@@ -34,7 +34,7 @@ struct PlanView: View {
                 if calendarCase == .week {
                     Spacer()
                 } else {
-                    MonthCalendarView(selectedDate: $selectedDate)
+                    MonthCalendarView(vm: vm)
                 }
             }
         }
