@@ -14,8 +14,8 @@ enum CalendarCase: String {
 
 struct PlanView: View {
     
+    @StateObject private var vm = PlanViewModel()
     @State private var calendarCase: CalendarCase = .month
-    @State private var selectedDate = Date()
     
     var body: some View {
         ZStack {

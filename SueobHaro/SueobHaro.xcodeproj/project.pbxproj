@@ -18,6 +18,7 @@
 		21977B4C28868E0700BAE020 /* NextScheduleInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21977B4B28868E0700BAE020 /* NextScheduleInfoCell.swift */; };
 		21977B4E28868E6800BAE020 /* CollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21977B4D28868E6800BAE020 /* CollectionViewHeader.swift */; };
 		21ABDA7E2893AB3F00F0DB4F /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ABDA7D2893AB3F00F0DB4F /* PlanView.swift */; };
+		21ABDA802893BC7F00F0DB4F /* PlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ABDA7F2893BC7F00F0DB4F /* PlanViewModel.swift */; };
 		21B86DC128918826009B7643 /* MonthCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B86DC028918826009B7643 /* MonthCalendar.swift */; };
 		21BC991E28910A12000C5FCF /* PrevScheduleInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BC991D28910A12000C5FCF /* PrevScheduleInfoCell.swift */; };
 		21BC992028911245000C5FCF /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BC991F28911245000C5FCF /* MainTabBarController.swift */; };
@@ -78,6 +79,7 @@
 		21977B4B28868E0700BAE020 /* NextScheduleInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextScheduleInfoCell.swift; sourceTree = "<group>"; };
 		21977B4D28868E6800BAE020 /* CollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeader.swift; sourceTree = "<group>"; };
 		21ABDA7D2893AB3F00F0DB4F /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
+		21ABDA7F2893BC7F00F0DB4F /* PlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanViewModel.swift; sourceTree = "<group>"; };
 		21B86DC028918826009B7643 /* MonthCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendar.swift; sourceTree = "<group>"; };
 		21BC991D28910A12000C5FCF /* PrevScheduleInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrevScheduleInfoCell.swift; sourceTree = "<group>"; };
 		21BC991F28911245000C5FCF /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				21B86DC028918826009B7643 /* MonthCalendar.swift */,
+				21ABDA7F2893BC7F00F0DB4F /* PlanViewModel.swift */,
 				21ABDA7D2893AB3F00F0DB4F /* PlanView.swift */,
 				2118206A289252DC00F2BA8E /* ScheduleInfoView.swift */,
 			);
@@ -413,6 +416,7 @@
 				211D244F289276EB0012F8C7 /* CalendarUtil.swift in Sources */,
 				21BC991E28910A12000C5FCF /* PrevScheduleInfoCell.swift in Sources */,
 				21BC991E28910A12000C5FCF /* PrevScheduleInfoCell.swift in Sources */,
+				21ABDA802893BC7F00F0DB4F /* PlanViewModel.swift in Sources */,
 				372B0EE628914C7F00482730 /* DatePickerView.swift in Sources */,
 				37B0427628848FC00043E9CB /* DataManager.swift in Sources */,
 				31EBB7FE2891920700502441 /* KeyboardHeightHelper.swift in Sources */,
