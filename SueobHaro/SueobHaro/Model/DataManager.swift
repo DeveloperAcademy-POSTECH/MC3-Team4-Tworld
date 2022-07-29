@@ -96,15 +96,15 @@ class DataManager {
         return newSchool
     }
     
-    func addExamPeriod(name: String, start startDate: Date, end endDate: Date, infos: [String] = [], school: School) {
+    func addExamPeriod(name: String, start startDate: Date, end endDate: Date, infos: [String] = []) {
         let newExamPeriod = ExamPeriod(context: container.viewContext)
         newExamPeriod.id = UUID()
-        newExamPeriod.name = name
         let dates = Calendar.current.generateDates(inside: DateInterval(start: startDate, end: endDate),
                                        matching: DateComponents(hour: 0, minute: 0, second: 0))
         for (i, date) in dates.enumerated() {
             addExamInfo(examPeriod: newExamPeriod, date: date, text: infos[i])
         }
+        let school = addSchool(name: name)
         newExamPeriod.school = school
         try? container.viewContext.save()
     }

@@ -114,7 +114,6 @@ struct ClassCheckView: View {
                     }
                     Button(action: {
                         save()
-//                        NavigationUtil.popToRootView()
                         dismissAction()
                         isNavHidden = false
                     }, label: {

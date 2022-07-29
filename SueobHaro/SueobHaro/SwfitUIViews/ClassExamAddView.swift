@@ -37,6 +37,10 @@ struct ClassExamAddView: View {
         return true
     }
     
+    private func save() {
+        DataManager.shared.addExamPeriod(name: schoolName, start: startDate, end: endDate, infos: examInfo)
+    }
+    
     var body: some View {
         ZStack {
             Color.spBlack.ignoresSafeArea()
@@ -157,7 +161,7 @@ struct ClassExamAddView: View {
                 
                 Button(action: {
                     withAnimation(.spring()) {
-                        // 여기에 저장 로직
+                        save()
                         dismissAction()
                     }
                 }, label: {
