@@ -78,7 +78,6 @@ struct ClassMembersView: View {
                                         .focused($isScoolFocused)
                                         .font(Font(uiFont: .systemFont(for: .body2)))
                                         .foregroundColor(.greyscale1)
-                                        .keyboardType(.numberPad)
                                         .onReceive(Just(memberSchools[idx]), perform: { _ in
                                             if 11 < memberSchools[idx].count {
                                                 memberSchools[idx] = String(memberSchools[idx].prefix(11))

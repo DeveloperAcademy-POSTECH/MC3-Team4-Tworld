@@ -98,14 +98,11 @@ struct ClassCheckView: View {
                         .padding(.top, CGFloat.padding.toDifferentHierarchy)
                         .padding(.bottom, CGFloat.padding.toTextComponents)
                     ZStack {
-                        RoundedRectangle(cornerRadius: 10)
-                            .strokeBorder(Color.greyscale6, lineWidth: 1)
-                            .background(Color.spBlack)
                         VStack(spacing: CGFloat.padding.inBox) {
                             ForEach(memberNames.indices, id: \.self) { idx in
                                 ClassMemberGridView(memberNames: memberNames, memberSchools: memberSchools, memberPhoneNumbers: memberPhoneNumbers)
                             }
-                        }.padding(.vertical, CGFloat.padding.inBox)
+                        }
                     }
                     HStack(spacing: 0) {
                         Spacer()
