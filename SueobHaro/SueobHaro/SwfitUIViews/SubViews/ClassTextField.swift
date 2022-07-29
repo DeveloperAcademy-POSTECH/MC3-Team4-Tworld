@@ -12,6 +12,7 @@ struct ClassTextField: View {
     
     var isFocused: FocusState<Bool>.Binding
     var placeholder: String
+    var keyboardType: UIKeyboardType = .default
     
     var body: some View {
         ZStack {
@@ -25,6 +26,7 @@ struct ClassTextField: View {
                     .focused(isFocused)
                     .font(Font(uiFont: .systemFont(for: .body2)))
                     .foregroundColor(.greyscale1)
+                    .keyboardType(keyboardType)
                     .padding(.leading, CGFloat.padding.margin)
                 Rectangle()
                     .foregroundColor(isFocused.wrappedValue ? .spLightBlue : (content.isEmpty ? .greyscale4 : .greyscale1))
