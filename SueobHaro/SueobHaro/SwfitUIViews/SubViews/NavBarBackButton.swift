@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct NavBarBackButton: View {
+    let title: String
+    
     var body: some View {
         Label {
-            Text("뒤로 가기")
+            Text(title)
                 .font(.body)
                 .foregroundColor(.spLightBlue)
                 .padding(-5)
@@ -22,8 +24,4 @@ struct NavBarBackButton: View {
     }
 }
 
-struct NavBarBackButton_Previews: PreviewProvider {
-    static var previews: some View {
-        NavBarBackButton()
-    }
-}
+

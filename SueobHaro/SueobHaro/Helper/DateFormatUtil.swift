@@ -19,4 +19,16 @@ final class DateFormatUtil {
         
         return dateFormatter.string(from: time)
     }
+    
+    // MARK: 수업일자 스트링 반환(ex: "15")
+    static func classDateFormatter(time: Date) -> String {
+        let dateFormatter: DateFormatter = {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd"
+            
+            return dateFormatter
+        }()
+        
+        return dateFormatter.string(from: time)
+    }
 }

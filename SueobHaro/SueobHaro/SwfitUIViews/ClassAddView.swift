@@ -44,7 +44,7 @@ struct ClassAddView: View {
                                     viewMode = viewMode.previousMode
                                 }
                             }, label: {
-                                NavBarBackButton()
+                                NavBarBackButton(title: "뒤로 가기")
                             })
                             .padding([.top, .leading], 8)
                             Spacer()

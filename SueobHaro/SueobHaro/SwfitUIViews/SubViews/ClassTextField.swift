@@ -11,14 +11,14 @@ struct ClassTextField: View {
     @Binding var content: String
     
     var isFocused: FocusState<Bool>.Binding
-    var testFieldName: String
+    var placeholder: String
     
     var body: some View {
         ZStack {
             VStack(spacing: 4) {
                 TextField("", text: $content)
                     .placeholder(when: content.isEmpty) {
-                        Text("수업명을 입력하세요")
+                        Text(placeholder)
                             .foregroundColor(.greyscale4)
                             .font(Font(uiFont: .systemFont(for: .body2)))
                     }
