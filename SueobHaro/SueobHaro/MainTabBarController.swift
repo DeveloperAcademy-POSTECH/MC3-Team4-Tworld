@@ -22,7 +22,7 @@ class MainTabBarController: UITabBarController {
         
         let firstNC = UINavigationController(rootViewController: ViewController())
         let secondNC = UIHostingController(rootView: PlanView())
-        let thirdNC = UINavigationController.init(rootViewController: UIViewController())
+        let thirdNC = UIHostingController(rootView: ClassSettingView())
         
         self.viewControllers = [firstNC, secondNC, thirdNC]
         
