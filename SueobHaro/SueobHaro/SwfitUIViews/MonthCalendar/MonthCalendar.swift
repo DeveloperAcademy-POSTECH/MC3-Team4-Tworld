@@ -21,49 +21,46 @@ enum Quadrant: String, CaseIterable {
     }
 }
 
-struct ContentView: View {
+struct MonthCalendarView: View {
     
     @Environment(\.calendar) var calendar
     @State private var standardDate = Date()
     @State private var selectedDate = Date()
     
     var body: some View {
-        ZStack {
-            Color.spBlack.ignoresSafeArea()
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 0) {
-                    header
-                        .padding(.bottom, 2)
-                        .padding(.horizontal, 16)
-                        .background(Color.spBlack)
-                        .overlay(alignment: .bottom) {
-                            Rectangle()
-                                .fill(Color.greyscale5)
-                                .frame(height: 1)
-                        }
-                    
-                    CalendarView(now: $standardDate) { date in
-                        ZStack(alignment: .top) {
-                            Button {
-                                selectedDate = date
-                            } label: {
-                                cell(date: date)
-                            }
-                            .buttonStyle(.plain)
-                            
-                            todayIndicator(date: date)
-                        }
-                    }
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 0) {
+                header
+                    .padding(.bottom, 2)
                     .padding(.horizontal, 16)
-                    .padding(.vertical, 20)
-                    .background(.black)
-                    
-                    Spacer()
-                        .frame(height: .padding.toDifferentHierarchy)
-                    
-                    plan(date: selectedDate)
-                        .padding(.bottom, .padding.toDifferentHierarchy)
+                    .background(Color.spBlack)
+                    .overlay(alignment: .bottom) {
+                        Rectangle()
+                            .fill(Color.greyscale5)
+                            .frame(height: 1)
+                    }
+                
+                MonthView(now: $standardDate) { date in
+                    ZStack(alignment: .top) {
+                        Button {
+                            selectedDate = date
+                        } label: {
+                            cell(date: date)
+                        }
+                        .buttonStyle(.plain)
+                        
+                        todayIndicator(date: date)
+                    }
                 }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 20)
+                .background(.black)
+                
+                Spacer()
+                    .frame(height: .padding.toDifferentHierarchy)
+                
+                plan(date: selectedDate)
+                    .padding(.bottom, .padding.toDifferentHierarchy)
             }
         }
     }
@@ -161,7 +158,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        MonthCalendarView()
             .preferredColorScheme(.dark)
             .environment(\.locale, .init(identifier: "ko"))
     }
@@ -220,7 +217,7 @@ struct WeekView<DateView>: View where DateView: View {
     }
 }
 
-struct CalendarView<DateView>: View where DateView: View {
+struct MonthView<DateView>: View where DateView: View {
     
     @Environment(\.calendar) var calendar
     @Binding var now: Date
