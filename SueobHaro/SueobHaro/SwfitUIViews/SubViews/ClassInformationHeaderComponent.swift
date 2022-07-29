@@ -15,12 +15,20 @@ struct ClassInformationHeaderComponent: View {
     @Binding var classInfo: ClassInfo?
     
     var body: some View {
-        VStack(spacing: 0) {
-            Text(classTitle)
-                .font(Font(uiFont: .systemFont(for: .title2)))
-                .foregroundColor(Color(UIColor.theme.greyscale1))
-                .padding(.top, CGFloat.padding.inBox)
-                .padding(.bottom, CGFloat.padding.toText)
+        VStack(alignment: .leading,spacing: 0) {
+            HStack(spacing:0) {
+                Circle()
+                    .foregroundColor(.red)
+                    .frame(width: 8, height: 8)
+                    .padding(.trailing, CGFloat.padding.toText)
+                Text(classTitle)
+                    .font(Font(uiFont: .systemFont(for: .title2)))
+                    .foregroundColor(Color(UIColor.theme.greyscale1))
+                Spacer()
+            }
+            .padding(.top, CGFloat.padding.inBox)
+            .padding(.bottom, CGFloat.padding.toText)
+            .padding(.leading, CGFloat.padding.inBox)
             HStack(spacing: 0) {
                 if memberList.count > 0 {
                     ForEach(0..<memberList.count, id: \.self) { i in
@@ -38,6 +46,7 @@ struct ClassInformationHeaderComponent: View {
             }
             .padding(.top, 0)
             .padding(.bottom, CGFloat.padding.inBox)
+            .padding(.leading, CGFloat.padding.inBox)
             
             Divider()
                 .background(Color(UIColor.theme.greyscale6))
@@ -47,20 +56,24 @@ struct ClassInformationHeaderComponent: View {
                 .foregroundColor(Color(UIColor.theme.greyscale1))
                 .padding(.top, CGFloat.padding.inBox)
                 .padding(.bottom, CGFloat.padding.toText)
+                .padding(.leading, CGFloat.padding.inBox)
             Text("\(classInfo?.tuitionPer ?? 0)회마다 총 \(classInfo?.tuition ?? 0)원 받아요.")
                 .font(Font(uiFont: .systemFont(for: .title3)))
                 .foregroundColor(Color(UIColor.theme.greyscale1))
                 .padding(.bottom, CGFloat.padding.inBox)
+                .padding(.leading, CGFloat.padding.inBox)
         }
         .frame(width: UIScreen.main.bounds.size.width - 32)
         .background {
             RoundedRectangle(cornerRadius: 10)
-                .foregroundColor(Color(UIColor.theme.greyscale7))
+                .fill(Color.clear)
+//                .fill(.yellow)
                 .frame(width: UIScreen.main.bounds.size.width - 32, height: 182)
             RoundedRectangle(cornerRadius: 10)
-                .stroke(Color(UIColor.theme.spLightBlue), lineWidth: 1)
+                .stroke(Color(UIColor.theme.spTurkeyBlue), lineWidth: 1)
                 .frame(width: UIScreen.main.bounds.size.width - 32, height: 182)
         }
+
     }
     
     func getDate(date: Date) -> String {

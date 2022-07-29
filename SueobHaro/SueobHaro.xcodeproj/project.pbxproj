@@ -32,6 +32,7 @@
 		317AE6C42888648B00FDA57B /* ClassInformationHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6C32888648B00FDA57B /* ClassInformationHeaderComponent.swift */; };
 		317AE6C62888649B00FDA57B /* ClassInformationListComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6C52888649B00FDA57B /* ClassInformationListComponent.swift */; };
 		31EBB7FE2891920700502441 /* KeyboardHeightHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EBB7FD2891920700502441 /* KeyboardHeightHelper.swift */; };
+		31EBB8062893BD1000502441 /* ClassUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EBB8052893BD1000502441 /* ClassUpdateView.swift */; };
 		372B0EDC288FBA9B00482730 /* ClassAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EDB288FBA9B00482730 /* ClassAddView.swift */; };
 		372B0EDE288FD76400482730 /* ClassTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EDD288FD76400482730 /* ClassTextField.swift */; };
 		372B0EE0289106F500482730 /* DateFormatUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EDF289106F500482730 /* DateFormatUtil.swift */; };
@@ -88,6 +89,7 @@
 		317AE6C32888648B00FDA57B /* ClassInformationHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationHeaderComponent.swift; sourceTree = "<group>"; };
 		317AE6C52888649B00FDA57B /* ClassInformationListComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationListComponent.swift; sourceTree = "<group>"; };
 		31EBB7FD2891920700502441 /* KeyboardHeightHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightHelper.swift; sourceTree = "<group>"; };
+		31EBB8052893BD1000502441 /* ClassUpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassUpdateView.swift; sourceTree = "<group>"; };
 		372B0EDB288FBA9B00482730 /* ClassAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassAddView.swift; sourceTree = "<group>"; };
 		372B0EDD288FD76400482730 /* ClassTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassTextField.swift; sourceTree = "<group>"; };
 		372B0EDF289106F500482730 /* DateFormatUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatUtil.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				317AE6C12888647000FDA57B /* ClassInformationView.swift */,
 				372B0EDB288FBA9B00482730 /* ClassAddView.swift */,
 				372B0EE728914E1900482730 /* ClassExamAddView.swift */,
+				31EBB8052893BD1000502441 /* ClassUpdateView.swift */,
 			);
 			path = SwfitUIViews;
 			sourceTree = "<group>";
@@ -393,6 +396,7 @@
 				21BC991E28910A12000C5FCF /* PrevClassInfoCell.swift in Sources */,
 				372B0EE628914C7F00482730 /* DatePickerView.swift in Sources */,
 				37B0427628848FC00043E9CB /* DataManager.swift in Sources */,
+				31EBB8062893BD1000502441 /* ClassUpdateView.swift in Sources */,
 				31EBB7FE2891920700502441 /* KeyboardHeightHelper.swift in Sources */,
 				372B0EE42891429700482730 /* ClassTitleProgressView.swift in Sources */,
 				317AE6C42888648B00FDA57B /* ClassInformationHeaderComponent.swift in Sources */,

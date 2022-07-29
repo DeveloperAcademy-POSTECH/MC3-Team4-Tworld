@@ -45,12 +45,45 @@ struct ClassDetailView: View {
         VStack {
             ScrollView(showsIndicators: false) {
                 ScrollViewReader { proxy in
-                    NavigationLink(destination: ClassInformationView(classTitle: $classTitle, classInfo: $selectedClass ,memberList: $members)) {
-                        //수업정보와, 멤버 이름 들어감
-                        ClassHeaderComponent(classInfo: $selectedClass, memberList: $members)
-                            .padding(.horizontal, 16)
-                            .padding(.top, 12)
+
+                    //수업정보와, 멤버 이름 들어감
+                        
+                    VStack(spacing: 0) {
+                        HStack(spacing: 0) {
+                            Circle()
+                                .foregroundColor(.red)
+                                .frame(width: 8, height: 8)
+                                .padding(.trailing, CGFloat.padding.toText)
+                            Text(classTitle)
+                                .font(Font(uiFont: .systemFont(for: .title2)))
+                                .foregroundColor(.greyscale1)
+                            
+                            Spacer()
+                            NavigationLink(destination: ClassInformationView(classTitle: $classTitle, classInfo: $selectedClass ,memberList: $members)) {
+                                Text("더보기 +")
+                                    .font(Font(uiFont: .systemFont(for: .body1)))
+                                    .foregroundColor(.spLightBlue)
+                            }
+                        }
+                        .padding(.bottom, CGFloat.padding.toText)
+                        HStack(spacing: 0) {
+                            ForEach(0..<members.count, id: \.self) { i in
+                                Text(i != members.count - 1 ? "\(members[i].name ?? ""), " : "\(members[i].name ?? "")")
+                                    .font(Font(uiFont: .systemFont(for: .body1)))
+                                    .foregroundColor(.greyscale3)
+                            }
+                            
+                            Spacer()
+                        }
                     }
+                    .padding(.horizontal, 16)
+                    .padding(.top, CGFloat.padding.toTextComponents)
+                    Rectangle()
+                        .fill(Color(UIColor.theme.greyscale5))
+                        .frame(height:1)
+                        .frame(maxWidth:.infinity)
+                        
+                       
                     HStack {
                         Text("수업 노트")
                             .font(Font(uiFont: .systemFont(for: .title3)))
@@ -156,8 +189,10 @@ struct ClassDetailView: View {
         .navigationBarTitle(isNavigationTitle ? classTitle : "", displayMode: .inline)
 //        .navigationBarHidden(!isNavigationTitle)
         .toolbar {
-            NavigationLink("더보기", destination: ClassInformationView(classTitle: $classTitle, classInfo: $selectedClass ,memberList: $members))
-                .tint(.spLightBlue)
+            if isOffset > 60 {
+                NavigationLink("더보기", destination: ClassInformationView(classTitle: $classTitle, classInfo: $selectedClass ,memberList: $members))
+                    .tint(.spLightBlue)
+            }
         }
         .toolbar {
             // 키보드에 저장 버튼을 둔다

@@ -15,14 +15,18 @@ struct ClassMemberGridView: View {
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
+    @State var backgroundColor: Color = .spBlack
+    @State var strokeColor: Color = .greyscale6
+    
     
     var body: some View {
         LazyVGrid(columns: columns, spacing: .padding.toComponents) {
             ForEach(memberNames.indices, id: \.self) { idx in
                 ZStack {
                     RoundedRectangle(cornerRadius: 10)
-                        .strokeBorder(Color.greyscale6, lineWidth: 1)
-                        .background(Color.spBlack)
+                        .fill(backgroundColor)
+                    RoundedRectangle(cornerRadius: 10)
+                        .strokeBorder(strokeColor, lineWidth: 1)
                     HStack(spacing: 0) {
                         VStack(alignment: .leading, spacing: 0) {
                             Text(memberNames[idx])
