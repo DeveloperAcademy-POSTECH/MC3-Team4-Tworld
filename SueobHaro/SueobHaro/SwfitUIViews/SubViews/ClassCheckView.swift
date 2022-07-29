@@ -13,6 +13,7 @@ struct ClassCheckView: View {
     @Binding var isDayPicked: [String:Bool]
     @Binding var classTimeInfo: [String:[String:Date?]]
     @Binding var memberNames: [String]
+    @Binding var memberSchools: [String]
     @Binding var memberPhoneNumbers: [String]
     @Binding var tuition: String
     @Binding var tuitionPer: String
@@ -102,12 +103,7 @@ struct ClassCheckView: View {
                             .background(Color.spBlack)
                         VStack(spacing: CGFloat.padding.inBox) {
                             ForEach(memberNames.indices, id: \.self) { idx in
-                                ClassInformationListComponent(firstText: memberNames[idx], secondText: memberPhoneNumbers[idx])
-                                if idx != memberNames.count - 1 {
-                                    Rectangle()
-                                        .frame(height: 1)
-                                        .foregroundColor(Color.greyscale6)
-                                }
+                                ClassMemberGridView(memberNames: memberNames, memberSchools: memberSchools, memberPhoneNumbers: memberPhoneNumbers)
                             }
                         }.padding(.vertical, CGFloat.padding.inBox)
                     }
@@ -136,8 +132,10 @@ struct ClassCheckView: View {
                         }
                         .frame(height: 52)
                     })
+                    .padding(.bottom, CGFloat.padding.toComponents)
                 }
-            }.padding(.horizontal, CGFloat.padding.margin)
+            }
+            .padding(.horizontal, CGFloat.padding.margin)
         }
         .onAppear {
             classDay = isDayPicked.allKeys(forValue: true)
