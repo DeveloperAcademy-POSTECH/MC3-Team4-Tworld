@@ -34,9 +34,15 @@
 		317AE6C22888647000FDA57B /* ClassInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6C12888647000FDA57B /* ClassInformationView.swift */; };
 		317AE6C42888648B00FDA57B /* ClassInformationHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6C32888648B00FDA57B /* ClassInformationHeaderComponent.swift */; };
 		317AE6C62888649B00FDA57B /* ClassInformationListComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6C52888649B00FDA57B /* ClassInformationListComponent.swift */; };
+		31EBB7FE2891920700502441 /* KeyboardHeightHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EBB7FD2891920700502441 /* KeyboardHeightHelper.swift */; };
 		372B0EDC288FBA9B00482730 /* ClassAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EDB288FBA9B00482730 /* ClassAddView.swift */; };
 		372B0EDE288FD76400482730 /* ClassTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EDD288FD76400482730 /* ClassTextField.swift */; };
 		372B0EE0289106F500482730 /* DateFormatUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EDF289106F500482730 /* DateFormatUtil.swift */; };
+		372B0EE22891420600482730 /* NavBarBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EE12891420600482730 /* NavBarBackButton.swift */; };
+		372B0EE42891429700482730 /* ClassTitleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EE32891429700482730 /* ClassTitleProgressView.swift */; };
+		372B0EE628914C7F00482730 /* DatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EE528914C7F00482730 /* DatePickerView.swift */; };
+		372B0EE828914E1900482730 /* ClassExamAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EE728914E1900482730 /* ClassExamAddView.swift */; };
+		372B0F3D289260D900482730 /* ClassMemberGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0F3C289260D900482730 /* ClassMemberGridView.swift */; };
 		37B0421A288277E00043E9CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B04219288277E00043E9CB /* AppDelegate.swift */; };
 		37B0421C288277E00043E9CB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0421B288277E00043E9CB /* SceneDelegate.swift */; };
 		37B0421E288277E00043E9CB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0421D288277E00043E9CB /* ViewController.swift */; };
@@ -87,9 +93,15 @@
 		317AE6C12888647000FDA57B /* ClassInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationView.swift; sourceTree = "<group>"; };
 		317AE6C32888648B00FDA57B /* ClassInformationHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationHeaderComponent.swift; sourceTree = "<group>"; };
 		317AE6C52888649B00FDA57B /* ClassInformationListComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationListComponent.swift; sourceTree = "<group>"; };
+		31EBB7FD2891920700502441 /* KeyboardHeightHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightHelper.swift; sourceTree = "<group>"; };
 		372B0EDB288FBA9B00482730 /* ClassAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassAddView.swift; sourceTree = "<group>"; };
 		372B0EDD288FD76400482730 /* ClassTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassTextField.swift; sourceTree = "<group>"; };
 		372B0EDF289106F500482730 /* DateFormatUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatUtil.swift; sourceTree = "<group>"; };
+		372B0EE12891420600482730 /* NavBarBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarBackButton.swift; sourceTree = "<group>"; };
+		372B0EE32891429700482730 /* ClassTitleProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassTitleProgressView.swift; sourceTree = "<group>"; };
+		372B0EE528914C7F00482730 /* DatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerView.swift; sourceTree = "<group>"; };
+		372B0EE728914E1900482730 /* ClassExamAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassExamAddView.swift; sourceTree = "<group>"; };
+		372B0F3C289260D900482730 /* ClassMemberGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassMemberGridView.swift; sourceTree = "<group>"; };
 		37B04216288277E00043E9CB /* SueobHaro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SueobHaro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37B04219288277E00043E9CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37B0421B288277E00043E9CB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -183,6 +195,7 @@
 				317AE6B728883D1400FDA57B /* ClassDetailView.swift */,
 				317AE6C12888647000FDA57B /* ClassInformationView.swift */,
 				372B0EDB288FBA9B00482730 /* ClassAddView.swift */,
+				372B0EE728914E1900482730 /* ClassExamAddView.swift */,
 			);
 			path = SwfitUIViews;
 			sourceTree = "<group>";
@@ -200,6 +213,10 @@
 				317AE6C32888648B00FDA57B /* ClassInformationHeaderComponent.swift */,
 				317AE6C52888649B00FDA57B /* ClassInformationListComponent.swift */,
 				372B0EDD288FD76400482730 /* ClassTextField.swift */,
+				372B0EE12891420600482730 /* NavBarBackButton.swift */,
+				372B0EE32891429700482730 /* ClassTitleProgressView.swift */,
+				372B0EE528914C7F00482730 /* DatePickerView.swift */,
+				372B0F3C289260D900482730 /* ClassMemberGridView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -307,6 +324,7 @@
 				37B0431D288856E40043E9CB /* NavigationUtil.swift */,
 				372B0EDF289106F500482730 /* DateFormatUtil.swift */,
 				211D244E289276EB0012F8C7 /* CalendarUtil.swift */,
+				31EBB7FD2891920700502441 /* KeyboardHeightHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -391,8 +409,13 @@
 				37B0421E288277E00043E9CB /* ViewController.swift in Sources */,
 				211D244F289276EB0012F8C7 /* CalendarUtil.swift in Sources */,
 				21BC991E28910A12000C5FCF /* PrevScheduleInfoCell.swift in Sources */,
+				21BC991E28910A12000C5FCF /* PrevClassInfoCell.swift in Sources */,
+				372B0EE628914C7F00482730 /* DatePickerView.swift in Sources */,
 				37B0427628848FC00043E9CB /* DataManager.swift in Sources */,
+				31EBB7FE2891920700502441 /* KeyboardHeightHelper.swift in Sources */,
+				372B0EE42891429700482730 /* ClassTitleProgressView.swift in Sources */,
 				317AE6C42888648B00FDA57B /* ClassInformationHeaderComponent.swift in Sources */,
+				372B0EE22891420600482730 /* NavBarBackButton.swift in Sources */,
 				317AE6BE28883D4700FDA57B /* ClassScheduleCardComponent.swift in Sources */,
 				37B042B728854A290043E9CB /* Members+CoreDataProperties.swift in Sources */,
 				317AE6852886919200FDA57B /* ClassDeatilViewController.swift in Sources */,
@@ -408,6 +431,8 @@
 				37B04252288434D50043E9CB /* SueobHaro.xcdatamodeld in Sources */,
 				317AE6BA28883D2700FDA57B /* ClassHeaderComponent.swift in Sources */,
 				37B042B928854A290043E9CB /* ClassIteration+CoreDataProperties.swift in Sources */,
+				372B0F3D289260D900482730 /* ClassMemberGridView.swift in Sources */,
+				372B0EE828914E1900482730 /* ClassExamAddView.swift in Sources */,
 				317AE6C028884E9D00FDA57B /* ClassUpdateModalView.swift in Sources */,
 				214707DF288FBDF9004E49D9 /* UnderlineSegmentedControl.swift in Sources */,
 				37B042CD28854F010043E9CB /* ClassInfo+CoreDataProperties.swift in Sources */,
@@ -570,7 +595,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VT69ZW2DRC;
+				DEVELOPMENT_TEAM = A44U4A2F2G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SueobHaro/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -597,7 +622,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VT69ZW2DRC;
+				DEVELOPMENT_TEAM = A44U4A2F2G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SueobHaro/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

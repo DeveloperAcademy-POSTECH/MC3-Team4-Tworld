@@ -23,6 +23,7 @@ struct ClassTextField: View {
                             .font(Font(uiFont: .systemFont(for: .body2)))
                     }
                     .focused(isFocused)
+                    .font(Font(uiFont: .systemFont(for: .body2)))
                     .foregroundColor(.greyscale1)
                     .padding(.leading, CGFloat.padding.margin)
                 Rectangle()

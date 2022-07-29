@@ -21,6 +21,7 @@ struct ClassAddView: View {
                                                          "토":["start":nil, "end":nil],
                                                          "일":["start":nil, "end":nil]]
     @State var memberNames: [String] = [""]
+    @State var memberSchools: [String] = [""]
     @State var memberPhoneNumbers: [String] = [""]
     @State var tuition: String = ""
     @State var tuitionPer: String = ""
@@ -43,45 +44,23 @@ struct ClassAddView: View {
                                     viewMode = viewMode.previousMode
                                 }
                             }, label: {
-                                HStack(spacing: 0) {
-                                    Label {
-                                        Text("뒤로 가기")
-                                            .font(.body)
-                                            .foregroundColor(.spLightBlue)
-                                            .padding(-5)
-                                    } icon: {
-                                        Image(systemName: "chevron.backward")
-                                            .font(.headline)
-                                            .foregroundColor(.spLightBlue)
-                                    }
-                                }
+                                NavBarBackButton()
                             })
                             .padding([.top, .leading], 8)
                             Spacer()
                         }
-                        HStack(spacing: 0) {
-                            Text(viewMode.title ?? "")
-                                .font(Font(uiFont: .systemFont(for: .title1)))
-                                .foregroundColor(.greyscale1)
-                                .padding(.top, CGFloat.padding.toComponents)
-                                .padding(.horizontal, CGFloat.padding.margin)
-                            Spacer()
-                        }
-                        Rectangle()
-                            .foregroundColor(.spLightBlue)
-                            .frame(width: tuitionPageDone ? UIScreen.main.bounds.width : viewMode.progressBarWidth, height: CGFloat(3), alignment: .leading)
+                        ClassTitleProgressView(title: viewMode.title ?? "", progressBarWidth: tuitionPageDone ? UIScreen.main.bounds.width : viewMode.progressBarWidth)
                     }
                 }
-                Spacer()
                 switch viewMode {
                 case .name:
                     ClassNameView(viewMode: $viewMode, className: $className, firstClassDate: $firstClassDate, isDayPicked: $isDayPicked, classTimeInfo: $classTimeInfo)
                 case .members:
-                    ClassMembersView(viewMode: $viewMode, memberNames: $memberNames, memberPhoneNumbers: $memberPhoneNumbers)
+                    ClassMembersView(viewMode: $viewMode, memberNames: $memberNames, memberSchools: $memberSchools, memberPhoneNumbers: $memberPhoneNumbers)
                 case .tuition:
                     ClassTuitionView(viewMode: $viewMode, tuition: $tuition, tuitionPer: $tuitionPer, tuitionPageDone: $tuitionPageDone)
                 case .check:
-                    ClassCheckView(className: $className, firstClassDate: $firstClassDate, isDayPicked: $isDayPicked, classTimeInfo: $classTimeInfo, memberNames: $memberNames, memberPhoneNumbers: $memberPhoneNumbers, tuition: $tuition, tuitionPer: $tuitionPer, dismissAction: dismissAction)
+                    ClassCheckView(className: $className, firstClassDate: $firstClassDate, isDayPicked: $isDayPicked, classTimeInfo: $classTimeInfo, memberNames: $memberNames, memberSchools: $memberSchools, memberPhoneNumbers: $memberPhoneNumbers, tuition: $tuition, tuitionPer: $tuitionPer, dismissAction: dismissAction)
                 }
                 
             }

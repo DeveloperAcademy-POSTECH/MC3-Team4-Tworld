@@ -11,7 +11,7 @@ struct ClassInformationHeaderComponent: View {
     @State var date: Date = Date()
     
     @Binding var classTitle: String
-    @Binding var memberList: [String]
+    @Binding var memberList: [Members]
     @Binding var classInfo: ClassInfo?
     
     var body: some View {
@@ -24,7 +24,7 @@ struct ClassInformationHeaderComponent: View {
             HStack(spacing: 0) {
                 if memberList.count > 0 {
                     ForEach(0..<memberList.count, id: \.self) { i in
-                        Text(memberList[i])
+                        Text(memberList[i].name ?? "")
                             .font(Font(uiFont: .systemFont(for: .body1)))
                             .foregroundColor(Color(UIColor.theme.greyscale3))
                         if i != memberList.count - 1 {
