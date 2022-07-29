@@ -74,8 +74,10 @@ struct ClassExamAddView: View {
                     let startDateBinding = Binding(
                         get: { startDate },
                         set: {
-                            examDay = []
-                            examInfo = []
+                            withAnimation(.spring()) {
+                                examDay = []
+                                examInfo = []
+                            }
                             startDate = $0
                         }
                     )
@@ -94,14 +96,18 @@ struct ClassExamAddView: View {
                         get: { endDate },
                         set: {
                             endDate = $0
-                            examDay = []
-                            examInfo = []
+                            withAnimation(.spring()) {
+                                examDay = []
+                                examInfo = []
+                            }
                             let startDateInt = Int(DateFormatUtil.classDateFormatter(time: startDate))
                             let endDateInt = Int(DateFormatUtil.classDateFormatter(time: endDate))
                             guard startDateInt! < endDateInt! else { return }
                             for day in startDateInt!..<(endDateInt!+1) {
-                                examDay.append(String(day))
-                                examInfo.append("")
+                                withAnimation(.spring()) {
+                                    examDay.append(String(day))
+                                    examInfo.append("")
+                                }
                             }
                         }
                     )
