@@ -39,6 +39,8 @@ struct ClassDetailView: View {
     // 네비게이션 바 타이틀 노출 여부
     @State var isNavigationTitle: Bool = false
     
+    var dismissAction: (() -> Void)
+    
     
     
     var body: some View {
@@ -200,13 +202,13 @@ struct ClassDetailView: View {
                 Button(action: {
                     if let index = selectedIndex {
                         if let progress = classSchedules[index].progress, !progress.isEmpty {
-                            
-                            DispatchQueue.main.async {
-                                DataManager.shared.updateSchedule(target: classSchedules[index], count: nil, endTime: nil, startTime: nil, isCanceled: nil, progress: nil)
+                            if progress.count <= 100 {
+                                DispatchQueue.main.async {
+                                    DataManager.shared.updateSchedule(target: classSchedules[index], count: nil, endTime: nil, startTime: nil, isCanceled: nil, progress: nil)
+                                }
+                                selectedIndex = nil
                             }
-                            selectedIndex = nil
-                            
-                            
+
                         } else {
 //                            print("값을 입력한 후 저장해 주세요")
                         }
@@ -255,15 +257,13 @@ struct ClassDetailView: View {
 //            print("Change")
             
         }
+        .onDisappear{
+            print("in DetailView")
+            dismissAction()
+        }
         
     }
     
-}
-
-struct ClassDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        ClassDetailView()
-    }
 }
 
 
