@@ -25,7 +25,6 @@ struct MonthCalendarView: View {
                         Button {
                             withAnimation(.spring()) {
                                 vm.selectedDate = date
-                                print(vm.examInfos)
                             }
                         } label: {
                             cell(date: date)
@@ -35,7 +34,6 @@ struct MonthCalendarView: View {
                         todayIndicator(date: date)
                     }
                 }
-                .frame(height: 400)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 20)
                 .background(.black)
@@ -263,7 +261,7 @@ struct YearView<DateView>: View where DateView: View {
     }
     
     private var months: [Date] {
-        guard let monthInterval = calendar.dateInterval(of: .year, for: now)
+        guard let monthInterval = calendar.dateInterval(of: .month, for: now)
         else { return [] }
         return calendar.generateDates(
             inside: monthInterval,
@@ -272,11 +270,8 @@ struct YearView<DateView>: View where DateView: View {
     }
     
     var body: some View {
-        TabView {
-            ForEach(months, id: \.self) { month in
-                MonthView(month: month, content: self.content)
-            }
+        ForEach(months, id: \.self) { month in
+            MonthView(month: month, content: self.content)
         }
-        .tabViewStyle(.page(indexDisplayMode: .never))
     }
 }

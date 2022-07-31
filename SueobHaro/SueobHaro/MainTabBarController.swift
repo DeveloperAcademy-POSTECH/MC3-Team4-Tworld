@@ -9,7 +9,7 @@ import UIKit
 import SwiftUI
 
 class MainTabBarController: UITabBarController {
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let appearance = UITabBarAppearance()
