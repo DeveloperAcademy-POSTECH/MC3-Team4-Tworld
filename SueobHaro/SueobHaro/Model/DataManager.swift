@@ -102,7 +102,7 @@ class DataManager {
         let dates = Calendar.current.generateDates(inside: DateInterval(start: startDate, end: endDate),
                                        matching: DateComponents(hour: 0, minute: 0, second: 0))
         for (i, date) in dates.enumerated() {
-            var flag: String?
+            var flag: String? = nil
             if i == 0 {
                 flag = "start"
             } else if i == dates.count-1 {

@@ -68,6 +68,27 @@ struct MonthCalendarView: View {
                 .padding(.leading, 16)
             
             VStack(spacing: .padding.toComponents) {
+                ForEach(vm.examInfos[vm.selectedDate] ?? []) { examInfo in
+                    HStack(spacing: 10) {
+                        Capsule()
+                            .fill(Color.spLightBlue)
+                            .frame(width: 3)
+                        
+                        Text(examInfo.examPeriod?.school?.name ?? "" + " 시험")
+                            .font(Font(uiFont: .systemFont(for: .title3)))
+                        Text(examInfo.text ?? "")
+                            .font(Font(uiFont: .systemFont(for: .caption)))
+                            .foregroundColor(Color.spBlack)
+                            .padding(8)
+                            .background{
+                                Capsule()
+                                    .fill(
+                                        LinearGradient(gradient: Gradient(colors: [Color.spLightGradientLeft, Color.spLightGradientRight]), startPoint: .topTrailing, endPoint: .bottomLeading)
+                                    )
+                            }
+                        Spacer()
+                    }
+                }
                 ForEach(vm.schedules[vm.selectedDate] ?? []) { schedule in
                     ScheduleInfoView(schedule: schedule)
                 }
@@ -107,6 +128,8 @@ struct MonthCalendarView: View {
                         ForEach(vm.examInfos[date] ?? []) { info in
                             Rectangle()
                                 .fill(Color.spLightBlue.opacity(0.3))
+                                .cornerRadius(radius: 12
+                                              ,corners: info.flag == "start" ? [.topLeft, .bottomLeft] : info.flag == "end" ? [.topRight, .bottomRight] : [])
                         }
                     }
                 )
