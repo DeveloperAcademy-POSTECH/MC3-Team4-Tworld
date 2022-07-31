@@ -20,7 +20,7 @@ struct MonthCalendarView: View {
                             .frame(height: 1)
                     }
                 
-                MonthView(now: $standardDate) { date in
+                YearView(now: $standardDate) { date in
                     ZStack(alignment: .top) {
                         Button {
                             withAnimation(.spring()) {
@@ -35,6 +35,7 @@ struct MonthCalendarView: View {
                         todayIndicator(date: date)
                     }
                 }
+                .frame(height: 400)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 20)
                 .background(.black)
@@ -47,6 +48,11 @@ struct MonthCalendarView: View {
             }
         }
         .onAppear{
+            vm.fetchPlan()
+            vm.fetchExamPeriod()
+        }
+        .onChange(of: standardDate) { newValue in
+            vm.selectedDate = standardDate
             vm.fetchPlan()
             vm.fetchExamPeriod()
         }
@@ -219,16 +225,16 @@ struct WeekView<DateView>: View where DateView: View {
 struct MonthView<DateView>: View where DateView: View {
     
     @Environment(\.calendar) var calendar
-    @Binding var now: Date
+    let month: Date
     let content: (Date) -> DateView
     
-    init(now: Binding<Date>, @ViewBuilder content: @escaping (Date) -> DateView) {
-        self._now = now
+    init(month: Date, @ViewBuilder content: @escaping (Date) -> DateView) {
+        self.month = month
         self.content = content
     }
     
     private var weeks: [Date] {
-        guard let monthInterval = calendar.dateInterval(of: .month, for: now)
+        guard let monthInterval = calendar.dateInterval(of: .month, for: month)
         else { return [] }
         return calendar.generateDates(
             inside: monthInterval,
@@ -242,5 +248,35 @@ struct MonthView<DateView>: View where DateView: View {
                 WeekView(week: week, content: self.content)
             }
         }
+    }
+}
+
+struct YearView<DateView>: View where DateView: View {
+    
+    @Environment(\.calendar) var calendar
+    @Binding var now: Date
+    let content: (Date) -> DateView
+    
+    init(now: Binding<Date>, @ViewBuilder content: @escaping (Date) -> DateView) {
+        self._now = now
+        self.content = content
+    }
+    
+    private var months: [Date] {
+        guard let monthInterval = calendar.dateInterval(of: .year, for: now)
+        else { return [] }
+        return calendar.generateDates(
+            inside: monthInterval,
+            matching: DateComponents(day: 1, hour: 0, minute: 0, second: 0)
+        )
+    }
+    
+    var body: some View {
+        TabView {
+            ForEach(months, id: \.self) { month in
+                MonthView(month: month, content: self.content)
+            }
+        }
+        .tabViewStyle(.page(indexDisplayMode: .never))
     }
 }
