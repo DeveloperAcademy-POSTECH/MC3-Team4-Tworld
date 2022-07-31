@@ -21,8 +21,8 @@ class MainTabBarController: UITabBarController {
         self.tabBar.scrollEdgeAppearance = tabBar.standardAppearance
         
         let firstNC = UINavigationController(rootViewController: ViewController())
-        let secondNC = UIHostingController(rootView: WeeklyCalendarView())
-        let thirdNC = UINavigationController.init(rootViewController: UIViewController())
+        let secondNC = UIHostingController(rootView: PlanView())
+        let thirdNC = UIHostingController(rootView: ClassSettingView())
         
         self.viewControllers = [firstNC, secondNC, thirdNC]
         
