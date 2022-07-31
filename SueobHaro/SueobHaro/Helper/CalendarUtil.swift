@@ -43,6 +43,18 @@ extension Calendar {
 }
 
 extension Date {
+    
+    var toDay: Date {
+        let calendar = Calendar.current
+        return calendar.date(bySettingHour: 0, minute: 0, second: 0, of: self) ?? self
+    }
+    
+    func nextDay() -> Date {
+        let calendar = Calendar.current
+        let newDate = calendar.date(byAdding: .day, value: 1, to: self) ?? self
+        return newDate
+    }
+    
     func isSameDay(date: Date) -> Bool {
         return Calendar.current.isDate(self, inSameDayAs: date)
     }

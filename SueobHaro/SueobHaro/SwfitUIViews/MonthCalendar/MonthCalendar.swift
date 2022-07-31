@@ -45,6 +45,7 @@ struct MonthCalendarView: View {
                         Button {
                             withAnimation(.spring()) {
                                 vm.selectedDate = date
+                                print(vm.schedules)
                             }
                         } label: {
                             cell(date: date)
@@ -65,9 +66,14 @@ struct MonthCalendarView: View {
                     .padding(.bottom, .padding.toDifferentHierarchy)
             }
         }
+        .onAppear{
+            vm.fetchPlan()
+//            vm.fetchSchedule()
+//            vm.fetchExamPeriod()
+        }
         .onChange(of: vm.selectedDate) { _ in
-            vm.fetchSchedule()
-            vm.fetchExamPeriod()
+//            vm.fetchSchedule()
+//            vm.fetchExamPeriod()
         }
     }
     
@@ -83,7 +89,7 @@ struct MonthCalendarView: View {
                 .padding(.leading, 16)
             
             VStack(spacing: .padding.toComponents) {
-                ForEach(vm.schedule) { schedule in
+                ForEach(vm.schedules[vm.selectedDate] ?? []) { schedule in
                     ScheduleInfoView(schedule: schedule)
                 }
             }
@@ -119,10 +125,14 @@ struct MonthCalendarView: View {
                             EmptyView()
                         }
                         
-                        if vm.examInfos.filter({ date.isSameDay(date: $0.date ?? Date()) }).count != 0 {
-                            Rectangle()
-                                .fill(Color.spLightBlue.opacity(0.3))
-                        }
+//                        ForEach(vm.examPeriods.keys) { period in
+//                            Rectangle()
+//                                .fill(Color.spLightBlue.opacity(0.3))
+//                        }
+//                        if vm.examInfos.filter({ date.isSameDay(date: $0.date ?? Date()) }).count != 0 {
+//                            Rectangle()
+//                                .fill(Color.spLightBlue.opacity(0.3))
+//                        }
                     }
                 )
                 .foregroundColor(.greyscale1)

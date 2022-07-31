@@ -102,8 +102,7 @@ struct PlanView: View {
     
     private func fetch() {
         showExamAddView = false
-        vm.fetchSchedule()
-        vm.fetchExamPeriod()
+        vm.fetchPlan()
     }
 }
 

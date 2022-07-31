@@ -102,19 +102,26 @@ class DataManager {
         let dates = Calendar.current.generateDates(inside: DateInterval(start: startDate, end: endDate),
                                        matching: DateComponents(hour: 0, minute: 0, second: 0))
         for (i, date) in dates.enumerated() {
-            addExamInfo(examPeriod: newExamPeriod, date: date, text: infos[i])
+            var flag: String?
+            if i == 0 {
+                flag = "start"
+            } else if i == dates.count-1 {
+                flag = "end"
+            }
+            addExamInfo(examPeriod: newExamPeriod, date: date, text: infos[i], flag: flag)
         }
         let school = addSchool(name: name)
         newExamPeriod.school = school
         try? container.viewContext.save()
     }
     
-    func addExamInfo(examPeriod: ExamPeriod, date: Date, text: String) -> Void {
+    func addExamInfo(examPeriod: ExamPeriod, date: Date, text: String, flag: String?) -> Void {
         let newExamInfo = ExamInfo(context: container.viewContext)
         newExamInfo.id = UUID()
         newExamInfo.text = text
         newExamInfo.examPeriod = examPeriod
         newExamInfo.date = date
+        newExamInfo.flag = flag
         try? container.viewContext.save()
     }
     
