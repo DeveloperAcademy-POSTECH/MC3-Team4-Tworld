@@ -52,13 +52,14 @@ class DataManager {
                       schoolString: memberSchool[idx]
             )
         }
+        var preSchedule: Schedule? = nil
         for idx in 0..<day.count {
-            addSchedule(count: 1, endTime: endTime[idx], startTime: startTime[idx], isCanceled: false, progress: "", classInfo: newClassInfo)
+            preSchedule = addSchedule(count: 1, endTime: endTime[idx], startTime: startTime[idx], isCanceled: false, progress: "", classInfo: newClassInfo, preSchedule: preSchedule)
             
         }
     }
     
-    func addSchedule(count: Int16, endTime: Date, startTime: Date, isCanceled: Bool, progress: String, classInfo: ClassInfo) -> Void {
+    func addSchedule(count: Int16, endTime: Date, startTime: Date, isCanceled: Bool, progress: String, classInfo: ClassInfo, preSchedule: Schedule?) -> Schedule {
         let newSchedule = Schedule(context: container.viewContext)
         newSchedule.id = UUID()
         newSchedule.count = count
@@ -67,7 +68,10 @@ class DataManager {
         newSchedule.isCanceled = isCanceled
         newSchedule.progress = progress
         newSchedule.classInfo = classInfo
+        newSchedule.preSchedule = preSchedule
         try? container.viewContext.save()
+        
+        return newSchedule
     }
     
     func addMember(name: String, phoneNumber: String, classInfo: ClassInfo, schoolString: String) -> Void {
@@ -100,7 +104,7 @@ class DataManager {
         let newExamPeriod = ExamPeriod(context: container.viewContext)
         newExamPeriod.id = UUID()
         let dates = Calendar.current.generateDates(inside: DateInterval(start: startDate, end: endDate),
-                                       matching: DateComponents(hour: 0, minute: 0, second: 0))
+                                                   matching: DateComponents(hour: 0, minute: 0, second: 0))
         for (i, date) in dates.enumerated() {
             addExamInfo(examPeriod: newExamPeriod, date: date, text: infos[i])
         }
@@ -274,7 +278,7 @@ class DataManager {
             return []
         }
     }
-
+    
 }
 
 // MARK: DataModel
