@@ -41,3 +41,9 @@ extension Calendar {
         return numberOfDays.day! + 1 // <1>
     }
 }
+
+extension Date {
+    func isSameDay(date: Date) -> Bool {
+        return Calendar.current.isDate(self, inSameDayAs: date)
+    }
+}

@@ -65,9 +65,9 @@ struct MonthCalendarView: View {
                     .padding(.bottom, .padding.toDifferentHierarchy)
             }
         }
-        .onChange(of: vm.selectedDate) { date in
-            vm.fetchSchedule(date: date)
-            vm.fetchExamPeriod(date: date)
+        .onChange(of: vm.selectedDate) { _ in
+            vm.fetchSchedule()
+            vm.fetchExamPeriod()
         }
     }
     
@@ -119,7 +119,7 @@ struct MonthCalendarView: View {
                             EmptyView()
                         }
                         
-                        if vm.examInfos.filter({ $0.date == date }).count != 0 {
+                        if vm.examInfos.filter({ date.isSameDay(date: $0.date ?? Date()) }).count != 0 {
                             Rectangle()
                                 .fill(Color.spLightBlue.opacity(0.3))
                         }

@@ -114,6 +114,7 @@ class DataManager {
         newExamInfo.id = UUID()
         newExamInfo.text = text
         newExamInfo.examPeriod = examPeriod
+        newExamInfo.date = date
         try? container.viewContext.save()
     }
     

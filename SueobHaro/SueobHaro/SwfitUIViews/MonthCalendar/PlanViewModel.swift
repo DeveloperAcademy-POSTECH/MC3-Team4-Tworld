@@ -15,9 +15,9 @@ class PlanViewModel: ObservableObject {
     @Published var schedule: [Schedule] = []
     @Published var examInfos: [ExamInfo] = []
     
-    func fetchSchedule(date: Date) {
+    func fetchSchedule() {
         let request = Schedule.fetchRequest()
-        let filter = NSPredicate(format: "startTime = %@", date as NSDate)
+        let filter = NSPredicate(format: "startTime = %@", selectedDate as NSDate)
         let sort = NSSortDescriptor(keyPath: \Schedule.startTime, ascending: true)
         request.predicate = filter
         request.sortDescriptors = [sort]
@@ -29,15 +29,17 @@ class PlanViewModel: ObservableObject {
         }
     }
     
-    func fetchExamPeriod(date: Date) {
+    func fetchExamPeriod() {
         let request = ExamPeriod.fetchRequest()
 //        guard let monthInterval = Calendar.current.dateInterval(of: .month, for: date) else { return }
         do {
             let results = try manager.container.viewContext.fetch(request)
+            examInfos = []
             for result in results {
                 guard let infos = result.examInfos?.allObjects as? [ExamInfo] else { return }
                 examInfos.append(contentsOf: infos)
             }
+            print(examInfos.map{ $0.date?.description(with: .current) })
         } catch {
             print(error)
         }
