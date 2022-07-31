@@ -46,6 +46,7 @@
 		372B0EE628914C7F00482730 /* DatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EE528914C7F00482730 /* DatePickerView.swift */; };
 		372B0EE828914E1900482730 /* ClassExamAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EE728914E1900482730 /* ClassExamAddView.swift */; };
 		372B0F3D289260D900482730 /* ClassMemberGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0F3C289260D900482730 /* ClassMemberGridView.swift */; };
+		372B0F4B2893D24900482730 /* ClassSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0F4A2893D24900482730 /* ClassSettingView.swift */; };
 		37B0421A288277E00043E9CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B04219288277E00043E9CB /* AppDelegate.swift */; };
 		37B0421C288277E00043E9CB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0421B288277E00043E9CB /* SceneDelegate.swift */; };
 		37B0421E288277E00043E9CB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0421D288277E00043E9CB /* ViewController.swift */; };
@@ -108,6 +109,7 @@
 		372B0EE528914C7F00482730 /* DatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerView.swift; sourceTree = "<group>"; };
 		372B0EE728914E1900482730 /* ClassExamAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassExamAddView.swift; sourceTree = "<group>"; };
 		372B0F3C289260D900482730 /* ClassMemberGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassMemberGridView.swift; sourceTree = "<group>"; };
+		372B0F4A2893D24900482730 /* ClassSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassSettingView.swift; sourceTree = "<group>"; };
 		37B04216288277E00043E9CB /* SueobHaro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SueobHaro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37B04219288277E00043E9CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37B0421B288277E00043E9CB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				372B0EDB288FBA9B00482730 /* ClassAddView.swift */,
 				372B0EE728914E1900482730 /* ClassExamAddView.swift */,
 				31EBB8052893BD1000502441 /* ClassUpdateView.swift */,
+				372B0F4A2893D24900482730 /* ClassSettingView.swift */,
 			);
 			path = SwfitUIViews;
 			sourceTree = "<group>";
@@ -466,6 +469,7 @@
 				37B0431528868DF80043E9CB /* ClassMembersView.swift in Sources */,
 				21BC992028911245000C5FCF /* MainTabBarController.swift in Sources */,
 				37B042CC28854F010043E9CB /* ClassInfo+CoreDataClass.swift in Sources */,
+				372B0F4B2893D24900482730 /* ClassSettingView.swift in Sources */,
 				21977B4C28868E0700BAE020 /* NextScheduleInfoCell.swift in Sources */,
 				37B042B528854A290043E9CB /* Schedule+CoreDataProperties.swift in Sources */,
 				372B0EDC288FBA9B00482730 /* ClassAddView.swift in Sources */,

@@ -84,6 +84,7 @@ struct ClassNameView: View {
                             }.onTapGesture {
                                 isDayPicked[day]?.toggle()
                                 selectedDay = day
+                                guard isDayPicked[day]! else { return }
                                 withAnimation(.spring()){
                                     halfModal.toggle()
                                 }
