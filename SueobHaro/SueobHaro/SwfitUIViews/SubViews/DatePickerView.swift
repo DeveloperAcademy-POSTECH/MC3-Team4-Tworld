@@ -9,11 +9,16 @@ import SwiftUI
 
 struct DatePickerView: View {
     @Binding var date: Date
+    @State var calendarId: UUID = UUID()
     
     var body: some View {
         DatePicker("", selection: $date, in: Date()..., displayedComponents: .date)
+            .id(calendarId)
             .changeTextColor(.spLightBlue)
             .labelsHidden()
+            .onChange(of: date) { _ in
+                calendarId = UUID()
+            }
     }
 }
 
