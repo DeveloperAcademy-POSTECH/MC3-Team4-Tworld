@@ -1,26 +1,6 @@
 
 import SwiftUI
 
-enum Quadrant: String, CaseIterable {
-    case first
-    case second
-    case third
-    case fourth
-    
-    var area: CGPoint {
-        switch self {
-        case .first:
-            return .init(x: 1, y: 1)
-        case .second:
-            return .init(x: -1, y: 1)
-        case .third:
-            return .init(x: -1, y: -1)
-        case .fourth:
-            return .init(x: 1, y: -1)
-        }
-    }
-}
-
 struct MonthCalendarView: View {
     
     @Environment(\.calendar) var calendar
@@ -45,7 +25,7 @@ struct MonthCalendarView: View {
                         Button {
                             withAnimation(.spring()) {
                                 vm.selectedDate = date
-                                print(vm.schedules)
+                                print(vm.examInfos)
                             }
                         } label: {
                             cell(date: date)
@@ -68,12 +48,7 @@ struct MonthCalendarView: View {
         }
         .onAppear{
             vm.fetchPlan()
-//            vm.fetchSchedule()
-//            vm.fetchExamPeriod()
-        }
-        .onChange(of: vm.selectedDate) { _ in
-//            vm.fetchSchedule()
-//            vm.fetchExamPeriod()
+            vm.fetchExamPeriod()
         }
     }
     
@@ -125,24 +100,22 @@ struct MonthCalendarView: View {
                             EmptyView()
                         }
                         
-//                        ForEach(vm.examPeriods.keys) { period in
-//                            Rectangle()
-//                                .fill(Color.spLightBlue.opacity(0.3))
-//                        }
-//                        if vm.examInfos.filter({ date.isSameDay(date: $0.date ?? Date()) }).count != 0 {
-//                            Rectangle()
-//                                .fill(Color.spLightBlue.opacity(0.3))
-//                        }
+                        ForEach(vm.examInfos[date] ?? []) { info in
+                            Rectangle()
+                                .fill(Color.spLightBlue.opacity(0.3))
+                        }
                     }
                 )
                 .foregroundColor(.greyscale1)
             ZStack {
-                ForEach(Quadrant.allCases, id: \.rawValue) { q in
-                    Circle()
-                        .fill()
-                        .frame(width: 8, height: 8)
-                        .offset(x: q.area.x * 6.5, y: q.area.y * 6.5)
-                        .opacity(0)
+                if let schedules = vm.schedules[date] {
+                    ForEach(Array(schedules.enumerated()), id: \.offset) { i, schedule in
+                        Circle()
+                            .fill(Color(schedule.classInfo?.color ?? ""))
+                            .frame(width: 8, height: 8)
+                            .offset(x: calIndicatorOffset(i).x * 6.5,
+                                    y: calIndicatorOffset(i).y * 6.5)
+                    }
                 }
             }
             .frame(width: 6.5+6.5+4+4, height: 6.5+6.5+4+4)
@@ -176,6 +149,19 @@ struct MonthCalendarView: View {
                         .frame(maxWidth: .infinity)
                 }
             }
+        }
+    }
+    
+    private func calIndicatorOffset(_ index: Int) -> CGPoint {
+        switch index {
+        case 0:
+            return .init(x: -1, y: -1)
+        case 1:
+            return .init(x: 1, y: -1)
+        case 2:
+            return .init(x: -1, y: 1)
+        default:
+            return .init(x: 1, y: 1)
         }
     }
 }

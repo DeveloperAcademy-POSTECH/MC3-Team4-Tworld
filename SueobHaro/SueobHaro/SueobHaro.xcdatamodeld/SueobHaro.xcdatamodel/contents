@@ -59,7 +59,7 @@
         <element name="ExamInfo" positionX="-243" positionY="-90" width="128" height="104"/>
         <element name="ExamPeriod" positionX="-8.29296875" positionY="148.078125" width="128" height="74"/>
         <element name="Members" positionX="-450.91015625" positionY="-44.20703125" width="128" height="118"/>
-        <element name="Schedule" positionX="236.25390625" positionY="-71.26953125" width="128" height="43"/>
+        <element name="Schedule" positionX="236.25390625" positionY="-71.26953125" width="128" height="134"/>
         <element name="School" positionX="286.6171875" positionY="245.328125" width="128" height="89"/>
     </elements>
 </model>

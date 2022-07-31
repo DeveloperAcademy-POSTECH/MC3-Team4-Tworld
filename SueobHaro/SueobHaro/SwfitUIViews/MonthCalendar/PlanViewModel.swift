@@ -12,9 +12,8 @@ class PlanViewModel: ObservableObject {
     let manager = DataManager.shared
     
     @Published var selectedDate = Date().toDay
-    @Published var schedule: [Schedule] = []
-    @Published var examPeriods: [Int:[ExamInfo]] = [:]
     @Published var schedules: [Date:[Schedule]] = [:]
+    @Published var examInfos: [Date:[ExamInfo]] = [:]
     
     func fetchPlan() {
         guard let monthInterval = Calendar.current.dateInterval(of: .month, for: selectedDate) else { return }
@@ -34,31 +33,20 @@ class PlanViewModel: ObservableObject {
         }
     }
     
-//    func fetchSchedule() {
-//        let request = Schedule.fetchRequest()
-//        let filter = NSPredicate(format: "startTime = %@", selectedDate as NSDate)
-//        let sort = NSSortDescriptor(keyPath: \Schedule.startTime, ascending: true)
-//        request.predicate = filter
-//        request.sortDescriptors = [sort]
-//        do {
-//            let result = try manager.container.viewContext.fetch(request)
-//            schedule = result
-//        } catch {
-//            print(error)
-//        }
-//    }
-    
-//    func fetchExamPeriod() {
-//        let request = ExamPeriod.fetchRequest()
-//        do {
-//            let results = try manager.container.viewContext.fetch(request)
-//            examPeriods = [:]
-//            for result in results {
-//                guard let infos = result.examInfos?.allObjects as? [ExamInfo] else { return }
-//                examPeriods[result] = infos
-//            }
-//        } catch {
-//            print(error)
-//        }
-//    }
+    func fetchExamPeriod() {
+        let request = ExamInfo.fetchRequest()
+        do {
+            let results = try manager.container.viewContext.fetch(request)
+            examInfos = [:]
+            for info in results {
+                let date = info.date ?? Date().toDay
+                var prevInfos = examInfos[date] ?? []
+                prevInfos.append(info)
+                examInfos.updateValue(prevInfos, forKey: date)
+            }
+        } catch {
+            print(error)
+        }
+        print(examInfos)
+    }
 }
