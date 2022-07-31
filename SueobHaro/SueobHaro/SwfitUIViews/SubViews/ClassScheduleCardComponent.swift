@@ -84,15 +84,29 @@ struct ClassScheduleCardComponent: View {
                 .padding(.horizontal, CGFloat.padding.inBox)
                 .padding(.top, CGFloat.padding.inBox)
                 .padding(.bottom, CGFloat.padding.inBox)
+                ZStack {
+                    TextEditor(text: $inputText)
+                        .foregroundColor(isFocused ? .greyscale1 : selectedIndex == myIndex ? .greyscale1 : Color.clear)
+                        .focused($isFocused)
+    //                    .background(isFocusing ? .greyscale7 : Color.clear)
+                    if isFocused {
+                        VStack {
+                            Spacer()
+                            HStack {
+                                Spacer()
+                                Text("\(inputText.count)/100자")
+                                    .font(Font(uiFont: .systemFont(for: .body1)))
+                                    .foregroundColor(inputText.count > 100 ? .red:.greyscale4)
+                            }
+                        }
+                    }
+                    
+                }
+                .frame(height: myIndex == selectedIndex ? 146.34 : 0)
+                .padding(.horizontal, CGFloat.padding.inBox)
+                .padding(.top, CGFloat.padding.inBox)
+                .padding(.bottom, CGFloat.padding.inBox)
                 
-                TextEditor(text: $inputText)
-                    .foregroundColor(isFocused ? .greyscale1 : selectedIndex == myIndex ? .greyscale1 : Color.clear)
-                    .focused($isFocused)
-//                    .background(isFocusing ? .greyscale7 : Color.clear)
-                    .frame(height: myIndex == selectedIndex ? 146.34 : 0)
-                    .padding(.horizontal, CGFloat.padding.inBox)
-                    .padding(.top, CGFloat.padding.inBox)
-                    .padding(.bottom, CGFloat.padding.inBox)
                     
                 
             }
