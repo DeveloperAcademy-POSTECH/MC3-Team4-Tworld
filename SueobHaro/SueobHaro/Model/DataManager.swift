@@ -232,7 +232,13 @@ class DataManager {
     // MARK: Fetch
     func fetchSchedules(section: Section) -> [Schedule] {
         let request = Schedule.fetchRequest()
-        let filter = NSPredicate(format: section == .next ? "endTime > %@" : "endTime < %@" , Date() as NSDate)
+        var filter: NSPredicate
+        if section == .next {
+            filter = NSPredicate(format: "endTime > %@ AND endTime < %@", Date() as NSDate, Date().nextDay() as NSDate)
+        } else {
+            filter = NSPredicate(format: "endTime < %@ AND progress == %@" , Date() as NSDate, "")
+        }
+        
         var sort = NSSortDescriptor(keyPath: \Schedule.startTime, ascending: true)
         if section == .prev {
             sort = NSSortDescriptor(keyPath: \Schedule.endTime, ascending: false)
