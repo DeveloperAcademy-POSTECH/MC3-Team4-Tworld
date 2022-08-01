@@ -23,11 +23,7 @@ struct WeeklyNumberView: View {
                             .font(Font(UIFont.systemFont(for: .body1)))
                             .fontWeight(.bold)
                             .foregroundColor(.greyscale1)
-                        Text(" ")
-                            .font(Font(UIFont.systemFont(for: .body1)))
-                    }
-                    
-                        
+                    }   
                 }
                 .frame(width: frameWidt)
             }

@@ -106,7 +106,7 @@ struct ClassInformationView: View {
         let columnLayout = Array(repeating: GridItem(), count: 2)
         LazyVGrid(columns: columnLayout) {
             ForEach(members) { data in
-                NavigationLink(destination: PersonalMemberView()) {
+                NavigationLink(destination: PersonalMemberView(member: data)) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(backgroundColor)

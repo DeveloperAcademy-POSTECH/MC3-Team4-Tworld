@@ -132,7 +132,7 @@ extension ViewController: UICollectionViewDelegate {
                 self.collectionView.reloadData()
             })), animated: true)
         } else {
-            self.navigationController?.pushViewController(UIHostingController(rootView: ClassDetailView(selectedClass: schedules[indexPath.row].classInfo, selectedSchedule: schedules[indexPath.row], dismissAction: {
+            self.navigationController?.pushViewController(UIHostingController(rootView: ClassDetailView(selectedClass: schedules[indexPath.row].classInfo, selectedSchedule: schedules[indexPath.row], isOut: true, dismissAction: {
                 self.collectionView.reloadData()
             })), animated: true)
         }

@@ -14,9 +14,12 @@ struct PersonalMemberView: View {
     @State var isShow: Bool = false
     @FocusState var isFocused: Bool
     @State var isShowHalfMOdal: Bool = false
+    @State var isEtcDeleteAlertShowed: Bool = false
     
-    let pointArray = [80, 70, 60, 70, 90, 100, 90, 95]
-    let examArray = ["3월", "중간고사", "모의고사", "모의고사", "기말고사", "중간고사", "모의고사", "수능"]
+    @State var pointArray = [80, 70, 60, 70, 90, 100, 90, 95]
+    @State var examArray = ["3월", "중간고사", "모의고사", "모의고사", "기말고사", "중간고사", "모의고사", "수능"]
+    @State var recordHistory = ["지리에 대한 지식이 아무것도 없다", "디자인 감각이 좋다", "항상 졸리다", "항상 배가고프다"]
+    @State var selectedRecordIndex = 0
     let pointPerHeight:CGFloat = 195 / 100
     
     @State var examTitle:String = ""
@@ -24,12 +27,14 @@ struct PersonalMemberView: View {
     @FocusState var isExamTitleFocused: Bool
     @FocusState var isExamPointFocused: Bool
     
+    @State var member: Members?
+    
     var body: some View {
         ZStack {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: CGFloat.padding.inBox) {
                     HStack(spacing: 0) {
-                        Text("사샤")
+                        Text(member?.name ?? "NoName")
                             .font(Font(UIFont.systemFont(for: .title2)))
                             .foregroundColor(.greyscale1)
                         Spacer()
@@ -37,19 +42,19 @@ struct PersonalMemberView: View {
                             .foregroundColor(.mint)
                             .frame(width: 8, height: 8)
                             .padding(.trailing, CGFloat.padding.toText)
-                        Text("한국지리 기초반")
+                        Text(member?.classInfo?.name ?? "No Class")
                             .font(Font(UIFont.systemFont(for: .body1)))
                             .foregroundColor(.greyscale1)
                     }
                     VStack (spacing:0) {
                         HStack {
-                            Text("태장고등학교")
+                            Text(member?.school?.name ?? "No School")
                                 .font(Font(UIFont.systemFont(for: .body1)))
                                 .foregroundColor(.greyscale3)
                             Spacer()
                         }
                         HStack {
-                            Text("010-2014-4586")
+                            Text(member?.phoneNumber ?? "010-2014-4586")
                                 .font(Font(UIFont.systemFont(for: .body1)))
                                 .foregroundColor(.greyscale3)
                             Spacer()
@@ -74,43 +79,50 @@ struct PersonalMemberView: View {
                                     .foregroundColor(.spLightBlue)
                             })
                         }
-                        
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            ZStack {
-                                HStack(spacing: 0) {
-                                        ForEach(0..<8) { i in
-                                            VStack(spacing: 0) {
-                                                ZStack {
-                                                    Color.clear
-                                                        .frame(width: 90, height: 195)
-                                                    Rectangle()
-                                                        .stroke()
-                                                        .offset(x: 45)
+                        ScrollViewReader { proxy in
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                ZStack {
+                                    HStack(spacing: 0) {
+                                        ForEach(0..<pointArray.count, id: \.self) { i in
+                                                VStack(spacing: 0) {
+                                                    ZStack {
+                                                        Color.clear
+                                                            .frame(width: 90, height: 195)
+                                                        Rectangle()
+                                                            .stroke()
+                                                            .offset(x: 45)
+                                                    }
+                                                    .padding(.bottom, CGFloat.padding.toComponents)
+                                                    Text("\(pointArray[i])")
+                                                        .font(.system(size: 14))
+                                                        .font(Font(UIFont.systemFont(for: .body1)))
+                                                        .foregroundColor(.greyscale1)
+                                                        .background(Capsule().fill(Color.greyscale6).cornerRadius(12).frame(width:49, height: 24))
+                                                        .padding(.bottom, CGFloat.padding.toText)
+                                                    Text(examArray[i])
+                                                        .font(.system(size: 12))
+                                                        .font(Font(UIFont.systemFont(for: .body2)))
+                                                        .foregroundColor(.greyscale4)
                                                 }
-                                                .padding(.bottom, CGFloat.padding.toComponents)
-                                                Text("\(pointArray[i])")
-                                                    .font(.system(size: 14))
-                                                    .font(Font(UIFont.systemFont(for: .body1)))
-                                                    .foregroundColor(.greyscale1)
-                                                    .background(Capsule().fill(Color.greyscale6).cornerRadius(12).frame(width:49, height: 24))
-                                                    .padding(.bottom, CGFloat.padding.toText)
-                                                Text(examArray[i])
-                                                    .font(.system(size: 12))
-                                                    .font(Font(UIFont.systemFont(for: .body2)))
-                                                    .foregroundColor(.greyscale4)
+                                                .id(i)
+                                                .offset(x: -45)
                                             }
-                                            .offset(x: -45)
-                                        }
+                                    }
+                                    PointChartView(data: $pointArray)
+                                        .offset(y: -50)
                                 }
-                                PointChartView()
-                                    .offset(y: -50)
+                                .onAppear{
+                                    proxy.scrollTo(pointArray.count - 1, anchor: .trailing)
+                                }
+                                .onChange(of: pointArray) { _ in
+                                    proxy.scrollTo(pointArray.count - 1, anchor: .trailing)
+                                }
+                                
                             }
-                            
-                            
-                            
+                            .padding(.top, CGFloat.padding.toTextComponents)
+                            .padding(.bottom, CGFloat.padding.toDifferentHierarchy)
                         }
-                        .padding(.top, CGFloat.padding.toTextComponents)
-                        .padding(.bottom, CGFloat.padding.toDifferentHierarchy)
+                        
             
                         
                     }
@@ -154,7 +166,7 @@ struct PersonalMemberView: View {
                             }
                         })
                         
-                        ForEach(0..<5) { _ in
+                        ForEach(recordHistory.indices, id: \.self) { index in
                             VStack(spacing: CGFloat.padding.toText) {
                                 HStack {
                                     Text("2022.7.14 (목)")
@@ -162,12 +174,18 @@ struct PersonalMemberView: View {
                                         .font(Font(UIFont.systemFont(for: .body2)))
                                         .foregroundColor(.greyscale4)
                                     Spacer()
-                                    Image(systemName: "trash")
-                                        .foregroundColor(.greyscale1)
-                                        .frame(width: 18, height: 18)
+                                    Button(action: {
+                                        isEtcDeleteAlertShowed = true
+                                        selectedRecordIndex = index
+                                    }, label: {
+                                        Image(systemName: "trash")
+                                            .foregroundColor(.greyscale1)
+                                            .frame(width: 18, height: 18)
+                                    })
+                                    
                                 }
                                 HStack {
-                                    Text("지리에 대한 지식이 아무것도 없다.")
+                                    Text(recordHistory[index])
                                         .font(Font(UIFont.systemFont(for: .body2)))
                                         .foregroundColor(.greyscale1)
                                     Spacer()
@@ -240,7 +258,7 @@ struct PersonalMemberView: View {
             ToolbarItemGroup(placement: .keyboard) {
                 Button(action: {
                     if isShow {
-                        print("특이사항 저장하기")
+                        recordHistory.insert(inputText, at: 0)
                         inputText = ""
                         isShow = false
                         isFocused = false
@@ -252,10 +270,15 @@ struct PersonalMemberView: View {
                             isExamTitleFocused = true
                             isExamPointFocused = false
                         } else if (!examTitle.isEmpty && !examPoint.isEmpty) {
-                            print("저장하기")
+                            withAnimation{
+                                pointArray.append(Int(examPoint)!)
+                                examArray.append(examTitle)
+                            }
                             isShowHalfMOdal = false
                             examPoint = ""
                             examTitle = ""
+                            isExamPointFocused = false
+                            isExamTitleFocused = false
                         }
                     }
                     
@@ -316,6 +339,17 @@ struct PersonalMemberView: View {
         .onAppear {
             UITextView.appearance().backgroundColor = .clear
         }
+        
+        .alert("저장하지 않고 나가기", isPresented: $isEtcDeleteAlertShowed) {
+            Button("취소", role: .cancel) {}
+            Button("삭제", role: .destructive) {
+                recordHistory.remove(at: selectedRecordIndex)
+            }
+        } message: {
+            Text("기록한 내용을 정말 삭제하시겠습니까?🥲")
+        }
+      
+        
     }
     
     
@@ -333,7 +367,7 @@ struct PersonalMemberView: View {
                 }
                 
                 
-                ClassTextField(content: $examTitle, isFocused: $isExamTitleFocused, placeholder: "3월 모의고사, 2학기 중간고사.")
+                ClassTextField(content: $examTitle, isFocused: $isExamTitleFocused, placeholder: "3월 모의고사, 2학기 중간고사.", marginValue: .zero)
                     .padding(.bottom, CGFloat.padding.toDifferentHierarchy)
                 HStack {
                     Text("몇 점인가요?")
@@ -343,7 +377,7 @@ struct PersonalMemberView: View {
                     Spacer()
                 }
                 HStack {
-                    ClassTextField(content: $examPoint, isFocused: $isExamPointFocused, placeholder: "점수를 입력해주세요.", keyboardType: .numberPad)
+                    ClassTextField(content: $examPoint, isFocused: $isExamPointFocused, placeholder: "점수를 입력해주세요.", keyboardType: .numberPad, marginValue: .zero)
                         .frame(width: UIScreen.main.bounds.width / 2)
                         .padding(.bottom, CGFloat.padding.toDifferentHierarchy)
                     Spacer()

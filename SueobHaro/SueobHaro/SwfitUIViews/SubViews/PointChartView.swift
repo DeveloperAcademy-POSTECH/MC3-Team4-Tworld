@@ -10,35 +10,34 @@ import SwiftUI
 struct PointChartView: View {
     
     @State var cgFloatdata: [CGFloat] = []
-    @State var data: [Int] = [80, 70, 60, 70, 90, 100, 90, 95]
+    @Binding var data: [Int]
     
     var body: some View {
         GeometryReader { proxy in
             ZStack {
+                
                 let height = proxy.size.height
                 let width = proxy.size.width / CGFloat(data.count)
                 
                 let maxPoint = (cgFloatdata.max() ?? 0) + 50
                 
                 let point = cgFloatdata.enumerated().compactMap { item -> CGPoint in
-                    
+                    // 최대 높이와의 비율
                     let progress = item.element / maxPoint
+                    // 높이 계산
                     let pathHeight = progress * height
-                    
+                    // x좌표 이동
                     let pathWidth = width * CGFloat(item.offset)
-                    
                     return CGPoint(x: pathWidth, y: -pathHeight + height)
                 }
                 
                 Path{ path in
-                    
                     path.move(to: CGPoint(x: 0, y: 0))
-                    
                     path.addLines(point)
                 }
                 .strokedPath(StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round))
-                
-                LinearGradient(gradient: Gradient(colors: [.spTurkeyBlue.opacity(0), .spTurkeyBlue, .spLightBlue, .spLightBlue]), startPoint: .bottom, endPoint: .top)
+
+                LinearGradient(gradient: Gradient(colors: [.spTurkeyBlue.opacity(0), .spTurkeyBlue.opacity(0.7), .spLightBlue.opacity(0.75), .spLightBlue.opacity(0.8)]), startPoint: .bottom, endPoint: .top)
                     .clipShape(
                         Path{ path in
                             path.move(to: CGPoint(x: 0, y: 0))
@@ -55,11 +54,8 @@ struct PointChartView: View {
         .onAppear{
             cgFloatdata = data.map{ CGFloat($0) }
         }
-    }
-}
-
-struct PointChartView_Previews: PreviewProvider {
-    static var previews: some View {
-        PointChartView()
+        .onChange(of: data) { _ in
+            cgFloatdata = data.map{ CGFloat($0) }
+        }
     }
 }
