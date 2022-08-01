@@ -59,7 +59,7 @@ struct WeeklyCalendarView: View {
                 
             }
             //Background 색상 확인 필요
-            .background(Color.greyscale6.edgesIgnoringSafeArea(.top))
+            .background(Color.spBlack.edgesIgnoringSafeArea(.top))
                 ZStack {
                     CalendarBackgroundView(height: $defaultHeight)
                     HStack(spacing:0) {
@@ -76,7 +76,7 @@ struct WeeklyCalendarView: View {
                                         VStack {
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: 6)
-                                                    .fill(Color.greyscale6)
+                                                    .fill(Color.spBlack)
                                                     .frame(height: float[0])
                                                 RoundedRectangle(cornerRadius: 6)
                                                     .stroke(Color.spLightBlue, lineWidth: 1)

@@ -39,7 +39,6 @@ struct CalendarNumberView: View {
                                         .frame(width: 48, height: 36)
                                         .foregroundColor(.spTurkeyBlue)
                                         .rotationEffect(.degrees(90))
-                                        
                                 }
                                 .frame(width: width * 0.13, height: 48)
                             } else {
