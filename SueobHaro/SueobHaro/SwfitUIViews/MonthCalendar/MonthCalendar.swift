@@ -80,17 +80,21 @@ struct MonthCalendarView: View {
                         
                         Text(examInfo.examPeriod?.school?.name ?? "" + " 시험")
                             .font(Font(uiFont: .systemFont(for: .title3)))
-                        Text(examInfo.text ?? "")
-                            .font(Font(uiFont: .systemFont(for: .caption)))
-                            .foregroundColor(Color.spBlack)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 6)
-                            .background{
-                                Capsule()
-                                    .fill(
-                                        LinearGradient(gradient: Gradient(colors: [Color.spLightGradientLeft, Color.spLightGradientRight]), startPoint: .topTrailing, endPoint: .bottomLeading)
-                                    )
-                            }
+                        
+                        if let text = examInfo.text, !text.isEmpty {
+                            Text(text)
+                                .font(Font(uiFont: .systemFont(for: .caption)))
+                                .foregroundColor(Color.spBlack)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 6)
+                                .background{
+                                    Capsule()
+                                        .fill(
+                                            LinearGradient(gradient: Gradient(colors: [Color.spLightGradientLeft, Color.spLightGradientRight]), startPoint: .topTrailing, endPoint: .bottomLeading)
+                                        )
+                                }
+                        }
+                        
                         Spacer()
                     }
                 }
