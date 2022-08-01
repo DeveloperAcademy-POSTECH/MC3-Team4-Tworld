@@ -49,6 +49,16 @@ extension Date {
         return calendar.date(bySettingHour: 0, minute: 0, second: 0, of: self) ?? self
     }
     
+    var hour: Int {
+        let hour = Calendar.current.component(.hour, from: Date())
+        return hour
+    }
+    
+    var minute: Int {
+        let minute = Calendar.current.component(.hour, from: Date())
+        return hour
+    }
+    
     func nextDay() -> Date {
         let calendar = Calendar.current
         let newDate = calendar.date(byAdding: .day, value: 1, to: self) ?? self

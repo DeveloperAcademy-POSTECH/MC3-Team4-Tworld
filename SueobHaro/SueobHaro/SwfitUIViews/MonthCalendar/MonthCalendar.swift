@@ -70,6 +70,10 @@ struct MonthCalendarView: View {
             VStack(spacing: .padding.toComponents) {
                 ForEach(vm.examInfos[vm.selectedDate] ?? []) { examInfo in
                     HStack(spacing: 10) {
+                        
+                        Spacer()
+                            .frame(width: 64 - 10)
+                        
                         Capsule()
                             .fill(Color.spLightBlue)
                             .frame(width: 3)
@@ -79,7 +83,8 @@ struct MonthCalendarView: View {
                         Text(examInfo.text ?? "")
                             .font(Font(uiFont: .systemFont(for: .caption)))
                             .foregroundColor(Color.spBlack)
-                            .padding(8)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 6)
                             .background{
                                 Capsule()
                                     .fill(
@@ -89,8 +94,32 @@ struct MonthCalendarView: View {
                         Spacer()
                     }
                 }
-                ForEach(vm.schedules[vm.selectedDate] ?? []) { schedule in
-                    ScheduleInfoView(schedule: schedule)
+                
+                if let schedules = vm.schedules[vm.selectedDate], !schedules.isEmpty {
+                    ForEach(schedules) { schedule in
+                        ScheduleInfoView(schedule: schedule)
+                    }
+                } else {
+                    HStack(spacing: 0) {
+                        Spacer()
+                            .frame(width: 64)
+                        Text("오늘은 일정이 존재하지 않아요.")
+                            .font(Font(uiFont: .systemFont(for: .body2)))
+                            .padding(.padding.inBox)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(
+                                ZStack {
+                                    Rectangle()
+                                        .fill(Color.greyscale6)
+                                        .cornerRadius(radius: 10, corners: [.topLeft, .bottomLeft])
+                                    
+                                    Rectangle()
+                                        .fill(Color.greyscale7)
+                                        .cornerRadius(radius: 10, corners: [.topLeft, .bottomLeft])
+                                        .padding([.vertical, .leading], 1)
+                                }
+                            )
+                    }
                 }
             }
         }
@@ -111,7 +140,7 @@ struct MonthCalendarView: View {
                 .foregroundColor(
                     Calendar.current.isDate(vm.selectedDate, inSameDayAs: date) ? .greyscale7 : .greyscale1
                 )
-                .padding(.vertical, 2)
+                .padding(.vertical, 4)
                 .frame(maxWidth: .infinity)
                 .background(
                     ZStack {
@@ -120,7 +149,6 @@ struct MonthCalendarView: View {
                                 .fill(
                                     LinearGradient(gradient: Gradient(colors: [Color.spLightGradientLeft, Color.spLightGradientRight]), startPoint: .topTrailing, endPoint: .bottomLeading)
                                 )
-                                .padding(.horizontal, 8)
                         } else {
                             EmptyView()
                         }
