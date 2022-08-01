@@ -101,7 +101,12 @@ struct MonthCalendarView: View {
                 
                 if let schedules = vm.schedules[vm.selectedDate], !schedules.isEmpty {
                     ForEach(schedules) { schedule in
-                        ScheduleInfoView(schedule: schedule)
+                        NavigationLink {
+                            ClassDetailView(selectedClass: schedule.classInfo)
+                        } label: {
+                            ScheduleInfoView(schedule: schedule)
+                        }
+                        .buttonStyle(.plain)
                     }
                 } else {
                     HStack(spacing: 0) {
@@ -198,6 +203,23 @@ struct MonthCalendarView: View {
                 Text("\(String(year))년 \(month)월")
                     .font(Font(uiFont: .systemFont(for: .title2)))
                 Spacer()
+                
+                HStack(spacing: 12) {
+                    Image(systemName: "chevron.left.circle")
+                        .onTapGesture {
+                            withAnimation(.spring()) {
+                                standardDate = Calendar.current.date(byAdding: .month, value: -1, to: standardDate) ?? standardDate
+                            }
+                        }
+                    Image(systemName: "chevron.right.circle")
+                        .onTapGesture {
+                            withAnimation(.spring()) {
+                                standardDate = Calendar.current.date(byAdding: .month, value: 1, to: standardDate) ?? standardDate
+                            }
+                        }
+                }
+                .font(Font(uiFont: .systemFont(for: .title3)))
+                .foregroundColor(.greyscale4)
             }
             
             HStack{

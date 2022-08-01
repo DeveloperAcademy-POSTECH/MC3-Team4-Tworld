@@ -15,6 +15,7 @@ enum CalendarCase: String {
 struct PlanView: View {
     @StateObject private var vm = PlanViewModel()
     @State private var calendarCase: CalendarCase = .month
+    @State private var showClassAddView = false
     @State private var showExamAddView = false
     
     var body: some View {
@@ -24,6 +25,15 @@ struct PlanView: View {
                 NavigationLink(isActive: $showExamAddView,
                                destination: {ClassExamAddView(){fetch()}},
                                label: {EmptyView()})
+                
+                NavigationLink(isActive: $showClassAddView,
+                               destination: {
+                    ClassAddView(dismissAction: {
+                        showClassAddView = false
+                        fetch()
+                    })
+                },
+                label: {EmptyView()})
                 
                 Color.spBlack.ignoresSafeArea()
                 
@@ -36,7 +46,7 @@ struct PlanView: View {
                         
                         Menu {
                             Button {
-                                print("hi")
+                                showClassAddView = true
                             } label: {
                                 Label("수업 추가", systemImage: "book")
                             }

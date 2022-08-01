@@ -37,6 +37,7 @@ struct ScheduleInfoView: View {
                                 Capsule()
                                     .fill(LinearGradient(colors: [.spLightGradientLeft, .spLightGradientRight], startPoint: .leading, endPoint: .trailing))
                             )
+                            .padding(.trailing, 16)
                     }
                     
                     Text(DateFormatUtil.scheduleDateFormatter(schedule.startTime ?? Date(), schedule.endTime ?? Date()))
