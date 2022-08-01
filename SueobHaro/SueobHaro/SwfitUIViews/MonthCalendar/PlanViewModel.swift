@@ -47,6 +47,5 @@ class PlanViewModel: ObservableObject {
         } catch {
             print(error)
         }
-        print(examInfos)
     }
 }

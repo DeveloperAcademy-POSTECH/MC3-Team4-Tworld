@@ -9,6 +9,29 @@ import Foundation
 
 extension Calendar {
     
+    func generateDatesAfter(
+        inside interval: DateInterval,
+        matching components: DateComponents
+    ) -> [Date] {
+        var dates: [Date] = []
+        
+        enumerateDates(
+            startingAfter: interval.start,
+            matching: components,
+            matchingPolicy: .nextTime
+        ) { date, _, stop in
+            if let date = date {
+                if date < interval.end {
+                    dates.append(date)
+                } else {
+                    stop = true
+                }
+            }
+        }
+        
+        return dates
+    }
+    
     func generateDates(
         inside interval: DateInterval,
         matching components: DateComponents
@@ -67,5 +90,28 @@ extension Date {
     
     func isSameDay(date: Date) -> Bool {
         return Calendar.current.isDate(self, inSameDayAs: date)
+    }
+}
+
+extension String {
+    func toWeekOfDayNum() -> Int {
+        switch self {
+        case "월":
+            return 2
+        case "화":
+            return 3
+        case "수":
+            return 4
+        case "목":
+            return 5
+        case "금":
+            return 6
+        case "토":
+            return 7
+        case "일":
+            return 1
+        default:
+            return 2
+        }
     }
 }

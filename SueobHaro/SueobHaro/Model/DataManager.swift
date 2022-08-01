@@ -52,8 +52,17 @@ class DataManager {
                       schoolString: memberSchool[idx]
             )
         }
-        for idx in 0..<day.count {
-            addSchedule(count: 1, endTime: endTime[idx], startTime: startTime[idx], isCanceled: false, progress: "", classInfo: newClassInfo)
+        for (i, d) in day.enumerated() {
+            let lastDate = Calendar.current.date(byAdding: .month, value: 6, to: firstDate.toDay) ?? firstDate.toDay
+            let dates = Calendar.current.generateDatesAfter(inside: DateInterval(start: firstDate.toDay, end: lastDate), matching: DateComponents(weekday: d.toWeekOfDayNum()))
+            for (j, date) in dates.enumerated() {
+                var start = Calendar.current.date(byAdding: .hour, value: startTime[i].hour, to: date)!
+                start = Calendar.current.date(byAdding: .minute, value: startTime[i].minute, to: start)!
+                var end = Calendar.current.date(byAdding: .hour, value: endTime[i].hour, to: date)!
+                end = Calendar.current.date(byAdding: .minute, value: endTime[i].minute, to: end)!
+                addSchedule(count: Int16(j+1), endTime: end, startTime: start, isCanceled: false, progress: "", classInfo: newClassInfo)
+            }
+            print(dates.map{ $0.description(with: .current) })
             
         }
     }
@@ -263,3 +272,4 @@ enum DataModel {
     case classIteration
     case school
 }
+
