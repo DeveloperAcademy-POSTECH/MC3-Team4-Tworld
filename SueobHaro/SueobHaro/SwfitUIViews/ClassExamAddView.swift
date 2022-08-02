@@ -11,25 +11,13 @@ struct ClassExamAddView: View {
     @State private var navBarHidden = true
     @State private var schoolName: String = ""
     @State private var startDate = Date()
-    @State private var endDate = Date() {
-        didSet {
-            print("끝날짜 변경")
-            examDay = []
-            examInfo = []
-            let startDateInt = Int(DateFormatUtil.classDateFormatter(time: startDate))
-            let endDateInt = Int(DateFormatUtil.classDateFormatter(time: endDate))
-            guard startDateInt! < endDateInt! else { return }
-            for day in startDateInt!..<(endDateInt!+1) {
-                examDay.append(String(day))
-                examInfo.append("")
-            }
-        }
-    }
+    @State private var endDate = Date()
     @State private var examDay: [String] = []
     @State private var examInfo: [String] = []
     
     @FocusState var isSchoolFocused: Bool
     
+    let day: TimeInterval = 60*60*24
     var dismissAction: (() -> Void)
     
     private func isDone() -> Bool {
@@ -38,7 +26,7 @@ struct ClassExamAddView: View {
     }
     
     private func save() {
-        DataManager.shared.addExamPeriod(name: schoolName, start: startDate, end: endDate, infos: examInfo)
+        DataManager.shared.addExamPeriod(name: schoolName, start: startDate.toDay, end: endDate.toDay, infos: examInfo)
     }
     
     var body: some View {
@@ -104,13 +92,14 @@ struct ClassExamAddView: View {
                                 examDay = []
                                 examInfo = []
                             }
-                            let startDateInt = Int(DateFormatUtil.classDateFormatter(time: startDate))
-                            let endDateInt = Int(DateFormatUtil.classDateFormatter(time: endDate))
-                            guard startDateInt! < endDateInt! else { return }
-                            for day in startDateInt!..<(endDateInt!+1) {
-                                withAnimation(.spring()) {
-                                    examDay.append(String(day))
-                                    examInfo.append("")
+                            var tempStartDate = startDate.toDay
+                            DispatchQueue.main.async {
+                                while tempStartDate <= endDate.toDay {
+                                    withAnimation(.spring()) {
+                                        examDay.append(DateFormatUtil.classDateFormatter(time: tempStartDate))
+                                        examInfo.append("")
+                                    }
+                                    tempStartDate += day
                                 }
                             }
                         }
@@ -159,27 +148,32 @@ struct ClassExamAddView: View {
                 .padding(.top, CGFloat.padding.toComponents)
                 .padding(.horizontal, CGFloat.padding.margin)
                 
-                Button(action: {
-                    withAnimation(.spring()) {
-                        save()
-                        dismissAction()
-                    }
-                }, label: {
-                    ZStack(alignment: .center) {
-                        Rectangle()
-                            .foregroundColor(isDone() ? .clear : .greyscale4)
-                            .background(LinearGradient(gradient: Gradient(colors: [Color.spLightBlue, Color.spDarkBlue]), startPoint: .trailing, endPoint: .leading))
-                            .cornerRadius(10)
-                        Text("저장하기")
-                            .font(Font(uiFont: .systemFont(for: .button)))
-                            .foregroundColor(.greyscale1)
-                    }
-                    .frame(maxHeight: 52)
-                })
-                .padding(.horizontal, CGFloat.padding.margin)
-                .padding(.bottom, CGFloat.padding.toComponents)
-                .disabled(!isDone())
+                if !isSchoolFocused {
+                    Button(action: {
+                        withAnimation(.spring()) {
+                            save()
+                            dismissAction()
+                        }
+                    }, label: {
+                        ZStack(alignment: .center) {
+                            Rectangle()
+                                .foregroundColor(isDone() ? .clear : .greyscale4)
+                                .background(LinearGradient(gradient: Gradient(colors: [Color.spLightBlue, Color.spDarkBlue]), startPoint: .trailing, endPoint: .leading))
+                                .cornerRadius(10)
+                            Text("저장하기")
+                                .font(Font(uiFont: .systemFont(for: .button)))
+                                .foregroundColor(.greyscale1)
+                        }
+                        .frame(maxHeight: 52)
+                    })
+                    .padding(.horizontal, CGFloat.padding.margin)
+                    .padding(.bottom, CGFloat.padding.toComponents)
+                    .disabled(!isDone())
+                }
             }
+        }
+        .onTapGesture {
+            isSchoolFocused = false
         }
         .navigationBarHidden(navBarHidden)
         .navigationBarBackButtonHidden(true)

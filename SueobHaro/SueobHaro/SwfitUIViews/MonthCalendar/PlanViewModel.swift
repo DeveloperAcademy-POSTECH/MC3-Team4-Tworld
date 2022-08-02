@@ -11,32 +11,38 @@ class PlanViewModel: ObservableObject {
     
     let manager = DataManager.shared
     
-    @Published var selectedDate = Date()
-    @Published var schedule: [Schedule] = []
-    @Published var examInfos: [ExamInfo] = []
+    @Published var selectedDate = Date().toDay
+    @Published var schedules: [Date:[Schedule]] = [:]
+    @Published var examInfos: [Date:[ExamInfo]] = [:]
     
-    func fetchSchedule(date: Date) {
-        let request = Schedule.fetchRequest()
-        let filter = NSPredicate(format: "startTime = %@", date as NSDate)
-        let sort = NSSortDescriptor(keyPath: \Schedule.startTime, ascending: true)
-        request.predicate = filter
-        request.sortDescriptors = [sort]
-        do {
-            let result = try manager.container.viewContext.fetch(request)
-            schedule = result
-        } catch {
-            print(error)
+    func fetchPlan() {
+        guard let monthInterval = Calendar.current.dateInterval(of: .month, for: selectedDate) else { return }
+        let dates = Calendar.current.generateDates(inside: monthInterval, matching: DateComponents(hour: 0, minute: 0, second: 0))
+        for date in dates {
+            let request = Schedule.fetchRequest()
+            let filter = NSPredicate(format: "startTime > %@ AND endTime < %@", date as NSDate, date.nextDay() as NSDate)
+            let sort = NSSortDescriptor(keyPath: \Schedule.startTime, ascending: true)
+            request.predicate = filter
+            request.sortDescriptors = [sort]
+            do {
+                let result = try manager.container.viewContext.fetch(request)
+                schedules[date] = result
+            } catch {
+                print(error)
+            }
         }
     }
     
-    func fetchExamPeriod(date: Date) {
-        let request = ExamPeriod.fetchRequest()
-//        guard let monthInterval = Calendar.current.dateInterval(of: .month, for: date) else { return }
+    func fetchExamPeriod() {
+        let request = ExamInfo.fetchRequest()
         do {
             let results = try manager.container.viewContext.fetch(request)
-            for result in results {
-                guard let infos = result.examInfos?.allObjects as? [ExamInfo] else { return }
-                examInfos.append(contentsOf: infos)
+            examInfos = [:]
+            for info in results {
+                let date = info.date ?? Date().toDay
+                var prevInfos = examInfos[date] ?? []
+                prevInfos.append(info)
+                examInfos.updateValue(prevInfos, forKey: date)
             }
         } catch {
             print(error)

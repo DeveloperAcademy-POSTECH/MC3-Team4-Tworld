@@ -26,77 +26,7 @@ struct ClassSettingView: View {
                 .padding(.bottom, .padding.toTextComponents)
                 
                 Button(action: {
-                    
-                }, label: {
-                    ZStack {
-                        Rectangle()
-                            .fill(Color.greyscale7)
-                        Rectangle()
-                            .strokeBorder(Color.greyscale6)
-                        HStack(spacing: 0) {
-                            Text("이용약관")
-                                .font(Font(uiFont: .systemFont(for: .body1)))
-                                .foregroundColor(.greyscale1)
-                            Spacer()
-                        }
-                        .padding(.vertical, .padding.inBox)
-                        .padding(.horizontal, .padding.margin)
-                        
-                    }.frame(maxHeight: 56)
-                })
-                
-                Button(action: {
-                    
-                }, label: {
-                    ZStack {
-                        Rectangle()
-                            .fill(Color.greyscale7)
-                        Rectangle()
-                            .strokeBorder(Color.greyscale6)
-                        HStack(spacing: 0) {
-                            Text("앱 버전 정보")
-                                .font(Font(uiFont: .systemFont(for: .body1)))
-                                .foregroundColor(.greyscale1)
-                            Spacer()
-                            Text("1.0")
-                                .font(Font(uiFont: .systemFont(for: .body1)))
-                                .foregroundColor(.greyscale3)
-                        }
-                        .padding(.vertical, .padding.inBox)
-                        .padding(.horizontal, .padding.margin)
-                        
-                    }.frame(maxHeight: 56)
-                })
-                
-                Button(action: {
-                    
-                }, label: {
-                    ZStack {
-                        Rectangle()
-                            .fill(Color.greyscale7)
-                        Rectangle()
-                            .strokeBorder(Color.greyscale6)
-                        HStack(spacing: 0) {
-                            Text("라이선스")
-                                .font(Font(uiFont: .systemFont(for: .body1)))
-                                .foregroundColor(.greyscale1)
-                            Spacer()
-                        }
-                        .padding(.vertical, .padding.inBox)
-                        .padding(.horizontal, .padding.margin)
-                        
-                    }.frame(maxHeight: 56)
-                })
-                
-                Text("개인화")
-                    .font(Font(uiFont: .systemFont(for: .title1)))
-                    .foregroundColor(.greyscale1)
-                    .padding(.top, .padding.toDifferentHierarchy)
-                    .padding(.horizontal, .padding.margin)
-                    .padding(.bottom, .padding.toTextComponents)
-                
-                Button(action: {
-                    
+                    monthFirst.toggle()
                 }, label: {
                     ZStack {
                         Rectangle()
@@ -125,7 +55,7 @@ struct ClassSettingView: View {
                     }.frame(maxHeight: 100)
                 })
                 Button(action: {
-                    
+                    classNoti.toggle()
                 }, label: {
                     ZStack {
                         Rectangle()
@@ -153,8 +83,26 @@ struct ClassSettingView: View {
                         .padding(.horizontal, .padding.margin)
                         
                     }.frame(maxHeight: 100)
-                })
+                }).padding(.bottom, .padding.toText)
                 
+                ZStack {
+                    Rectangle()
+                        .fill(Color.greyscale7)
+                    Rectangle()
+                        .strokeBorder(Color.greyscale6)
+                    HStack(spacing: 0) {
+                        Text("앱 버전 정보")
+                            .font(Font(uiFont: .systemFont(for: .body1)))
+                            .foregroundColor(.greyscale1)
+                        Spacer()
+                        Text("1.0")
+                            .font(Font(uiFont: .systemFont(for: .body1)))
+                            .foregroundColor(.greyscale3)
+                    }
+                    .padding(.vertical, .padding.inBox)
+                    .padding(.horizontal, .padding.margin)
+                    
+                }.frame(maxHeight: 56)
                 Spacer()
             }
         }

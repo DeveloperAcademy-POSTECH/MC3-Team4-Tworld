@@ -48,6 +48,8 @@
 		31EBB83528957E5E00502441 /* CalendarBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EBB83428957E5E00502441 /* CalendarBackgroundView.swift */; };
 		31EBB83728957E7100502441 /* CalendarNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EBB83628957E7100502441 /* CalendarNumberView.swift */; };
 		31EBB83928957EBE00502441 /* WeeklyNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EBB83828957EBE00502441 /* WeeklyNumberView.swift */; };
+		371A52522896D00100FA01DF /* Schedule+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371A52502896D00100FA01DF /* Schedule+CoreDataClass.swift */; };
+		371A52532896D00100FA01DF /* Schedule+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371A52512896D00100FA01DF /* Schedule+CoreDataProperties.swift */; };
 		372B0EDC288FBA9B00482730 /* ClassAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EDB288FBA9B00482730 /* ClassAddView.swift */; };
 		372B0EDE288FD76400482730 /* ClassTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EDD288FD76400482730 /* ClassTextField.swift */; };
 		372B0EE0289106F500482730 /* DateFormatUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EDF289106F500482730 /* DateFormatUtil.swift */; };
@@ -64,8 +66,6 @@
 		37B04226288277E20043E9CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37B04224288277E20043E9CB /* LaunchScreen.storyboard */; };
 		37B04252288434D50043E9CB /* SueobHaro.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 37B04250288434D50043E9CB /* SueobHaro.xcdatamodeld */; };
 		37B0427628848FC00043E9CB /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B0427528848FC00043E9CB /* DataManager.swift */; };
-		37B042B428854A290043E9CB /* Schedule+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B042AC28854A290043E9CB /* Schedule+CoreDataClass.swift */; };
-		37B042B528854A290043E9CB /* Schedule+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B042AD28854A290043E9CB /* Schedule+CoreDataProperties.swift */; };
 		37B042B628854A290043E9CB /* Members+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B042AE28854A290043E9CB /* Members+CoreDataClass.swift */; };
 		37B042B728854A290043E9CB /* Members+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B042AF28854A290043E9CB /* Members+CoreDataProperties.swift */; };
 		37B042B828854A290043E9CB /* ClassIteration+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B042B028854A290043E9CB /* ClassIteration+CoreDataClass.swift */; };
@@ -121,6 +121,8 @@
 		31EBB83428957E5E00502441 /* CalendarBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarBackgroundView.swift; sourceTree = "<group>"; };
 		31EBB83628957E7100502441 /* CalendarNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarNumberView.swift; sourceTree = "<group>"; };
 		31EBB83828957EBE00502441 /* WeeklyNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyNumberView.swift; sourceTree = "<group>"; };
+		371A52502896D00100FA01DF /* Schedule+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Schedule+CoreDataClass.swift"; sourceTree = "<group>"; };
+		371A52512896D00100FA01DF /* Schedule+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Schedule+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		372B0EDB288FBA9B00482730 /* ClassAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassAddView.swift; sourceTree = "<group>"; };
 		372B0EDD288FD76400482730 /* ClassTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassTextField.swift; sourceTree = "<group>"; };
 		372B0EDF289106F500482730 /* DateFormatUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatUtil.swift; sourceTree = "<group>"; };
@@ -139,8 +141,6 @@
 		37B04227288277E20043E9CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		37B04251288434D50043E9CB /* SueobHaro.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SueobHaro.xcdatamodel; sourceTree = "<group>"; };
 		37B0427528848FC00043E9CB /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		37B042AC28854A290043E9CB /* Schedule+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Schedule+CoreDataClass.swift"; sourceTree = "<group>"; };
-		37B042AD28854A290043E9CB /* Schedule+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Schedule+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		37B042AE28854A290043E9CB /* Members+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Members+CoreDataClass.swift"; sourceTree = "<group>"; };
 		37B042AF28854A290043E9CB /* Members+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Members+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		37B042B028854A290043E9CB /* ClassIteration+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClassIteration+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -334,8 +334,8 @@
 		37B042BC28854A350043E9CB /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
-				37B042AC28854A290043E9CB /* Schedule+CoreDataClass.swift */,
-				37B042AD28854A290043E9CB /* Schedule+CoreDataProperties.swift */,
+				371A52502896D00100FA01DF /* Schedule+CoreDataClass.swift */,
+				371A52512896D00100FA01DF /* Schedule+CoreDataProperties.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -467,6 +467,7 @@
 				37B0427628848FC00043E9CB /* DataManager.swift in Sources */,
 				31DD866C2896FC8B00861A5D /* PointChartView.swift in Sources */,
 				31EBB8062893BD1000502441 /* ClassUpdateView.swift in Sources */,
+				371A52532896D00100FA01DF /* Schedule+CoreDataProperties.swift in Sources */,
 				31EBB7FE2891920700502441 /* KeyboardHeightHelper.swift in Sources */,
 				372B0EE42891429700482730 /* ClassTitleProgressView.swift in Sources */,
 				317AE6C42888648B00FDA57B /* ClassInformationHeaderComponent.swift in Sources */,
@@ -494,18 +495,17 @@
 				31DD867228977AC800861A5D /* ClassMemberCollectionViewCell.swift in Sources */,
 				37B042CD28854F010043E9CB /* ClassInfo+CoreDataProperties.swift in Sources */,
 				21B86DC128918826009B7643 /* MonthCalendar.swift in Sources */,
-				37B042B428854A290043E9CB /* Schedule+CoreDataClass.swift in Sources */,
 				317AE68A2886A25200FDA57B /* ClassDetailHeaderView.swift in Sources */,
 				31DD86682896DDDE00861A5D /* PersonalMemberView.swift in Sources */,
 				31EB7DD02897BFFC00689030 /* ClassMemberSectionHeaderView.swift in Sources */,
 				317AE68C2886EFE700FDA57B /* ClassInformationViewController.swift in Sources */,
 				317AE68E28870DAF00FDA57B /* ProgressUpdateModalViewController.swift in Sources */,
+				371A52522896D00100FA01DF /* Schedule+CoreDataClass.swift in Sources */,
 				2118206B289252DC00F2BA8E /* ScheduleInfoView.swift in Sources */,
 				37B0431328868DE50043E9CB /* ClassNameView.swift in Sources */,
 				37B042B928854A290043E9CB /* ClassIteration+CoreDataProperties.swift in Sources */,
 				2186376728888C5800F71595 /* TeamInfoView.swift in Sources */,
 				37B042CD28854F010043E9CB /* ClassInfo+CoreDataProperties.swift in Sources */,
-				37B042B428854A290043E9CB /* Schedule+CoreDataClass.swift in Sources */,
 				37B0431728868E060043E9CB /* ClassTuitionView.swift in Sources */,
 				37B042B628854A290043E9CB /* Members+CoreDataClass.swift in Sources */,
 				21ABDA7E2893AB3F00F0DB4F /* PlanView.swift in Sources */,
@@ -659,7 +659,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = A44U4A2F2G;
+				DEVELOPMENT_TEAM = VT69ZW2DRC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SueobHaro/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -686,7 +686,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = A44U4A2F2G;
+				DEVELOPMENT_TEAM = VT69ZW2DRC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SueobHaro/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

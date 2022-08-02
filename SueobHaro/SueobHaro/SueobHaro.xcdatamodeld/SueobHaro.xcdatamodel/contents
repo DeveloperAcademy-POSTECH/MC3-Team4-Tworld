@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G72" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ClassInfo" representedClassName=".ClassInfo" syncable="YES">
         <attribute name="color" optional="YES" attributeType="String"/>
         <attribute name="firstDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -21,6 +21,7 @@
     </entity>
     <entity name="ExamInfo" representedClassName="ExamInfo" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="flag" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <relationship name="examPeriod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ExamPeriod" inverseName="examInfos" inverseEntity="ExamPeriod"/>
@@ -45,6 +46,7 @@
         <attribute name="progress" optional="YES" attributeType="String"/>
         <attribute name="startTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="classInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ClassInfo" inverseName="schedule" inverseEntity="ClassInfo"/>
+        <relationship name="preSchedule" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Schedule" inverseName="preSchedule" inverseEntity="Schedule"/>
     </entity>
     <entity name="School" representedClassName="School" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -55,10 +57,10 @@
     <elements>
         <element name="ClassInfo" positionX="-186.1953125" positionY="-245.9453125" width="128" height="193"/>
         <element name="ClassIteration" positionX="-228.25" positionY="178.42578125" width="128" height="118"/>
-        <element name="ExamInfo" positionX="-243" positionY="-90" width="128" height="89"/>
+        <element name="ExamInfo" positionX="-243" positionY="-90" width="128" height="104"/>
         <element name="ExamPeriod" positionX="-8.29296875" positionY="148.078125" width="128" height="74"/>
         <element name="Members" positionX="-450.91015625" positionY="-44.20703125" width="128" height="118"/>
-        <element name="Schedule" positionX="236.25390625" positionY="-71.26953125" width="128" height="43"/>
+        <element name="Schedule" positionX="236.25390625" positionY="-71.26953125" width="128" height="149"/>
         <element name="School" positionX="286.6171875" positionY="245.328125" width="128" height="89"/>
     </elements>
 </model>
