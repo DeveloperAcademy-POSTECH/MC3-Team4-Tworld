@@ -12,7 +12,7 @@ final class DateFormatUtil {
     static func classTimeFormatter(time: Date) -> String {
         let dateFormatter: DateFormatter = {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "HH:MM"
+            dateFormatter.dateFormat = "HH:mm"
             
             return dateFormatter
         }()

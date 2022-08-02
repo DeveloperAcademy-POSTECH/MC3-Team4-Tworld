@@ -95,7 +95,6 @@ struct ClassExamAddView: View {
                             var tempStartDate = startDate.toDay
                             DispatchQueue.main.async {
                                 while tempStartDate <= endDate.toDay {
-                                    print(tempStartDate)
                                     withAnimation(.spring()) {
                                         examDay.append(DateFormatUtil.classDateFormatter(time: tempStartDate))
                                         examInfo.append("")

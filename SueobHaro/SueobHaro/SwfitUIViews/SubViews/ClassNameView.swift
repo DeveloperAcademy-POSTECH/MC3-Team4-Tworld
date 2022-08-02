@@ -84,6 +84,7 @@ struct ClassNameView: View {
                             }.onTapGesture {
                                 isDayPicked[day]?.toggle()
                                 selectedDay = day
+                                guard isDayPicked[day]! else { return }
                                 withAnimation(.spring()){
                                     halfModal.toggle()
                                 }
@@ -165,7 +166,7 @@ struct ClassNameView: View {
             isFocused = false
         }
         .onAppear {
-            dateFormatter.dateFormat = "HH:MM"
+            dateFormatter.dateFormat = "HH:mm"
         }
         .customSheet(isPresented: $halfModal) {
             HStack(spacing: 0) {

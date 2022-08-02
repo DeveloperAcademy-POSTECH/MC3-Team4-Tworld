@@ -128,9 +128,13 @@ extension ViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if nowSection == .next {
             print(schedules[indexPath.row])
-            self.navigationController?.pushViewController(UIHostingController(rootView: ClassDetailView(selectedClass: schedules[indexPath.row].classInfo)), animated: true)
+            self.navigationController?.pushViewController(UIHostingController(rootView: ClassDetailView(selectedClass: schedules[indexPath.row].classInfo, dismissAction: {
+                self.collectionView.reloadData()
+            })), animated: true)
         } else {
-            self.navigationController?.pushViewController(UIHostingController(rootView: ClassDetailView(selectedClass: schedules[indexPath.row].classInfo, selectedSchedule: schedules[indexPath.row])), animated: true)
+            self.navigationController?.pushViewController(UIHostingController(rootView: ClassDetailView(selectedClass: schedules[indexPath.row].classInfo, selectedSchedule: schedules[indexPath.row], dismissAction: {
+                self.collectionView.reloadData()
+            })), animated: true)
         }
         
     }

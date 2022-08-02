@@ -63,11 +63,10 @@ class DataManager {
                 addSchedule(count: Int16(j+1), endTime: end, startTime: start, isCanceled: false, progress: "", classInfo: newClassInfo)
             }
             print(dates.map{ $0.description(with: .current) })
-            
         }
     }
     
-    func addSchedule(count: Int16, endTime: Date, startTime: Date, isCanceled: Bool, progress: String, classInfo: ClassInfo) -> Void {
+    func addSchedule(count: Int16, endTime: Date, startTime: Date, isCanceled: Bool, progress: String, classInfo: ClassInfo, preSchedule: Schedule?) -> Schedule {
         let newSchedule = Schedule(context: container.viewContext)
         newSchedule.id = UUID()
         newSchedule.count = count
@@ -76,7 +75,10 @@ class DataManager {
         newSchedule.isCanceled = isCanceled
         newSchedule.progress = progress
         newSchedule.classInfo = classInfo
+        newSchedule.preSchedule = preSchedule
         try? container.viewContext.save()
+        
+        return newSchedule
     }
     
     func addMember(name: String, phoneNumber: String, classInfo: ClassInfo, schoolString: String) -> Void {
@@ -109,7 +111,7 @@ class DataManager {
         let newExamPeriod = ExamPeriod(context: container.viewContext)
         newExamPeriod.id = UUID()
         let dates = Calendar.current.generateDates(inside: DateInterval(start: startDate, end: endDate),
-                                       matching: DateComponents(hour: 0, minute: 0, second: 0))
+                                                   matching: DateComponents(hour: 0, minute: 0, second: 0))
         for (i, date) in dates.enumerated() {
             var flag: String? = nil
             if i == 0 {
@@ -163,7 +165,7 @@ class DataManager {
     
     
     // MARK: Update (업데이트 필요한 내용만 값을 넘기고, 업데이트 하지 않는 프로퍼티는 nil을 넘겨주시면 됩니다.)
-    func updateClassInfo(target: ClassInfo, firstDate: Date?, tuition: Int32?, tuitionPer: Int16?, name: String?, color: String?, location: String?) -> Void {
+    func updateClassInfo(target: ClassInfo, firstDate: Date?, tuition: Int32?, tuitionPer: Int16?, name: String?, color: String?, location: String?) -> ClassInfo {
         if let firstDate = firstDate { target.firstDate = firstDate }
         if let tuition = tuition { target.tuition = tuition }
         if let tuitionPer = tuitionPer { target.tuitionPer = tuitionPer }
@@ -171,6 +173,8 @@ class DataManager {
         if let color = color { target.color = color }
         if let location = location { target.location = location }
         try? container.viewContext.save()
+        
+        return target
     }
     
     func updateSchedule(target: Schedule, count: Int16?, endTime: Date?, startTime: Date?, isCanceled: Bool?, progress: String?) -> Void {
@@ -183,9 +187,22 @@ class DataManager {
     }
     
     func updateClassIteration(target: ClassIteration, day: String?, startTime: Date?, endTime: Date?) -> Void {
-        if let day = day { target.day = day }
-        if let startTime = startTime { target.startTime = startTime }
+        if let day = day {
+            target.day = day
+            print("in datamanager \(day) \(target.day ?? "")")
+        }
+        if let startTime = startTime { target.startTime = startTime
+            
+        }
         if let endTime = endTime { target.endTime = endTime }
+        
+        try? container.viewContext.save()
+    }
+    
+    func updateMembers(target: Members, name: String?, phoneNumber: String?, school: String?) -> Void {
+        if let name = name { target.name = name }
+        if let phoneNumber = phoneNumber { target.phoneNumber = phoneNumber }
+        if let school = school { target.school?.name = school }
         try? container.viewContext.save()
     }
     
@@ -201,6 +218,7 @@ class DataManager {
         let request = Members.fetchRequest()
         let filter = NSPredicate(format: "classInfo == %@", classInfo)
         request.predicate = filter
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Members.id, ascending: true)]
         var filterMembers:[Members] = []
         do {
             filterMembers = try container.viewContext.fetch(request)
@@ -208,6 +226,20 @@ class DataManager {
             print("Fetch Error, get Members, \(error)")
         }
         return filterMembers
+    }
+    
+    func getClassIters(classInfo: ClassInfo) -> [ClassIteration] {
+        let request = ClassIteration.fetchRequest()
+        let filter = NSPredicate(format: "classInfo == %@", classInfo)
+        request.predicate = filter
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \ClassIteration.id, ascending: true)]
+        var filterClassIteration:[ClassIteration] = []
+        do {
+            filterClassIteration = try container.viewContext.fetch(request)
+        } catch let error {
+            print("Fetch Error, get Members, \(error)")
+        }
+        return filterClassIteration
     }
     
     func getSchedules(classInfo: ClassInfo) -> [Schedule] {
@@ -267,7 +299,7 @@ class DataManager {
             return []
         }
     }
-
+    
 }
 
 // MARK: DataModel
