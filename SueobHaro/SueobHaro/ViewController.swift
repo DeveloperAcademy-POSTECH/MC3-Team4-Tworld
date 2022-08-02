@@ -67,6 +67,27 @@ class ViewController: UIViewController {
         return collectionView
     }()
     
+    lazy var noCellLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.text = "등록된 수업이 없어요!"
+        label.font = .systemFont(for: .title3)
+        label.textColor = .theme.greyscale1
+        label.alpha = 0.5
+        return label
+    }()
+    
+    lazy var noCellView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 26
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        let image = UIImage()
+        let icon = UIImageView(image: image)
+        [icon, noCellLabel].forEach{ stackView.addArrangedSubview($0) }
+        return stackView
+    }()
+    
     lazy var indicator: UIView = {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -78,12 +99,14 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationItem.largeTitleDisplayMode = .never
         guard DataManager.shared.container != nil else { fatalError("This view needs a persistent container.") }
             self.view.backgroundColor = .theme.spBlack
-            configureNavbar()
+//            configureNavbar()
             configureSegmentControl()
             configureCollectionView()
             configureIndicator()
+            configureNoCellView()
             updateCell()
     }
     
@@ -132,7 +155,8 @@ extension ViewController: UICollectionViewDelegate {
                 self.collectionView.reloadData()
             })), animated: true)
         } else {
-            self.navigationController?.pushViewController(UIHostingController(rootView: ClassDetailView(selectedClass: schedules[indexPath.row].classInfo, selectedSchedule: schedules[indexPath.row], isOut: true, dismissAction: {
+            self.navigationController?.pushViewController(UIHostingController(rootView: ClassDetailView(selectedClass: schedules[indexPath.row].classInfo, selectedSchedule: schedules[indexPath.row], dismissAction: {
+                self.updateCell()
                 self.collectionView.reloadData()
             })), animated: true)
         }
@@ -151,10 +175,10 @@ extension ViewController: UICollectionViewDelegate {
         
         let nextCellRegistration = UICollectionView.CellRegistration<NextScheduleInfoCell, Schedule> { (cell, indexPath, item) in
             cell.titleLabel.text = item.classInfo?.name ?? ""
-            cell.durationLabel.text = "\((item.startTime ?? Date()).toString())~\((item.endTime ?? Date()).toString())"
+            cell.durationLabel.text = DateFormatUtil.scheduleDateFormatter(item.startTime ?? Date(), item.endTime ?? Date())
             let members = item.classInfo?.members?.allObjects as? [Members] ?? []
             cell.teamLabel.text = String(members.reduce(into: ""){ $0 += "\($1.name ?? ""), " }.dropLast(2))
-            cell.progressInfoLabel.text = item.progress ?? ""
+            cell.progressInfoLabel.text = item.preSchedule?.progress ?? ""
             
             var container = AttributeContainer()
             container.font = .systemFont(for: .caption)
@@ -170,8 +194,11 @@ extension ViewController: UICollectionViewDelegate {
         
         let prevCellRegistration = UICollectionView.CellRegistration<PrevScheduleInfoCell, Schedule> { (cell, indexPath, item) in
             cell.titleLabel.text = item.classInfo?.name ?? ""
-            cell.durationLabel.text = "\((item.startTime ?? Date()).toString())~\((item.endTime ?? Date()).toString())"
-            cell.progressInfoLabel.text = item.progress ?? ""
+            let dateString = item.startTime?.formatted(date: .complete, time: .omitted) ?? ""
+            let timeString = DateFormatUtil.scheduleDateFormatter(item.startTime ?? Date(), item.endTime ?? Date())
+            cell.durationLabel.text = dateString + "  " + timeString
+            let members = item.classInfo?.members?.allObjects as? [Members] ?? []
+            cell.teamLabel.text = String(members.reduce(into: ""){ $0 += "\($1.name ?? ""), " }.dropLast(2))
             
             var container = AttributeContainer()
             container.font = .systemFont(for: .caption)
@@ -203,6 +230,14 @@ extension ViewController: UICollectionViewDelegate {
 }
 
 extension ViewController {
+    
+    private func configureNoCellView() {
+        view.addSubview(noCellView)
+        NSLayoutConstraint.activate([
+            noCellView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
+            noCellView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
+        ])
+    }
     
     private func configureSegmentControl() {
         view.addSubview(segmentedControl)
@@ -251,10 +286,18 @@ extension ViewController {
         DataManager.shared.fetchData(target: .schedule)
         self.schedules = DataManager.shared.fetchSchedules(section: nowSection)
         var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
-        snapshot.appendSections([nowSection])
-        snapshot.appendItems(schedules)
+        if !schedules.isEmpty {
+            snapshot.appendSections([nowSection])
+            snapshot.appendItems(schedules)
+        }
         if let dataSource = self.dataSource {
             dataSource.apply(snapshot, animatingDifferences: false)
+        }
+        if schedules.isEmpty {
+            noCellLabel.text = nowSection == .next ? "등록된 수업이 없어요!" : "노트를 작성하지 않은 수업이 없어요!"
+            noCellView.alpha = 1
+        } else {
+            noCellView.alpha = 0
         }
     }
     

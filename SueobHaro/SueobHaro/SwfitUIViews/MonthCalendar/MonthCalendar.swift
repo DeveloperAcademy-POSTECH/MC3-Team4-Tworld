@@ -102,7 +102,7 @@ struct MonthCalendarView: View {
                 if let schedules = vm.schedules[vm.selectedDate], !schedules.isEmpty {
                     ForEach(schedules) { schedule in
                         NavigationLink {
-                            ClassDetailView(selectedClass: schedule.classInfo)
+                            ClassDetailView(selectedClass: schedule.classInfo) { vm.fetchPlan() }
                         } label: {
                             ScheduleInfoView(schedule: schedule)
                         }
