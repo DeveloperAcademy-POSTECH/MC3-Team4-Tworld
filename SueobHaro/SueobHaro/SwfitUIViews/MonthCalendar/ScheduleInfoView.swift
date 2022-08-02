@@ -55,8 +55,15 @@ struct ScheduleInfoView: View {
                     .fill(Color.greyscale6)
                     .frame(height: 1)
                 
-                Text(schedule.progress ?? "")
-                    .font(Font(uiFont: .systemFont(for: .body2)))
+                Group {
+                    if let progress = schedule.preSchedule?.progress {
+                        Text(progress)
+                    } else {
+                        Text("지난 수업의 진도를 기록하지 않았어요…")
+                            .foregroundColor(.spTurkeyBlue)
+                    }
+                }
+                .font(Font(uiFont: .systemFont(for: .body2)))
             }
             .padding([.vertical, .leading], .padding.inBox)
             .background(

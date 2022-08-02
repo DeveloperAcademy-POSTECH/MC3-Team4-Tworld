@@ -133,6 +133,7 @@ extension ViewController: UICollectionViewDelegate {
             })), animated: true)
         } else {
             self.navigationController?.pushViewController(UIHostingController(rootView: ClassDetailView(selectedClass: schedules[indexPath.row].classInfo, selectedSchedule: schedules[indexPath.row], dismissAction: {
+                self.updateCell()
                 self.collectionView.reloadData()
             })), animated: true)
         }
@@ -154,7 +155,7 @@ extension ViewController: UICollectionViewDelegate {
             cell.durationLabel.text = "\((item.startTime ?? Date()).toString())~\((item.endTime ?? Date()).toString())"
             let members = item.classInfo?.members?.allObjects as? [Members] ?? []
             cell.teamLabel.text = String(members.reduce(into: ""){ $0 += "\($1.name ?? ""), " }.dropLast(2))
-            cell.progressInfoLabel.text = item.progress ?? ""
+            cell.progressInfoLabel.text = item.preSchedule?.progress ?? ""
             
             var container = AttributeContainer()
             container.font = .systemFont(for: .caption)
