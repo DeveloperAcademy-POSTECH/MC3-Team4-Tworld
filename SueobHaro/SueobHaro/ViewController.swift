@@ -99,9 +99,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationItem.largeTitleDisplayMode = .never
         guard DataManager.shared.container != nil else { fatalError("This view needs a persistent container.") }
             self.view.backgroundColor = .theme.spBlack
-            configureNavbar()
+//            configureNavbar()
             configureSegmentControl()
             configureCollectionView()
             configureIndicator()

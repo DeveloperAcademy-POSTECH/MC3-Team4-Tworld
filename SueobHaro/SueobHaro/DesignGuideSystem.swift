@@ -149,6 +149,26 @@ enum CustomTextStyle {
     case caption
 }
 
+extension UIImage {
+    static let plan = UIImage(named: "plan")!
+    static let addCalendar = UIImage(named: "addCalendar")!
+    static let gear = UIImage(named: "gear")!
+    static let trash = UIImage(named: "trash")!
+    static let calendar = UIImage(named: "calendar")!
+    static let card = UIImage(named: "card")!
+    static let book = UIImage(named: "book")!
+    static let progress = UIImage(named: "progress")!
+    
+    static let planUnselected = UIImage(named: "plan-unselected")!
+    static let addCalendarUnselected = UIImage(named: "addCalendar-unselected")!
+    static let gearUnselected = UIImage(named: "gear-unselected")!
+    static let trashUnselected = UIImage(named: "trash-unselected")!
+    static let calendarUnselected = UIImage(named: "calendar-unselected")!
+    static let cardUnselected = UIImage(named: "card-unselected")!
+    static let bookUnselected = UIImage(named: "book-unselected")!
+    static let progressUnselected = UIImage(named: "progress-unselected")!
+}
+
 // MARK: SwiftUI Font extension
 // .font(Font(uiFont: .systemFont(for: .body2)))
 extension Font {
