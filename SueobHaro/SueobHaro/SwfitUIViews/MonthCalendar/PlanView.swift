@@ -14,7 +14,7 @@ enum CalendarCase: String {
 
 struct PlanView: View {
     @StateObject private var vm = PlanViewModel()
-    @State private var calendarCase: CalendarCase = .month
+    @State private var calendarCase: CalendarCase = .week
     @State private var showClassAddView = false
     @State private var showExamAddView = false
     
@@ -69,7 +69,7 @@ struct PlanView: View {
                     .padding(.top, 12)
                     
                     if calendarCase == .week {
-                        Spacer()
+                        WeeklyCalendarView()
                     } else {
                         MonthCalendarView(vm: vm)
                     }

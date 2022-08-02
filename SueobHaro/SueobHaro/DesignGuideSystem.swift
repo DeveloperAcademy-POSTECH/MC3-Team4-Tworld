@@ -56,21 +56,21 @@ enum RandomColorTheme: CaseIterable {
     var name: String {
         switch self {
         case .pink:
-            return "RandomPink"
+            return "randomPink"
         case .orange:
-            return "RandomOrange"
+            return "randomOrange"
         case .blue:
-            return "RandomBlue"
+            return "randomBlue"
         case .purple:
-            return "RandomPurple"
+            return "randomPurple"
         case .yellow:
-            return "RandomYellow"
+            return "randomYellow"
         case .green:
-            return "RandomGreen"
+            return "randomGreen"
         case .skyblue:
-            return "RandomSkyblue"
+            return "randomSkyblue"
         case .salmon:
-            return "RandomSalmon"
+            return "randomSalmon"
         }
     }
 }
