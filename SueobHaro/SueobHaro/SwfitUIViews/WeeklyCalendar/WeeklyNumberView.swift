@@ -18,11 +18,12 @@ struct WeeklyNumberView: View {
         HStack(spacing: 0) {
             ForEach(0..<numbers.count, id: \.self) { i in
                 ZStack {
-                    Text("\(dayToString(day: dayArray[i]))")
-                        .font(Font(UIFont.systemFont(for: .body1)))
-                        .fontWeight(.bold)
-                        .foregroundColor(.greyscale1)
-                        
+                    VStack {
+                        Text("\(dayToString(day: dayArray[i]))")
+                            .font(Font(UIFont.systemFont(for: .body1)))
+                            .fontWeight(.bold)
+                            .foregroundColor(.greyscale1)
+                    }   
                 }
                 .frame(width: frameWidt)
             }

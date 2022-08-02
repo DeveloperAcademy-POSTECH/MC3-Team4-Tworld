@@ -26,7 +26,7 @@ struct CalendarBackgroundView: View {
                         HStack {
                             ZStack {
                                 Rectangle()
-                                    .fill(Color.greyscale6)
+                                    .fill(Color.spBlack)
                                     .frame(width: UIScreen.main.bounds.width * 0.065)
                                 
                             }
@@ -40,7 +40,7 @@ struct CalendarBackgroundView: View {
                         HStack {
                             ZStack {
                                 Rectangle()
-                                    .fill(Color.greyscale6)
+                                    .fill(Color.spBlack)
                                     .frame(width: UIScreen.main.bounds.width * 0.065)
                                 Text("\(i)")
                                     .foregroundColor(.white)
