@@ -22,7 +22,7 @@ class ClassMemberTableViewCell: UITableViewCell {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 142, height: 97)
         layout.scrollDirection = .horizontal
-
+    
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(ClassMemberCollectionViewCell.self, forCellWithReuseIdentifier:  ClassMemberCollectionViewCell.identifier)
         return collectionView
@@ -31,7 +31,10 @@ class ClassMemberTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.layer.backgroundColor = UIColor.theme.spBlack.cgColor
+        contentView.backgroundColor = .theme.spBlack
         contentView.addSubview(collectionView)
         
         collectionView.delegate = self

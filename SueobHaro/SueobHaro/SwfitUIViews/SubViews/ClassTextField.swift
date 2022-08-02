@@ -13,7 +13,7 @@ struct ClassTextField: View {
     var isFocused: FocusState<Bool>.Binding
     var placeholder: String
     var keyboardType: UIKeyboardType = .default
-    @State var marginValue = CGFloat.padding.margin
+    var marginValue = CGFloat.padding.margin
     
     var body: some View {
         ZStack {

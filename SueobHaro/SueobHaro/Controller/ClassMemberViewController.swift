@@ -18,13 +18,15 @@ class ClassMemberViewController: UIViewController, InnerNavigationControll {
         
     private let schoolTable: UITableView = {
         let table = UITableView(frame: .zero, style: .plain)
+        table.layer.backgroundColor = UIColor.theme.spBlack.cgColor
         table.register(ClassMemberTableViewCell.self, forCellReuseIdentifier: ClassMemberTableViewCell.identifier)
         return table
     } ()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = .theme.spBlack
+        schoolTable.layer.backgroundColor = UIColor.theme.spBlack.cgColor
         view.addSubview(schoolTable)
         DataManager.shared.fetchData(target: .classInfo)
         classArray = DataManager.shared.classInfo ?? []
@@ -37,9 +39,7 @@ class ClassMemberViewController: UIViewController, InnerNavigationControll {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         schoolTable.frame = view.bounds
-        for i in classArray {
-            print(i.name)
-        }
+        
     }
 
 
