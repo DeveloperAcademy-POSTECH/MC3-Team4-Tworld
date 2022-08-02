@@ -30,11 +30,11 @@ class MainTabBarController: UITabBarController {
         firstTabBarItem.image = .planUnselected
         firstTabBarItem.selectedImage = .plan
         let secondTabBarItem = UITabBarItem(title: "모든일정", image: UIImage(systemName: "calendar"), tag: 1)
-        firstTabBarItem.image = .calendarUnselected
-        firstTabBarItem.selectedImage = .calendar
+        secondTabBarItem.image = .calendarUnselected
+        secondTabBarItem.selectedImage = .calendar
         let thirtdTabBarItem = UITabBarItem(title: "설정", image: UIImage(systemName: "gearshape"), tag: 2)
-        firstTabBarItem.image = .planUnselected
-        firstTabBarItem.selectedImage = .plan
+        thirtdTabBarItem.image = .planUnselected
+        thirtdTabBarItem.selectedImage = .plan
         
         firstNC.tabBarItem = firstTabBarItem
         secondNC.tabBarItem = secondTabBarItem

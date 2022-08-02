@@ -70,6 +70,7 @@ struct PlanView: View {
                     
                     if calendarCase == .week {
                         WeeklyCalendarView()
+                            .frame(width: UIScreen.main.bounds.width)
                     } else {
                         MonthCalendarView(vm: vm)
                     }
