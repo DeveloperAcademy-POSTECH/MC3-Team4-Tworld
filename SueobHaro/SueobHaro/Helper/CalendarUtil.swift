@@ -73,13 +73,13 @@ extension Date {
     }
     
     var hour: Int {
-        let hour = Calendar.current.component(.hour, from: Date())
+        let hour = Calendar.current.component(.hour, from: self)
         return hour
     }
     
     var minute: Int {
-        let minute = Calendar.current.component(.hour, from: Date())
-        return hour
+        let minute = Calendar.current.component(.minute, from: self)
+        return minute
     }
     
     func nextDay() -> Date {
