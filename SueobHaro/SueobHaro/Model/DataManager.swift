@@ -55,12 +55,13 @@ class DataManager {
         for (i, d) in day.enumerated() {
             let lastDate = Calendar.current.date(byAdding: .month, value: 6, to: firstDate.toDay) ?? firstDate.toDay
             let dates = Calendar.current.generateDatesAfter(inside: DateInterval(start: firstDate.toDay, end: lastDate), matching: DateComponents(weekday: d.toWeekOfDayNum()))
+            var preSchedule: Schedule?
             for (j, date) in dates.enumerated() {
                 var start = Calendar.current.date(byAdding: .hour, value: startTime[i].hour, to: date)!
                 start = Calendar.current.date(byAdding: .minute, value: startTime[i].minute, to: start)!
                 var end = Calendar.current.date(byAdding: .hour, value: endTime[i].hour, to: date)!
                 end = Calendar.current.date(byAdding: .minute, value: endTime[i].minute, to: end)!
-                addSchedule(count: Int16(j+1), endTime: end, startTime: start, isCanceled: false, progress: "", classInfo: newClassInfo)
+                preSchedule = addSchedule(count: Int16(j+1), endTime: end, startTime: start, isCanceled: false, progress: "", classInfo: newClassInfo, preSchedule: preSchedule)
             }
             print(dates.map{ $0.description(with: .current) })
         }
