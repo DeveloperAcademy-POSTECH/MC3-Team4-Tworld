@@ -27,6 +27,14 @@ class PrevScheduleInfoCell: UICollectionViewCell {
         return label
     }()
     
+    lazy var teamLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.font = .systemFont(for: .body1)
+        label.textColor = .theme.greyscale3
+        
+        return label
+    }()
+    
     lazy var labelStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.axis = .vertical
@@ -37,33 +45,6 @@ class PrevScheduleInfoCell: UICollectionViewCell {
     }()
     
     lazy var progressCountLabel = GradientCapsuleLabel(frame: .zero)
-    
-    lazy var progressIcon: UIImageView = {
-        let imageView = UIImageView(frame: .zero)
-        let image = UIImage(systemName: "highlighter", withConfiguration: UIImage.SymbolConfiguration(pointSize: 15, weight: .semibold))!
-        imageView.tintColor = .theme.spLightBlue
-        imageView.image = image
-        
-        return imageView
-    }()
-    
-    lazy var progressInfoLabel: ProgressLabel = {
-        let label = ProgressLabel(frame: .zero)
-        label.font = .systemFont(for: .body2)
-        label.numberOfLines = 0
-        
-        return label
-    }()
-    
-    lazy var progressStackView: UIStackView = {
-        let stackView = UIStackView(frame: .zero)
-        stackView.axis = .horizontal
-        stackView.alignment = .top
-        stackView.spacing = 14
-        
-        return stackView
-        
-    }()
     
     lazy var mainStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
@@ -141,13 +122,9 @@ class ProgressLabel: UILabel {
 
 extension PrevScheduleInfoCell {
     func configure() {
-        let divider = UIView(frame: .zero)
-        divider.translatesAutoresizingMaskIntoConstraints = false
-        divider.backgroundColor = .darkGray
         [schoolIndicator, titleLabel].forEach{ titleStackView.addArrangedSubview($0) }
-        [titleStackView, durationLabel].forEach{ labelStackView.addArrangedSubview($0) }
-        [progressIcon, progressInfoLabel].forEach{ progressStackView.addArrangedSubview($0) }
-        [labelStackView, divider, progressStackView].forEach{ mainStackView.addArrangedSubview($0) }
+        [titleStackView, durationLabel, teamLabel].forEach{ labelStackView.addArrangedSubview($0) }
+        [labelStackView].forEach{ mainStackView.addArrangedSubview($0) }
         self.addSubview(mainStackView)
         self.addSubview(progressCountLabel)
         
@@ -156,9 +133,6 @@ extension PrevScheduleInfoCell {
             mainStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             mainStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             mainStackView.topAnchor.constraint(equalTo: self.topAnchor),
-            divider.heightAnchor.constraint(equalToConstant: 1),
-            divider.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
-            
             progressCountLabel.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -16),
             progressCountLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: .padding.toBox)
         ])

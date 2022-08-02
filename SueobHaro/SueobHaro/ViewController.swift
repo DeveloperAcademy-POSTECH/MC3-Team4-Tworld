@@ -152,7 +152,7 @@ extension ViewController: UICollectionViewDelegate {
         
         let nextCellRegistration = UICollectionView.CellRegistration<NextScheduleInfoCell, Schedule> { (cell, indexPath, item) in
             cell.titleLabel.text = item.classInfo?.name ?? ""
-            cell.durationLabel.text = "\((item.startTime ?? Date()).toString())~\((item.endTime ?? Date()).toString())"
+            cell.durationLabel.text = DateFormatUtil.scheduleDateFormatter(item.startTime ?? Date(), item.endTime ?? Date())
             let members = item.classInfo?.members?.allObjects as? [Members] ?? []
             cell.teamLabel.text = String(members.reduce(into: ""){ $0 += "\($1.name ?? ""), " }.dropLast(2))
             cell.progressInfoLabel.text = item.preSchedule?.progress ?? ""
@@ -171,8 +171,11 @@ extension ViewController: UICollectionViewDelegate {
         
         let prevCellRegistration = UICollectionView.CellRegistration<PrevScheduleInfoCell, Schedule> { (cell, indexPath, item) in
             cell.titleLabel.text = item.classInfo?.name ?? ""
-            cell.durationLabel.text = "\((item.startTime ?? Date()).toString())~\((item.endTime ?? Date()).toString())"
-            cell.progressInfoLabel.text = item.progress ?? ""
+            let dateString = item.startTime?.formatted(date: .complete, time: .omitted) ?? ""
+            let timeString = DateFormatUtil.scheduleDateFormatter(item.startTime ?? Date(), item.endTime ?? Date())
+            cell.durationLabel.text = dateString + "  " + timeString
+            let members = item.classInfo?.members?.allObjects as? [Members] ?? []
+            cell.teamLabel.text = String(members.reduce(into: ""){ $0 += "\($1.name ?? ""), " }.dropLast(2))
             
             var container = AttributeContainer()
             container.font = .systemFont(for: .caption)
