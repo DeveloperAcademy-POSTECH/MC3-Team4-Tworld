@@ -58,7 +58,9 @@ class DataManager {
             var preSchedule: Schedule?
             for (j, date) in dates.enumerated() {
                 var start = Calendar.current.date(byAdding: .hour, value: startTime[i].hour, to: date)!
+                print(startTime[i].hour)
                 start = Calendar.current.date(byAdding: .minute, value: startTime[i].minute, to: start)!
+                print(startTime[i].minute)
                 var end = Calendar.current.date(byAdding: .hour, value: endTime[i].hour, to: date)!
                 end = Calendar.current.date(byAdding: .minute, value: endTime[i].minute, to: end)!
                 preSchedule = addSchedule(count: Int16(j+1), endTime: end, startTime: start, isCanceled: false, progress: "", classInfo: newClassInfo, preSchedule: preSchedule)
