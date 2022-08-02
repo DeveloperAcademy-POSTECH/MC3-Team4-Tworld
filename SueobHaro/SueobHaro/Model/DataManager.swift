@@ -52,10 +52,17 @@ class DataManager {
                       schoolString: memberSchool[idx]
             )
         }
-        var preSchedule: Schedule? = nil
-        for idx in 0..<day.count {
-            preSchedule = addSchedule(count: 1, endTime: endTime[idx], startTime: startTime[idx], isCanceled: false, progress: "", classInfo: newClassInfo, preSchedule: preSchedule)
-            
+        for (i, d) in day.enumerated() {
+            let lastDate = Calendar.current.date(byAdding: .month, value: 6, to: firstDate.toDay) ?? firstDate.toDay
+            let dates = Calendar.current.generateDatesAfter(inside: DateInterval(start: firstDate.toDay, end: lastDate), matching: DateComponents(weekday: d.toWeekOfDayNum()))
+            for (j, date) in dates.enumerated() {
+                var start = Calendar.current.date(byAdding: .hour, value: startTime[i].hour, to: date)!
+                start = Calendar.current.date(byAdding: .minute, value: startTime[i].minute, to: start)!
+                var end = Calendar.current.date(byAdding: .hour, value: endTime[i].hour, to: date)!
+                end = Calendar.current.date(byAdding: .minute, value: endTime[i].minute, to: end)!
+                addSchedule(count: Int16(j+1), endTime: end, startTime: start, isCanceled: false, progress: "", classInfo: newClassInfo)
+            }
+            print(dates.map{ $0.description(with: .current) })
         }
     }
     
@@ -106,18 +113,26 @@ class DataManager {
         let dates = Calendar.current.generateDates(inside: DateInterval(start: startDate, end: endDate),
                                                    matching: DateComponents(hour: 0, minute: 0, second: 0))
         for (i, date) in dates.enumerated() {
-            addExamInfo(examPeriod: newExamPeriod, date: date, text: infos[i])
+            var flag: String? = nil
+            if i == 0 {
+                flag = "start"
+            } else if i == dates.count-1 {
+                flag = "end"
+            }
+            addExamInfo(examPeriod: newExamPeriod, date: date, text: infos[i], flag: flag)
         }
         let school = addSchool(name: name)
         newExamPeriod.school = school
         try? container.viewContext.save()
     }
     
-    func addExamInfo(examPeriod: ExamPeriod, date: Date, text: String) -> Void {
+    func addExamInfo(examPeriod: ExamPeriod, date: Date, text: String, flag: String?) -> Void {
         let newExamInfo = ExamInfo(context: container.viewContext)
         newExamInfo.id = UUID()
         newExamInfo.text = text
         newExamInfo.examPeriod = examPeriod
+        newExamInfo.date = date
+        newExamInfo.flag = flag
         try? container.viewContext.save()
     }
     
@@ -249,7 +264,13 @@ class DataManager {
     // MARK: Fetch
     func fetchSchedules(section: Section) -> [Schedule] {
         let request = Schedule.fetchRequest()
-        let filter = NSPredicate(format: section == .next ? "endTime > %@" : "endTime < %@" , Date() as NSDate)
+        var filter: NSPredicate
+        if section == .next {
+            filter = NSPredicate(format: "endTime > %@ AND endTime < %@", Date() as NSDate, Date().nextDay() as NSDate)
+        } else {
+            filter = NSPredicate(format: "endTime < %@ AND progress == %@" , Date() as NSDate, "")
+        }
+        
         var sort = NSSortDescriptor(keyPath: \Schedule.startTime, ascending: true)
         if section == .prev {
             sort = NSSortDescriptor(keyPath: \Schedule.endTime, ascending: false)
@@ -289,3 +310,4 @@ enum DataModel {
     case classIteration
     case school
 }
+

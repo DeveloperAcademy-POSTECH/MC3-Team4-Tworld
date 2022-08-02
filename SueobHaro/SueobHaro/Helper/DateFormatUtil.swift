@@ -31,4 +31,18 @@ final class DateFormatUtil {
         
         return dateFormatter.string(from: time)
     }
+    
+    // MARK: 수업일자 스케쥴 시간 스트링 반환(ex: "15")
+    static func scheduleDateFormatter(_ start: Date, _ end: Date) -> String {
+        let dateFormatter: DateFormatter = {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm"
+            
+            return dateFormatter
+        }()
+        
+        let startString = dateFormatter.string(from: start)
+        let endString = dateFormatter.string(from: end)
+        return startString + " ~ " + endString
+    }
 }

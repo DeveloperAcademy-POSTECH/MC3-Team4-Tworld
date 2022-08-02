@@ -43,6 +43,38 @@ struct ColorTheme {
     let greyscale7 = UIColor(named: "Greyscale7")!
 }
 
+enum RandomColorTheme: CaseIterable {
+    case pink
+    case orange
+    case blue
+    case purple
+    case yellow
+    case green
+    case skyblue
+    case salmon
+    
+    var name: String {
+        switch self {
+        case .pink:
+            return "RandomPink"
+        case .orange:
+            return "RandomOrange"
+        case .blue:
+            return "RandomBlue"
+        case .purple:
+            return "RandomPurple"
+        case .yellow:
+            return "RandomYellow"
+        case .green:
+            return "RandomGreen"
+        case .skyblue:
+            return "RandomSkyblue"
+        case .salmon:
+            return "RandomSalmon"
+        }
+    }
+}
+
 // MARK: Color for swiftUI
 extension Color {
     static let spBlack = Color("SPBlack")

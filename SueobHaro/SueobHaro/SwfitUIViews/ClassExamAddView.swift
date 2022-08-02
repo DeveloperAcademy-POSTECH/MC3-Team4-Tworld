@@ -26,7 +26,7 @@ struct ClassExamAddView: View {
     }
     
     private func save() {
-        DataManager.shared.addExamPeriod(name: schoolName, start: startDate, end: endDate, infos: examInfo)
+        DataManager.shared.addExamPeriod(name: schoolName, start: startDate.toDay, end: endDate.toDay, infos: examInfo)
     }
     
     var body: some View {
@@ -92,9 +92,9 @@ struct ClassExamAddView: View {
                                 examDay = []
                                 examInfo = []
                             }
-                            var tempStartDate = startDate
+                            var tempStartDate = startDate.toDay
                             DispatchQueue.main.async {
-                                while tempStartDate <= endDate {
+                                while tempStartDate <= endDate.toDay {
                                     withAnimation(.spring()) {
                                         examDay.append(DateFormatUtil.classDateFormatter(time: tempStartDate))
                                         examInfo.append("")

@@ -13,30 +13,69 @@ enum CalendarCase: String {
 }
 
 struct PlanView: View {
-    
     @StateObject private var vm = PlanViewModel()
     @State private var calendarCase: CalendarCase = .month
+    @State private var showClassAddView = false
+    @State private var showExamAddView = false
     
     var body: some View {
-        ZStack {
-            
-            Color.spBlack.ignoresSafeArea()
-            
-            VStack(spacing: 20) {
+        NavigationView {
+            ZStack {
                 
-                HStack {
-                    calendarCasePicker
-                        .padding(.leading, 16)
-                    Spacer()
-                }
-                .padding(.top, 12)
+                NavigationLink(isActive: $showExamAddView,
+                               destination: {ClassExamAddView(){fetch()}},
+                               label: {EmptyView()})
                 
-                if calendarCase == .week {
-                    Spacer()
-                } else {
-                    MonthCalendarView(vm: vm)
+                NavigationLink(isActive: $showClassAddView,
+                               destination: {
+                    ClassAddView(dismissAction: {
+                        showClassAddView = false
+                        fetch()
+                    })
+                },
+                label: {EmptyView()})
+                
+                Color.spBlack.ignoresSafeArea()
+                
+                VStack(spacing: 20) {
+                    
+                    HStack {
+                        calendarCasePicker
+                            
+                        Spacer()
+                        
+                        Menu {
+                            Button {
+                                showClassAddView = true
+                            } label: {
+                                Label("수업 추가", systemImage: "book")
+                            }
+                            
+                            Button {
+                                showExamAddView = true
+                            } label: {
+                                Label("시험기간 추가", systemImage: "pencil.and.outline")
+                            }
+                        } label: {
+                            HStack(spacing: 4) {
+                                Text("추가하기")
+                                    .font(Font(uiFont: .systemFont(for: .body1)))
+                                Image(systemName: "plus")
+                            }
+                            .foregroundColor(.spLightBlue)
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.top, 12)
+                    
+                    if calendarCase == .week {
+                        Spacer()
+                    } else {
+                        MonthCalendarView(vm: vm)
+                    }
                 }
             }
+            .navigationBarHidden(true)
         }
     }
     
@@ -70,10 +109,10 @@ struct PlanView: View {
             .frame(height: 3)
         }
     }
-}
-
-struct PlanView_Previews: PreviewProvider {
-    static var previews: some View {
-        PlanView()
+    
+    private func fetch() {
+        showExamAddView = false
+        vm.fetchPlan()
     }
 }
+

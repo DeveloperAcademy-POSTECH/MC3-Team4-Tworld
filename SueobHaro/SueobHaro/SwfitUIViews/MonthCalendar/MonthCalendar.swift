@@ -1,26 +1,6 @@
 
 import SwiftUI
 
-enum Quadrant: String, CaseIterable {
-    case first
-    case second
-    case third
-    case fourth
-    
-    var area: CGPoint {
-        switch self {
-        case .first:
-            return .init(x: 1, y: 1)
-        case .second:
-            return .init(x: -1, y: 1)
-        case .third:
-            return .init(x: -1, y: -1)
-        case .fourth:
-            return .init(x: 1, y: -1)
-        }
-    }
-}
-
 struct MonthCalendarView: View {
     
     @Environment(\.calendar) var calendar
@@ -40,7 +20,7 @@ struct MonthCalendarView: View {
                             .frame(height: 1)
                     }
                 
-                MonthView(now: $standardDate) { date in
+                YearView(now: $standardDate) { date in
                     ZStack(alignment: .top) {
                         Button {
                             withAnimation(.spring()) {
@@ -65,9 +45,14 @@ struct MonthCalendarView: View {
                     .padding(.bottom, .padding.toDifferentHierarchy)
             }
         }
-        .onChange(of: vm.selectedDate) { date in
-            vm.fetchSchedule(date: date)
-            vm.fetchExamPeriod(date: date)
+        .onAppear{
+            vm.fetchPlan()
+            vm.fetchExamPeriod()
+        }
+        .onChange(of: standardDate) { newValue in
+            vm.selectedDate = standardDate
+            vm.fetchPlan()
+            vm.fetchExamPeriod()
         }
     }
     
@@ -83,8 +68,67 @@ struct MonthCalendarView: View {
                 .padding(.leading, 16)
             
             VStack(spacing: .padding.toComponents) {
-                ForEach(vm.schedule) { schedule in
-                    ScheduleInfoView(schedule: schedule)
+                ForEach(vm.examInfos[vm.selectedDate] ?? []) { examInfo in
+                    HStack(spacing: 10) {
+                        
+                        Spacer()
+                            .frame(width: 64 - 10)
+                        
+                        Capsule()
+                            .fill(Color.spLightBlue)
+                            .frame(width: 3)
+                        
+                        Text(examInfo.examPeriod?.school?.name ?? "" + " 시험")
+                            .font(Font(uiFont: .systemFont(for: .title3)))
+                        
+                        if let text = examInfo.text, !text.isEmpty {
+                            Text(text)
+                                .font(Font(uiFont: .systemFont(for: .caption)))
+                                .foregroundColor(Color.spBlack)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 6)
+                                .background{
+                                    Capsule()
+                                        .fill(
+                                            LinearGradient(gradient: Gradient(colors: [Color.spLightGradientLeft, Color.spLightGradientRight]), startPoint: .topTrailing, endPoint: .bottomLeading)
+                                        )
+                                }
+                        }
+                        
+                        Spacer()
+                    }
+                }
+                
+                if let schedules = vm.schedules[vm.selectedDate], !schedules.isEmpty {
+                    ForEach(schedules) { schedule in
+                        NavigationLink {
+                            ClassDetailView(selectedClass: schedule.classInfo)
+                        } label: {
+                            ScheduleInfoView(schedule: schedule)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                } else {
+                    HStack(spacing: 0) {
+                        Spacer()
+                            .frame(width: 64)
+                        Text("오늘은 일정이 존재하지 않아요.")
+                            .font(Font(uiFont: .systemFont(for: .body2)))
+                            .padding(.padding.inBox)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(
+                                ZStack {
+                                    Rectangle()
+                                        .fill(Color.greyscale6)
+                                        .cornerRadius(radius: 10, corners: [.topLeft, .bottomLeft])
+                                    
+                                    Rectangle()
+                                        .fill(Color.greyscale7)
+                                        .cornerRadius(radius: 10, corners: [.topLeft, .bottomLeft])
+                                        .padding([.vertical, .leading], 1)
+                                }
+                            )
+                    }
                 }
             }
         }
@@ -105,7 +149,7 @@ struct MonthCalendarView: View {
                 .foregroundColor(
                     Calendar.current.isDate(vm.selectedDate, inSameDayAs: date) ? .greyscale7 : .greyscale1
                 )
-                .padding(.vertical, 2)
+                .padding(.vertical, 4)
                 .frame(maxWidth: .infinity)
                 .background(
                     ZStack {
@@ -114,25 +158,28 @@ struct MonthCalendarView: View {
                                 .fill(
                                     LinearGradient(gradient: Gradient(colors: [Color.spLightGradientLeft, Color.spLightGradientRight]), startPoint: .topTrailing, endPoint: .bottomLeading)
                                 )
-                                .padding(.horizontal, 8)
                         } else {
                             EmptyView()
                         }
                         
-                        if vm.examInfos.filter({ $0.date == date }).count != 0 {
+                        ForEach(vm.examInfos[date] ?? []) { info in
                             Rectangle()
                                 .fill(Color.spLightBlue.opacity(0.3))
+                                .cornerRadius(radius: 12
+                                              ,corners: info.flag == "start" ? [.topLeft, .bottomLeft] : info.flag == "end" ? [.topRight, .bottomRight] : [])
                         }
                     }
                 )
                 .foregroundColor(.greyscale1)
             ZStack {
-                ForEach(Quadrant.allCases, id: \.rawValue) { q in
-                    Circle()
-                        .fill()
-                        .frame(width: 8, height: 8)
-                        .offset(x: q.area.x * 6.5, y: q.area.y * 6.5)
-                        .opacity(0)
+                if let schedules = vm.schedules[date] {
+                    ForEach(Array(schedules.enumerated()), id: \.offset) { i, schedule in
+                        Circle()
+                            .fill(Color(schedule.classInfo?.color ?? ""))
+                            .frame(width: 8, height: 8)
+                            .offset(x: calIndicatorOffset(i).x * 6.5,
+                                    y: calIndicatorOffset(i).y * 6.5)
+                    }
                 }
             }
             .frame(width: 6.5+6.5+4+4, height: 6.5+6.5+4+4)
@@ -156,6 +203,23 @@ struct MonthCalendarView: View {
                 Text("\(String(year))년 \(month)월")
                     .font(Font(uiFont: .systemFont(for: .title2)))
                 Spacer()
+                
+                HStack(spacing: 12) {
+                    Image(systemName: "chevron.left.circle")
+                        .onTapGesture {
+                            withAnimation(.spring()) {
+                                standardDate = Calendar.current.date(byAdding: .month, value: -1, to: standardDate) ?? standardDate
+                            }
+                        }
+                    Image(systemName: "chevron.right.circle")
+                        .onTapGesture {
+                            withAnimation(.spring()) {
+                                standardDate = Calendar.current.date(byAdding: .month, value: 1, to: standardDate) ?? standardDate
+                            }
+                        }
+                }
+                .font(Font(uiFont: .systemFont(for: .title3)))
+                .foregroundColor(.greyscale4)
             }
             
             HStack{
@@ -166,6 +230,19 @@ struct MonthCalendarView: View {
                         .frame(maxWidth: .infinity)
                 }
             }
+        }
+    }
+    
+    private func calIndicatorOffset(_ index: Int) -> CGPoint {
+        switch index {
+        case 0:
+            return .init(x: -1, y: -1)
+        case 1:
+            return .init(x: 1, y: -1)
+        case 2:
+            return .init(x: -1, y: 1)
+        default:
+            return .init(x: 1, y: 1)
         }
     }
 }
@@ -223,16 +300,16 @@ struct WeekView<DateView>: View where DateView: View {
 struct MonthView<DateView>: View where DateView: View {
     
     @Environment(\.calendar) var calendar
-    @Binding var now: Date
+    let month: Date
     let content: (Date) -> DateView
     
-    init(now: Binding<Date>, @ViewBuilder content: @escaping (Date) -> DateView) {
-        self._now = now
+    init(month: Date, @ViewBuilder content: @escaping (Date) -> DateView) {
+        self.month = month
         self.content = content
     }
     
     private var weeks: [Date] {
-        guard let monthInterval = calendar.dateInterval(of: .month, for: now)
+        guard let monthInterval = calendar.dateInterval(of: .month, for: month)
         else { return [] }
         return calendar.generateDates(
             inside: monthInterval,
@@ -245,6 +322,33 @@ struct MonthView<DateView>: View where DateView: View {
             ForEach(weeks, id: \.self) { week in
                 WeekView(week: week, content: self.content)
             }
+        }
+    }
+}
+
+struct YearView<DateView>: View where DateView: View {
+    
+    @Environment(\.calendar) var calendar
+    @Binding var now: Date
+    let content: (Date) -> DateView
+    
+    init(now: Binding<Date>, @ViewBuilder content: @escaping (Date) -> DateView) {
+        self._now = now
+        self.content = content
+    }
+    
+    private var months: [Date] {
+        guard let monthInterval = calendar.dateInterval(of: .month, for: now)
+        else { return [] }
+        return calendar.generateDates(
+            inside: monthInterval,
+            matching: DateComponents(day: 1, hour: 0, minute: 0, second: 0)
+        )
+    }
+    
+    var body: some View {
+        ForEach(months, id: \.self) { month in
+            MonthView(month: month, content: self.content)
         }
     }
 }
