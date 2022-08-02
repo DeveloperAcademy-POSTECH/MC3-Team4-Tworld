@@ -106,27 +106,30 @@ struct ClassInformationView: View {
         let columnLayout = Array(repeating: GridItem(), count: 2)
         LazyVGrid(columns: columnLayout) {
             ForEach(members) { data in
-                ZStack {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(backgroundColor)
-                    RoundedRectangle(cornerRadius: 10)
-                        .strokeBorder(strokeColor, lineWidth: 1)
-                    HStack(spacing: 0) {
-                        VStack(alignment: .leading, spacing: 0) {
-                            Text(data.name ?? "")
-                                .font(Font(uiFont: .systemFont(for: .title3)))
-                                .foregroundColor(Color.greyscale1)
-                                .padding(.bottom, .padding.toText)
-                            Text(data.school?.name ?? "")
-                                .font(Font(uiFont: .systemFont(for: .body1)))
-                                .foregroundColor(Color.greyscale3)
-                            Text(data.phoneNumber ?? "")
-                                .font(Font(uiFont: .systemFont(for: .body1)))
-                                .foregroundColor(Color.greyscale3)
-                        }
-                        Spacer()
-                    }.padding(.padding.inBox)
+                NavigationLink(destination: PersonalMemberView(member: data)) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(backgroundColor)
+                        RoundedRectangle(cornerRadius: 10)
+                            .strokeBorder(strokeColor, lineWidth: 1)
+                        HStack(spacing: 0) {
+                            VStack(alignment: .leading, spacing: 0) {
+                                Text(data.name ?? "")
+                                    .font(Font(uiFont: .systemFont(for: .title3)))
+                                    .foregroundColor(Color.greyscale1)
+                                    .padding(.bottom, .padding.toText)
+                                Text(data.school?.name ?? "")
+                                    .font(Font(uiFont: .systemFont(for: .body1)))
+                                    .foregroundColor(Color.greyscale3)
+                                Text(data.phoneNumber ?? "")
+                                    .font(Font(uiFont: .systemFont(for: .body1)))
+                                    .foregroundColor(Color.greyscale3)
+                            }
+                            Spacer()
+                        }.padding(.padding.inBox)
+                    }
                 }
+                
             }
         }
     }

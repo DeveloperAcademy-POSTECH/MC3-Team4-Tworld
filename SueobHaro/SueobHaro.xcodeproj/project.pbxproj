@@ -36,6 +36,12 @@
 		317AE6C22888647000FDA57B /* ClassInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6C12888647000FDA57B /* ClassInformationView.swift */; };
 		317AE6C42888648B00FDA57B /* ClassInformationHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6C32888648B00FDA57B /* ClassInformationHeaderComponent.swift */; };
 		317AE6C62888649B00FDA57B /* ClassInformationListComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AE6C52888649B00FDA57B /* ClassInformationListComponent.swift */; };
+		31DD86682896DDDE00861A5D /* PersonalMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD86672896DDDE00861A5D /* PersonalMemberView.swift */; };
+		31DD866C2896FC8B00861A5D /* PointChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD866B2896FC8B00861A5D /* PointChartView.swift */; };
+		31DD866E2897797B00861A5D /* ClassMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD866D2897797B00861A5D /* ClassMemberViewController.swift */; };
+		31DD867028977A3600861A5D /* ClassMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD866F28977A3600861A5D /* ClassMemberTableViewCell.swift */; };
+		31DD867228977AC800861A5D /* ClassMemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD867128977AC800861A5D /* ClassMemberCollectionViewCell.swift */; };
+		31EB7DD02897BFFC00689030 /* ClassMemberSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EB7DCF2897BFFC00689030 /* ClassMemberSectionHeaderView.swift */; };
 		31EBB7FE2891920700502441 /* KeyboardHeightHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EBB7FD2891920700502441 /* KeyboardHeightHelper.swift */; };
 		31EBB8062893BD1000502441 /* ClassUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EBB8052893BD1000502441 /* ClassUpdateView.swift */; };
 		31EBB83328957E4A00502441 /* WeeklyCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EBB83228957E4A00502441 /* WeeklyCalendarView.swift */; };
@@ -103,6 +109,12 @@
 		317AE6C12888647000FDA57B /* ClassInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationView.swift; sourceTree = "<group>"; };
 		317AE6C32888648B00FDA57B /* ClassInformationHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationHeaderComponent.swift; sourceTree = "<group>"; };
 		317AE6C52888649B00FDA57B /* ClassInformationListComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInformationListComponent.swift; sourceTree = "<group>"; };
+		31DD86672896DDDE00861A5D /* PersonalMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalMemberView.swift; sourceTree = "<group>"; };
+		31DD866B2896FC8B00861A5D /* PointChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointChartView.swift; sourceTree = "<group>"; };
+		31DD866D2897797B00861A5D /* ClassMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassMemberViewController.swift; sourceTree = "<group>"; };
+		31DD866F28977A3600861A5D /* ClassMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassMemberTableViewCell.swift; sourceTree = "<group>"; };
+		31DD867128977AC800861A5D /* ClassMemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassMemberCollectionViewCell.swift; sourceTree = "<group>"; };
+		31EB7DCF2897BFFC00689030 /* ClassMemberSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassMemberSectionHeaderView.swift; sourceTree = "<group>"; };
 		31EBB7FD2891920700502441 /* KeyboardHeightHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightHelper.swift; sourceTree = "<group>"; };
 		31EBB8052893BD1000502441 /* ClassUpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassUpdateView.swift; sourceTree = "<group>"; };
 		31EBB83228957E4A00502441 /* WeeklyCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalendarView.swift; sourceTree = "<group>"; };
@@ -190,6 +202,7 @@
 				317AE6842886919200FDA57B /* ClassDeatilViewController.swift */,
 				317AE68B2886EFE700FDA57B /* ClassInformationViewController.swift */,
 				317AE68D28870DAF00FDA57B /* ProgressUpdateModalViewController.swift */,
+				31DD866D2897797B00861A5D /* ClassMemberViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -201,6 +214,9 @@
 				317AE6872886927400FDA57B /* ClassDetailTableViewCell.swift */,
 				317AE69128873BCE00FDA57B /* ClassInformationHeaderView.swift */,
 				317AE69328873BEA00FDA57B /* ClassInformationTableViewCell.swift */,
+				31DD866F28977A3600861A5D /* ClassMemberTableViewCell.swift */,
+				31DD867128977AC800861A5D /* ClassMemberCollectionViewCell.swift */,
+				31EB7DCF2897BFFC00689030 /* ClassMemberSectionHeaderView.swift */,
 			);
 			path = ViewComponent;
 			sourceTree = "<group>";
@@ -217,6 +233,7 @@
 				372B0EE728914E1900482730 /* ClassExamAddView.swift */,
 				31EBB8052893BD1000502441 /* ClassUpdateView.swift */,
 				372B0F4A2893D24900482730 /* ClassSettingView.swift */,
+				31DD86672896DDDE00861A5D /* PersonalMemberView.swift */,
 			);
 			path = SwfitUIViews;
 			sourceTree = "<group>";
@@ -238,6 +255,7 @@
 				372B0EE32891429700482730 /* ClassTitleProgressView.swift */,
 				372B0EE528914C7F00482730 /* DatePickerView.swift */,
 				372B0F3C289260D900482730 /* ClassMemberGridView.swift */,
+				31DD866B2896FC8B00861A5D /* PointChartView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -447,6 +465,7 @@
 				21ABDA802893BC7F00F0DB4F /* PlanViewModel.swift in Sources */,
 				372B0EE628914C7F00482730 /* DatePickerView.swift in Sources */,
 				37B0427628848FC00043E9CB /* DataManager.swift in Sources */,
+				31DD866C2896FC8B00861A5D /* PointChartView.swift in Sources */,
 				31EBB8062893BD1000502441 /* ClassUpdateView.swift in Sources */,
 				371A52532896D00100FA01DF /* Schedule+CoreDataProperties.swift in Sources */,
 				31EBB7FE2891920700502441 /* KeyboardHeightHelper.swift in Sources */,
@@ -473,9 +492,12 @@
 				31EBB83728957E7100502441 /* CalendarNumberView.swift in Sources */,
 				317AE6C028884E9D00FDA57B /* ClassUpdateModalView.swift in Sources */,
 				214707DF288FBDF9004E49D9 /* UnderlineSegmentedControl.swift in Sources */,
+				31DD867228977AC800861A5D /* ClassMemberCollectionViewCell.swift in Sources */,
 				37B042CD28854F010043E9CB /* ClassInfo+CoreDataProperties.swift in Sources */,
 				21B86DC128918826009B7643 /* MonthCalendar.swift in Sources */,
 				317AE68A2886A25200FDA57B /* ClassDetailHeaderView.swift in Sources */,
+				31DD86682896DDDE00861A5D /* PersonalMemberView.swift in Sources */,
+				31EB7DD02897BFFC00689030 /* ClassMemberSectionHeaderView.swift in Sources */,
 				317AE68C2886EFE700FDA57B /* ClassInformationViewController.swift in Sources */,
 				317AE68E28870DAF00FDA57B /* ProgressUpdateModalViewController.swift in Sources */,
 				371A52522896D00100FA01DF /* Schedule+CoreDataClass.swift in Sources */,
@@ -489,12 +511,15 @@
 				21ABDA7E2893AB3F00F0DB4F /* PlanView.swift in Sources */,
 				37B0421C288277E00043E9CB /* SceneDelegate.swift in Sources */,
 				31EBB83528957E5E00502441 /* CalendarBackgroundView.swift in Sources */,
+				31DD867028977A3600861A5D /* ClassMemberTableViewCell.swift in Sources */,
 				37B042B828854A290043E9CB /* ClassIteration+CoreDataClass.swift in Sources */,
 				37B0431528868DF80043E9CB /* ClassMembersView.swift in Sources */,
 				21BC992028911245000C5FCF /* MainTabBarController.swift in Sources */,
 				37B042CC28854F010043E9CB /* ClassInfo+CoreDataClass.swift in Sources */,
 				372B0F4B2893D24900482730 /* ClassSettingView.swift in Sources */,
 				21977B4C28868E0700BAE020 /* NextScheduleInfoCell.swift in Sources */,
+				31DD866E2897797B00861A5D /* ClassMemberViewController.swift in Sources */,
+				37B042B528854A290043E9CB /* Schedule+CoreDataProperties.swift in Sources */,
 				372B0EDC288FBA9B00482730 /* ClassAddView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

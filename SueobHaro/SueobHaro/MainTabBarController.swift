@@ -22,16 +22,19 @@ class MainTabBarController: UITabBarController {
         
         let firstNC = UINavigationController(rootViewController: ViewController())
         let secondNC = UIHostingController(rootView: PlanView())
-        let thirdNC = UIHostingController(rootView: ClassSettingView())
+        let thirdNC = UINavigationController(rootViewController: ClassMemberViewController())
+        let fourthNC = UIHostingController(rootView: ClassSettingView())
         
-        self.viewControllers = [firstNC, secondNC, thirdNC]
+        self.viewControllers = [firstNC, secondNC, thirdNC, fourthNC]
         
         let firstTabBarItem = UITabBarItem(title: "빠른수업", image: UIImage(systemName: "list.bullet"), tag: 0)
         let secondTabBarItem = UITabBarItem(title: "모든일정", image: UIImage(systemName: "calendar"), tag: 1)
-        let thirtdTabBarItem = UITabBarItem(title: "설정", image: UIImage(systemName: "gearshape"), tag: 2)
+        let thirtdTabBarItem = UITabBarItem(title: "학생관리", image: UIImage(systemName: "person.text.rectangle"), tag: 2)
+        let fourthTabBarItem = UITabBarItem(title: "설정", image: UIImage(systemName: "gearshape"), tag: 3)
         
         firstNC.tabBarItem = firstTabBarItem
         secondNC.tabBarItem = secondTabBarItem
         thirdNC.tabBarItem = thirtdTabBarItem
+        fourthNC.tabBarItem = fourthTabBarItem
     }
 }

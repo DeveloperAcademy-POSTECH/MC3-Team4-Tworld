@@ -39,7 +39,6 @@ struct CalendarNumberView: View {
                                         .frame(width: 48, height: 36)
                                         .foregroundColor(.spTurkeyBlue)
                                         .rotationEffect(.degrees(90))
-                                        
                                 }
                                 .frame(width: width * 0.13, height: 48)
                             } else {
@@ -69,48 +68,47 @@ struct CalendarNumberView: View {
                         }
                     }
                 }
-//                .edgesIgnoringSafeArea(.horizontal)
                 .offset(x: width*0.03 + gestureOffset + offset)
-                .gesture(
-                    DragGesture()
-                        .updating($gestureOffset) { dragValue, gestureState, _ in
-                            gestureState = dragValue.translation.width
-                        }.onEnded { value in
-                            
-                            if value.translation.width < -100 {
-                                offset = value.translation.width
-                                indexOffset += 7
-                                withAnimation {
-                                    offset = width * -1
-                                }
-                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05) {
-                                    dayList.append(dayList[2].map{ $0 + 7 })
-                                    dayList.removeFirst()
-                                    dayArray.append(dateInWeek(date: Date(), offset: indexOffset+7))
-                                    dayArray.removeFirst()
-                                    offset = .zero
-                                    
-                                }
+                
+            }.gesture(
+                DragGesture()
+                    .updating($gestureOffset) { dragValue, gestureState, _ in
+                        gestureState = dragValue.translation.width
+                    }.onEnded { value in
+                        
+                        if value.translation.width < -100 {
+                            offset = value.translation.width
+                            indexOffset += 7
+                            withAnimation {
+                                offset = width * -1
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05) {
+                                dayList.append(dayList[2].map{ $0 + 7 })
+                                dayList.removeFirst()
+                                dayArray.append(dateInWeek(date: Date(), offset: indexOffset+7))
+                                dayArray.removeFirst()
+                                offset = .zero
                                 
                             }
-                            if value.translation.width > 100 {
-                                offset = value.translation.width
-                                indexOffset -= 7
-                                withAnimation {
-    //                                proxy.scrollTo(currentIndex + 1)
-                                    offset = width * 1
-                                }
-                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05) {
-                                    dayList.insert(dayList[0].map{ $0 - 7 }, at: 0)
-                                    dayList.removeLast()
-                                    dayArray.insert(dateInWeek(date: Date(), offset: indexOffset-7), at: 0)
-                                    dayArray.removeLast()
-                                    offset = .zero
-                                }
+                            
+                        }
+                        if value.translation.width > 100 {
+                            offset = value.translation.width
+                            indexOffset -= 7
+                            withAnimation {
+//                                proxy.scrollTo(currentIndex + 1)
+                                offset = width * 1
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05) {
+                                dayList.insert(dayList[0].map{ $0 - 7 }, at: 0)
+                                dayList.removeLast()
+                                dayArray.insert(dateInWeek(date: Date(), offset: indexOffset-7), at: 0)
+                                dayArray.removeLast()
+                                offset = .zero
                             }
                         }
-                )
-            }
+                    }
+            )
             
         }
     }

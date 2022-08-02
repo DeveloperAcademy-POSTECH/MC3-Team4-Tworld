@@ -10,7 +10,7 @@ import SwiftUI
 struct ClassDetailView: View {
     
 //    @ObservedObject var keyboardHelper = UIKeyboardHeightHelper()
-    
+    @Environment(\.presentationMode) var presentationMode
     // OnAppear 에서 선택된 클래스에 대한 타이틀값을 할당 받는다
     @State var classTitle: String = "코딩 영재반"
     //    @State var isPresented: Bool = false
@@ -38,6 +38,9 @@ struct ClassDetailView: View {
     @State var isOffset: CGFloat = .zero
     // 네비게이션 바 타이틀 노출 여부
     @State var isNavigationTitle: Bool = false
+    
+    @State var isOut:Bool = false
+    @State var nextSchedule:Schedule?
     
     var dismissAction: (() -> Void)
     
@@ -84,6 +87,92 @@ struct ClassDetailView: View {
                         .fill(Color(UIColor.theme.greyscale5))
                         .frame(height:1)
                         .frame(maxWidth:.infinity)
+                    
+                    if let data = nextSchedule {
+//                        if selectedSchedule == nil
+                            VStack(spacing: 0) {
+                                HStack {
+                                    Text("다음 수업")
+                                        .font(Font(UIFont.systemFont(for: .title3)))
+                                        .foregroundColor(.greyscale1)
+                                }
+                                .padding(.horizontal, CGFloat.padding.margin)
+                                .padding(.vertical, CGFloat.padding.toTextComponents)
+                                VStack {
+                                    HStack {
+                                        Text(getDate(date: data.startTime ?? Date()))
+                                            .font(Font(uiFont: .systemFont(for: .title3)))
+                                            .foregroundColor(Color(UIColor.theme.greyscale1))
+                                        Spacer()
+                                        Text("\(data.count)회차")
+                                            .font(Font(uiFont: .systemFont(for: .caption)))
+                                            .foregroundColor(Color(UIColor.theme.greyscale7))
+                                            .background{
+                                                Capsule()
+                                                    .fill(LinearGradient(gradient: Gradient(colors: [Color(UIColor.theme.spLightBlue), Color(UIColor.theme.spDarkBlue)]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                                                    .frame(width: 42, height: 24, alignment: .center)
+                                            }
+                                            .padding(.trailing, CGFloat.padding.inBox)
+                                    }
+                                    .padding(.top, CGFloat.padding.inBox)
+                                    .padding(.leading, CGFloat.padding.inBox)
+
+                                    HStack {
+                                        Text("\(getTime(date:data.startTime ?? Date()))~\(getTime(date:data.endTime ?? Date()))")
+                                            .foregroundColor(Color(UIColor.theme.greyscale3))
+                                            .font(Font(uiFont: .systemFont(for: .body1)))
+                                        Spacer()
+                                        
+                                    }
+                                    .padding(.horizontal, CGFloat.padding.inBox)
+                                    .padding(.top, CGFloat.padding.toText)
+                                    .padding(.bottom, CGFloat.padding.inBox)
+                                    
+                                    Button(action: {
+                                        if data.isCanceled {
+                                            DataManager.shared.updateSchedule(target: data, count: data.count, endTime: data.endTime, startTime: data.startTime, isCanceled: false, progress: data.progress)
+                                        } else {
+                                            DataManager.shared.updateSchedule(target: data, count: data.count, endTime: data.endTime, startTime: data.startTime, isCanceled: true, progress: data.progress)
+                                        }
+                                        let someThing = DataManager.shared.fetchSchedules(section: .next)
+                                        nextSchedule = nil
+                                        if !someThing.isEmpty {
+                                            nextSchedule = someThing[0]
+                                        }
+                                        
+                                    }, label: {
+                                        ZStack {
+                                            Rectangle()
+                                                .fill(Color(UIColor.theme.greyscale6))
+                                                .cornerRadius(radius: 10.0, corners: [.bottomLeft, .bottomRight])
+                                                .frame(width: UIScreen.main.bounds.size.width - (CGFloat.padding.margin * 2))
+                                            Text("\(data.isCanceled ?"휴강취소" : "휴강하기")")
+                                                .font(Font(UIFont.systemFont(for: .button)))
+                                                .foregroundColor(.greyscale2)
+                                                .padding(.vertical, CGFloat.padding.inBox)
+                                        }
+                                        
+                                            
+                                            
+                                    })
+                                }
+                                .background {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(Color(UIColor.theme.greyscale7))
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color(UIColor.theme.greyscale5), lineWidth: 1)
+                                    }
+                                    
+                                }
+                                .padding(.horizontal, CGFloat.padding.margin)
+                                
+                            }
+                            
+                            
+                        
+                    
+                    }
                         
                        
                     HStack {
@@ -138,6 +227,11 @@ struct ClassDetailView: View {
                                 bottomPadding = 0
                                 // 선택이 해제되는 경우는 데이터 값의 변화가 있던지, 작성 중이 내용을 취소한 경우로 스케쥴 데이터를 다시 fetch 하여 해당 값을 refresh 해준다
                                 classSchedules = DataManager.shared.getSchedules(classInfo: selectedClass!)
+                                print("is OUt \(isOut)")
+                                if isOut {
+                                    self.presentationMode.wrappedValue.dismiss()
+                                    dismissAction()
+                                }
                             }
                         }
                         .onAppear{
@@ -149,6 +243,7 @@ struct ClassDetailView: View {
                                     selectedIndex = classSchedules.firstIndex(of: schdule)
                                 }
                             }
+                            
                         }
                     }
                         
@@ -248,6 +343,11 @@ struct ClassDetailView: View {
             classTitle = selectedClass?.name ?? ""
             //텍스트 에디터의 백그라운드를 커스텀 하기 위함
             UITextView.appearance().backgroundColor = .clear
+            let someThing = DataManager.shared.fetchSchedules(section: .next)
+            if !someThing.isEmpty {
+                nextSchedule = someThing[0]
+            }
+            
           
         }
         .onChange(of: isChanged) { _ in
@@ -258,10 +358,30 @@ struct ClassDetailView: View {
             
         }
         .onDisappear{
-            print("in DetailView")
             dismissAction()
         }
         
+    }
+                    
+    func getDate(date: Date) -> String {
+        
+        let dateFormatter = DateFormatter() // Date 포맷 객체 선언
+        dateFormatter.locale = Locale(identifier: "ko") // 한국 지정
+        
+        dateFormatter.dateFormat = "yyyy.MM.dd (E)" // Date 포맷 타입 지정
+        let date_string = dateFormatter.string(from: date) // 포맷된 형식 문자열로 반환
+
+        return date_string
+    }
+    
+    func getTime(date: Date) -> String {
+        let dateFormatter = DateFormatter() // Date 포맷 객체 선언
+        dateFormatter.locale = Locale(identifier: "ko") // 한국 지정
+        
+        dateFormatter.dateFormat = "kk:mm" // Date 포맷 타입 지정
+        let date_string = dateFormatter.string(from: date) // 포맷된 형식 문자열로 반환
+
+        return date_string
     }
     
 }
