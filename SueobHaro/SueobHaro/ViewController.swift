@@ -82,10 +82,38 @@ class ViewController: UIViewController {
         stackView.alignment = .center
         stackView.spacing = 26
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        let image = UIImage()
+        let image = UIImage(named: "question")
         let icon = UIImageView(image: image)
         [icon, noCellLabel].forEach{ stackView.addArrangedSubview($0) }
         return stackView
+    }()
+    
+    lazy var addButton: UIButton = {
+        let button = UIButton(frame: .zero)
+        button.setTitle("수업 추가하러 가기", for: .normal)
+        button.setTitleColor(UIColor.theme.greyscale1, for: .normal)
+        button.titleLabel?.font = .systemFont(for: .button)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        button.layer.cornerRadius = 12
+        let gradient = GradientView(frame: .zero)
+        gradient.leadingColor = .theme.spDeepGradientLeft
+        gradient.trailingColor = .theme.spDeepGradientRight
+        gradient.isUserInteractionEnabled = false
+        button.insertSubview(gradient, at: 0)
+        gradient.layer.cornerRadius = 12
+        gradient.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            gradient.leadingAnchor.constraint(equalTo: button.leadingAnchor),
+            gradient.trailingAnchor.constraint(equalTo: button.trailingAnchor),
+            gradient.topAnchor.constraint(equalTo: button.topAnchor),
+            gradient.bottomAnchor.constraint(equalTo: button.bottomAnchor),
+        ])
+        
+        button.addTarget(self, action: #selector(addSchedule), for: .touchUpInside)
+        
+        return button
     }()
     
     lazy var indicator: UIView = {
@@ -199,6 +227,7 @@ extension ViewController: UICollectionViewDelegate {
             cell.durationLabel.text = dateString + "  " + timeString
             let members = item.classInfo?.members?.allObjects as? [Members] ?? []
             cell.teamLabel.text = String(members.reduce(into: ""){ $0 += "\($1.name ?? ""), " }.dropLast(2))
+            cell.schoolIndicator.backgroundColor = UIColor(named: item.classInfo?.color ?? "")
             
             var container = AttributeContainer()
             container.font = .systemFont(for: .caption)
@@ -233,9 +262,14 @@ extension ViewController {
     
     private func configureNoCellView() {
         view.addSubview(noCellView)
+        view.addSubview(addButton)
         NSLayoutConstraint.activate([
             noCellView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             noCellView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
+            addButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            addButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            addButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            addButton.heightAnchor.constraint(equalToConstant: 52)
         ])
     }
     
@@ -296,8 +330,10 @@ extension ViewController {
         if schedules.isEmpty {
             noCellLabel.text = nowSection == .next ? "등록된 수업이 없어요!" : "노트를 작성하지 않은 수업이 없어요!"
             noCellView.alpha = 1
+            addButton.alpha = 1
         } else {
             noCellView.alpha = 0
+            addButton.alpha = 0
         }
     }
     
