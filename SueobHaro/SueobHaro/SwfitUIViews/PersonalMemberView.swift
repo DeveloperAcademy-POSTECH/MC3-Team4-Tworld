@@ -18,7 +18,9 @@ struct PersonalMemberView: View {
     
     @State var pointArray = [80, 70, 60, 70, 90, 100, 90, 95]
     @State var examArray = ["3월", "중간고사", "모의고사", "모의고사", "기말고사", "중간고사", "모의고사", "수능"]
-    @State var recordHistory = ["지리에 대한 지식이 아무것도 없다", "디자인 감각이 좋다", "항상 졸리다", "항상 배가고프다"]
+//    @State var recordHistory = ["지리에 대한 지식이 아무것도 없다", "디자인 감각이 좋다", "항상 졸리다", "항상 배가고프다"]
+    @State var recordHistory: [MemberHistory] = []
+    @State var examScores: [ExamScore] = []
     @State var selectedRecordIndex = 0
     let pointPerHeight:CGFloat = 195 / 100
     
@@ -83,7 +85,7 @@ struct PersonalMemberView: View {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 ZStack {
                                     HStack(spacing: 0) {
-                                        ForEach(0..<pointArray.count, id: \.self) { i in
+                                        ForEach(0..<examScores.count, id: \.self) { i in
                                                 VStack(spacing: 0) {
                                                     ZStack {
                                                         Color.clear
@@ -93,13 +95,13 @@ struct PersonalMemberView: View {
                                                             .offset(x: 45)
                                                     }
                                                     .padding(.bottom, CGFloat.padding.toComponents)
-                                                    Text("\(pointArray[i])")
+                                                    Text("\(examScores[i].score ?? 1)")
                                                         .font(.system(size: 14))
                                                         .font(Font(UIFont.systemFont(for: .body1)))
                                                         .foregroundColor(.greyscale1)
                                                         .background(Capsule().fill(Color.greyscale6).cornerRadius(12).frame(width:49, height: 24))
                                                         .padding(.bottom, CGFloat.padding.toText)
-                                                    Text(examArray[i])
+                                                    Text(examScores[i].examName ?? "NoName")
                                                         .font(.system(size: 12))
                                                         .font(Font(UIFont.systemFont(for: .body2)))
                                                         .foregroundColor(.greyscale4)
@@ -177,6 +179,7 @@ struct PersonalMemberView: View {
                                     Button(action: {
                                         isEtcDeleteAlertShowed = true
                                         selectedRecordIndex = index
+                                        
                                     }, label: {
                                         Image(systemName: "trash")
                                             .foregroundColor(.greyscale1)
@@ -185,7 +188,7 @@ struct PersonalMemberView: View {
                                     
                                 }
                                 HStack {
-                                    Text(recordHistory[index])
+                                    Text(recordHistory[index].history ?? "")
                                         .font(Font(UIFont.systemFont(for: .body2)))
                                         .foregroundColor(.greyscale1)
                                     Spacer()
@@ -201,8 +204,6 @@ struct PersonalMemberView: View {
                             }
                             
                         }
-                        
-                        
                     }
                 }
                 
@@ -258,7 +259,10 @@ struct PersonalMemberView: View {
             ToolbarItemGroup(placement: .keyboard) {
                 Button(action: {
                     if isShow {
-                        recordHistory.insert(inputText, at: 0)
+//                        recordHistory.insert(inputText, at: 0)
+                        DataManager.shared.addMemberHistory(member: member!, history: inputText)
+                        recordHistory = []
+                        recordHistory = DataManager.shared.fetchMemberHistory(member: member!)
                         inputText = ""
                         isShow = false
                         isFocused = false
@@ -273,6 +277,10 @@ struct PersonalMemberView: View {
                             withAnimation{
                                 pointArray.append(Int(examPoint)!)
                                 examArray.append(examTitle)
+                                DataManager.shared.addExamScore(member: member!, score: Int(examPoint) ?? 0, examName: examTitle)
+//                                print(DataManager.shared.fetchExamScore(member: member!))
+                                examScores = []
+                                examScores = DataManager.shared.fetchExamScore(member: member!)
                             }
                             isShowHalfMOdal = false
                             examPoint = ""
@@ -338,12 +346,16 @@ struct PersonalMemberView: View {
         }
         .onAppear {
             UITextView.appearance().backgroundColor = .clear
+            recordHistory = DataManager.shared.fetchMemberHistory(member: member!)
+            examScores = DataManager.shared.fetchExamScore(member: member!)
         }
         
         .alert("학생기록 삭제하기.", isPresented: $isEtcDeleteAlertShowed) {
             Button("취소", role: .cancel) {}
             Button("삭제", role: .destructive) {
-                recordHistory.remove(at: selectedRecordIndex)
+                DataManager.shared.deleteData(target: recordHistory[selectedRecordIndex])
+                recordHistory = []
+                recordHistory = DataManager.shared.fetchMemberHistory(member: member!)
             }
         } message: {
             Text("기록한 내용을 정말 삭제하시겠습니까?🥲")
@@ -409,6 +421,7 @@ struct PersonalMemberView: View {
                 .ignoresSafeArea()
             
         }
+        
     }
 }
 

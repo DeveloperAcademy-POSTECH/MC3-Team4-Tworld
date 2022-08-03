@@ -325,6 +325,69 @@ class DataManager {
         }
     }
     
+    func addExamScore(member: Members, score: Int, examName: String) -> Void {
+        let newScore = ExamScore(context: container.viewContext)
+        newScore.id = UUID()
+        newScore.examName = examName
+        newScore.score = Int32(score)
+        newScore.createdAt = Date()
+        newScore.member = member
+//        let school = schools?.filter({ $0.name ?? "" == schoolString })
+//
+//        if school?.isEmpty ?? true {
+//            newMember.school = addSchool(name: schoolString)
+//        } else {
+//            newMember.school = school!.first!
+//        }
+        try? container.viewContext.save()
+    }
+    
+    func addMemberHistory(member: Members, history: String) -> Void {
+        let newHistory = MemberHistory(context: container.viewContext)
+        newHistory.id = UUID()
+        newHistory.history = history
+        newHistory.createdAt = Date()
+        newHistory.member = member
+        
+        try? container.viewContext.save()
+    }
+    
+    func fetchExamScore(member: Members) -> [ExamScore] {
+        let request = ExamScore.fetchRequest()
+        //해당 클래스 만
+        let filter = NSPredicate(format: "member == %@", member)
+        //날짜 순 정렬
+        let sort = NSSortDescriptor(keyPath: \ExamScore.createdAt, ascending: true)
+        request.predicate = filter
+        request.sortDescriptors = [sort]
+        var filteredExamScore:[ExamScore] = []
+        do {
+            filteredExamScore = try container.viewContext.fetch(request)
+
+        } catch let error {
+            print("Fetch Error, get Members, \(error)")
+        }
+        return filteredExamScore
+    }
+    
+    func fetchMemberHistory(member: Members) -> [MemberHistory] {
+        let request = MemberHistory.fetchRequest()
+        //해당 클래스 만
+        let filter = NSPredicate(format: "member == %@", member)
+        //날짜 순 정렬
+        let sort = NSSortDescriptor(keyPath: \MemberHistory.createdAt, ascending: true)
+        request.predicate = filter
+        request.sortDescriptors = [sort]
+        var filteredMemberHistory:[MemberHistory] = []
+        do {
+            filteredMemberHistory = try container.viewContext.fetch(request)
+
+        } catch let error {
+            print("Fetch Error, get Members, \(error)")
+        }
+        return filteredMemberHistory
+    }
+    
 }
 
 // MARK: DataModel
