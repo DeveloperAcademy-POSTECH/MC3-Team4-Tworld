@@ -99,9 +99,9 @@ struct ClassCheckView: View {
                         .padding(.bottom, CGFloat.padding.toTextComponents)
                     ZStack {
                         VStack(spacing: CGFloat.padding.inBox) {
-                            ForEach(memberNames.indices, id: \.self) { idx in
+//                            ForEach(memberNames.indices, id: \.self) { idx in
                                 ClassMemberGridView(memberNames: memberNames, memberSchools: memberSchools, memberPhoneNumbers: memberPhoneNumbers)
-                            }
+//                            }
                         }
                     }
                     HStack(spacing: 0) {

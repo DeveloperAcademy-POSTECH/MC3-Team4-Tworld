@@ -12,6 +12,7 @@ class ClassMemberCollectionViewCell: UICollectionViewCell {
     static let identifier = "ClassMemberCollectionViewCell"
     
     var memberValue: Members?
+    var color: UIColor?
     
     private let memberNameLabel: UILabel = {
         let label = UILabel()
@@ -43,7 +44,7 @@ class ClassMemberCollectionViewCell: UICollectionViewCell {
         contentView.layer.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         contentView.layer.cornerRadius = 10
         contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.theme.spLightBlue.cgColor
+//        contentView.layer.borderColor = UIColor.theme.spLightBlue.cgColor
         contentView.backgroundColor = .theme.greyscale7
         contentView.addSubview(memberNameLabel)
         contentView.addSubview(memberSchoolLabel)
@@ -59,6 +60,7 @@ class ClassMemberCollectionViewCell: UICollectionViewCell {
         memberNameLabel.text = memberValue?.name ?? "NoName"
         memberSchoolLabel.text = memberValue?.school?.name ?? "NoSchool"
         memberPhoneNumberLabel.text = memberValue?.phoneNumber ?? "NoPhone"
+        contentView.layer.borderColor = color?.cgColor ?? UIColor(named: "Greyscale2")?.cgColor
         applyConstraints()
     }
     

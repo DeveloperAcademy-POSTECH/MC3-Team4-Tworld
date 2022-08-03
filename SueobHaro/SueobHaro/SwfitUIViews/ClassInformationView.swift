@@ -67,19 +67,14 @@ struct ClassInformationView: View {
                 .padding(.bottom, CGFloat.padding.toTextComponents)
                 .padding(.horizontal, 16)
                 
-//                ClassMemberGridView(memberNames: memberNames, memberSchools: memberSchools, memberPhoneNumbers: memberPhoneNumbers, backgroundColor: .greyscale7, strokeColor: .spTurkeyBlue)
-//                     .padding(.horizontal, 16)
-                
                 member(members: memberList, backgroundColor: .greyscale7, strokeColor: .spTurkeyBlue)
                     .padding(.horizontal, 16)
             }
             
         }
         .onAppear{
-//            classInfo = DataManager.shared.getMembers(classInfo: classInfo!)
             memberList = DataManager.shared.getMembers(classInfo: classInfo!)
             classIter = DataManager.shared.getClassIters(classInfo: classInfo!)
-            print("in Information View")
         }
         .toolbar {
             NavigationLink("편집", destination: ClassUpdateView(classInfo: $classInfo))

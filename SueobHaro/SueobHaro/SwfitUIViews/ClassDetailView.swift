@@ -44,6 +44,8 @@ struct ClassDetailView: View {
     
     var dismissAction: (() -> Void)
     
+    @State var isAlertShowing: Bool = false
+    
     
     
     var body: some View {
@@ -56,7 +58,7 @@ struct ClassDetailView: View {
                     VStack(spacing: 0) {
                         HStack(spacing: 0) {
                             Circle()
-                                .foregroundColor(.red)
+                                .foregroundColor(Color(selectedClass?.color ?? "randomBlue"))
                                 .frame(width: 8, height: 8)
                                 .padding(.trailing, CGFloat.padding.toText)
                             Text(classTitle)
@@ -95,6 +97,7 @@ struct ClassDetailView: View {
                                     Text("다음 수업")
                                         .font(Font(UIFont.systemFont(for: .title3)))
                                         .foregroundColor(.greyscale1)
+                                    Spacer()
                                 }
                                 .padding(.horizontal, CGFloat.padding.margin)
                                 .padding(.vertical, CGFloat.padding.toTextComponents)
@@ -129,17 +132,7 @@ struct ClassDetailView: View {
                                     .padding(.bottom, CGFloat.padding.inBox)
                                     
                                     Button(action: {
-                                        if data.isCanceled {
-                                            DataManager.shared.updateSchedule(target: data, count: data.count, endTime: data.endTime, startTime: data.startTime, isCanceled: false, progress: data.progress)
-                                        } else {
-                                            DataManager.shared.updateSchedule(target: data, count: data.count, endTime: data.endTime, startTime: data.startTime, isCanceled: true, progress: data.progress)
-                                        }
-                                        let someThing = DataManager.shared.fetchSchedules(section: .next)
-                                        nextSchedule = nil
-                                        if !someThing.isEmpty {
-                                            nextSchedule = someThing[0]
-                                        }
-                                        
+                                        isAlertShowing = true
                                     }, label: {
                                         ZStack {
                                             Rectangle()
@@ -335,15 +328,15 @@ struct ClassDetailView: View {
             DataManager.shared.fetchData(target: .schedule)
             DataManager.shared.fetchData(target: .members)
             
-            if selectedClass == nil {
-                selectedClass = DataManager.shared.classInfo?[3]
-            }
+//            if selectedClass == nil {
+//                selectedClass = DataManager.shared.classInfo?[3]
+//            }
             classSchedules = DataManager.shared.getSchedules(classInfo: selectedClass!)
             members = DataManager.shared.getMembers(classInfo: selectedClass!)
             classTitle = selectedClass?.name ?? ""
             //텍스트 에디터의 백그라운드를 커스텀 하기 위함
             UITextView.appearance().backgroundColor = .clear
-            let someThing = DataManager.shared.fetchSchedules(section: .next)
+            let someThing = DataManager.shared.getNextSchedules(classInfo: selectedClass!)
             if !someThing.isEmpty {
                 nextSchedule = someThing[0]
             }
@@ -360,6 +353,27 @@ struct ClassDetailView: View {
         .onDisappear{
             dismissAction()
         }
+        .alert("휴강처리", isPresented: $isAlertShowing) {
+            Button("취소", role: .cancel) {}
+            Button("확인", role: .destructive) {
+                if let data = nextSchedule {
+                    if data.isCanceled {
+                        DataManager.shared.updateSchedule(target: data, count: data.count, endTime: data.endTime, startTime: data.startTime, isCanceled: false, progress: data.progress)
+                    } else {
+                        DataManager.shared.updateSchedule(target: data, count: data.count, endTime: data.endTime, startTime: data.startTime, isCanceled: true, progress: data.progress)
+                    }
+                    let someThing = DataManager.shared.getNextSchedules(classInfo: selectedClass!)
+                    nextSchedule = nil
+                    if !someThing.isEmpty {
+                        nextSchedule = someThing[0]
+                    }
+                }
+            }
+            
+        } message: {
+            Text("\(getDate(date: nextSchedule?.startTime ?? Date())) 수업을 휴강처리 하시겠습니까?")
+        }
+      
         
     }
                     

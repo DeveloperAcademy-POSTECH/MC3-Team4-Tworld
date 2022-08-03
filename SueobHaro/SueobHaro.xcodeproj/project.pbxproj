@@ -519,7 +519,6 @@
 				372B0F4B2893D24900482730 /* ClassSettingView.swift in Sources */,
 				21977B4C28868E0700BAE020 /* NextScheduleInfoCell.swift in Sources */,
 				31DD866E2897797B00861A5D /* ClassMemberViewController.swift in Sources */,
-				37B042B528854A290043E9CB /* Schedule+CoreDataProperties.swift in Sources */,
 				372B0EDC288FBA9B00482730 /* ClassAddView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -659,7 +658,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VT69ZW2DRC;
+				DEVELOPMENT_TEAM = A44U4A2F2G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SueobHaro/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -686,7 +685,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VT69ZW2DRC;
+				DEVELOPMENT_TEAM = A44U4A2F2G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SueobHaro/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

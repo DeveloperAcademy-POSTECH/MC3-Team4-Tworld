@@ -39,7 +39,7 @@ struct PersonalMemberView: View {
                             .foregroundColor(.greyscale1)
                         Spacer()
                         Circle()
-                            .foregroundColor(.mint)
+                            .foregroundColor(Color(member?.classInfo?.color ?? "Greyscale2"))
                             .frame(width: 8, height: 8)
                             .padding(.trailing, CGFloat.padding.toText)
                         Text(member?.classInfo?.name ?? "No Class")
@@ -340,7 +340,7 @@ struct PersonalMemberView: View {
             UITextView.appearance().backgroundColor = .clear
         }
         
-        .alert("저장하지 않고 나가기", isPresented: $isEtcDeleteAlertShowed) {
+        .alert("학생기록 삭제하기.", isPresented: $isEtcDeleteAlertShowed) {
             Button("취소", role: .cancel) {}
             Button("삭제", role: .destructive) {
                 recordHistory.remove(at: selectedRecordIndex)

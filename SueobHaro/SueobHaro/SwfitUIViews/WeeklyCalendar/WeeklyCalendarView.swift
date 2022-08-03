@@ -41,14 +41,20 @@ struct WeeklyCalendarView: View {
                     Spacer()
                 }
                 .padding(.horizontal, CGFloat.padding.margin)
-                .padding(.vertical, CGFloat.padding.toDifferentHierarchy)
+                .padding(.bottom, CGFloat.padding.toDifferentHierarchy)
                 
                 CalendarNumberView(dayList: $dayList, dayArray: $dayArray, currentWeekArray: $currentWeekArray, indexOffset: $indexOffset)
-                    .padding(.bottom, CGFloat.padding.toComponents + 10)
-                
+//                    .padding(.bottom, CGFloat.padding.toComponents + 10)
+//                Rectangle().foregroundColor(Color(UIColor.theme.greyscale6)).frame(height: 1)
+//                    .padding(.bottom, 2)
+                    .padding(.bottom, 1)
             }
             //Background 색상 확인 필요
-            .background(Color.spBlack.edgesIgnoringSafeArea(.top))
+            .background{
+                Color.spBlack
+            }
+            
+            
                 ZStack {
                     CalendarBackgroundView(height: $defaultHeight)
                     HStack(spacing:0) {
@@ -58,48 +64,51 @@ struct WeeklyCalendarView: View {
                             ForEach(currentWeekArray, id: \.self) { i in
                                 let daySchduleArray = schdules.filter { dateToString(date: $0.startTime ?? Date()) == dateToString(date: i) }
                                 if daySchduleArray.isEmpty {
-                                    Color.clear.frame(width:(UIScreen.main.bounds.width - UIScreen.main.bounds.width * 0.065) / 7)
+                                    Color.clear.frame(width:(UIScreen.main.bounds.width - UIScreen.main.bounds.width * 0.065) / 7, height: 10)
                                 } else {
                                     ZStack {
                                         ForEach(daySchduleArray.indices, id: \.self) { index in
                                             let startTime = dateToTimeString(date: daySchduleArray[index].startTime ?? Date())
                                             let endTime = dateToTimeString(date: daySchduleArray[index].endTime ?? Date())
                                             let float = timeToValue(first: startTime ?? "11:00", second: endTime ?? "12:00")
+                                            
                                             VStack {
-                                                ZStack {
-                                                    RoundedRectangle(cornerRadius: 6)
-                                                        .fill(Color.spBlack)
+                                                NavigationLink(destination: ClassDetailView(selectedClass: daySchduleArray[index].classInfo ,dismissAction: {()})) {
+                                                    ZStack {
+                                                        RoundedRectangle(cornerRadius: 6)
+                                                            .fill(Color.spBlack)
+                                                            .frame(height: float[0])
+                                                        RoundedRectangle(cornerRadius: 6)
+                                                            .stroke(Color(daySchduleArray[index].classInfo?.color ?? "randomBlue"), lineWidth: 1)
+                                                            .frame(height: float[0])
+                                                        VStack {
+                                                            Text(daySchduleArray[index].classInfo?.name ?? "")
+                                                                .font(Font(UIFont(name: CustomFont.pretendardBold.name, size: 11)!))
+                                                                .fontWeight(.bold)
+                                                                .foregroundColor(.greyscale1)
+                                                                .padding(.bottom, CGFloat.padding.toText)
+                                                            Text("\(startTime ?? "")~\(endTime ?? "")")
+                                                                .font(Font(UIFont(name: CustomFont.pretendardBold.name, size: 10)!))
+                                                                .fontWeight(.medium)
+                                                                .foregroundColor(.greyscale1)
+                                                            Spacer()
+
+                                                        }
+                                                        .padding(10)
                                                         .frame(height: float[0])
-                                                    RoundedRectangle(cornerRadius: 6)
-                                                        .stroke(Color.spLightBlue, lineWidth: 1)
-                                                        .frame(height: float[0])
-                                                    VStack {
-                                                        Text(daySchduleArray[index].classInfo?.name ?? "")
-                                                            .font(Font(UIFont(name: CustomFont.pretendardBold.name, size: 11)!))
-                                                            .fontWeight(.bold)
-                                                            .foregroundColor(.greyscale1)
-                                                            .padding(.bottom, CGFloat.padding.toText)
-                                                        Text("\(startTime ?? "")~\(endTime ?? "")")
-                                                            .font(Font(UIFont(name: CustomFont.pretendardBold.name, size: 10)!))
-                                                            .fontWeight(.medium)
-                                                            .foregroundColor(.greyscale1)
-                                                        Spacer()
-                                                        
                                                     }
-                                                    .padding(10)
-                                                    .frame(height: float[0])
-                                                    
-                                                    
+                                                    .padding(.top, float[1])
                                                 }
-                                                .padding(.top, float[1])
                                                 Spacer()
                                             }
+//                                            }
+                                            
 
                                         }
                                     }
                                 }
-                                
-                                
+
+
                             }
                     }
                     .frame(height: defaultHeight)
@@ -117,6 +126,7 @@ struct WeeklyCalendarView: View {
                         
                     }
             }
+                .offset(y: 10)
             
         }
         .background(Color.greyscale7)
@@ -129,12 +139,11 @@ struct WeeklyCalendarView: View {
         .onChange(of: dayList, perform: { _ in
             currentWeekDays = dayList[1]
             currentWeekArray = dayArray[1]
-            print(currentWeekArray)
         })
     
             
     }
-    
+
     //스케쥴 높이와 위치값 반환
     func timeToValue(first: String, second: String) -> [CGFloat] {
         var startPoint: CGFloat = 0
@@ -158,12 +167,14 @@ struct WeeklyCalendarView: View {
         
         height = (endPoint - startPoint) * defaultHeight / 16 / 60
         let startPdding = startPoint * defaultHeight / 16 / 60
+//        print("endPoint: \(endPoint), startPoint: \(startPoint), \(first), \(second)")
         return [height, startPdding]
     }
     //현재시간 표시용
     func currentTimePadding(date: Date) -> [CGFloat] {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
+        
         let result = formatter.string(from: date)
         let timeToValue = result.split(separator: ":")[0]
         let minuteToValue = result.split(separator: ":")[1]
@@ -175,6 +186,7 @@ struct WeeklyCalendarView: View {
             paddingValue = CGFloat(value) * defaultHeight / 16 / 60
             height = 1
         }
+        
         return [height, paddingValue]
     }
     //일주일치 날짜 가져오기
@@ -190,8 +202,6 @@ struct WeeklyCalendarView: View {
         let day = formatter.string(from:date)
         let today = day.components(separatedBy: "-")
         guard let interval = Double(today[4]) else{ return []}
-        print(today)
-        print(interval)
         var startDay = Date(timeInterval:  -(86400 * (interval - 2)), since: formatter.date(from:day)!)
         if interval == 1 {
            startDay = Calendar.current.date(byAdding: .day, value: -6, to: date)!

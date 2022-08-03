@@ -52,6 +52,8 @@ class DataManager {
                       schoolString: memberSchool[idx]
             )
         }
+        let dayCount = day.count
+//        let newDay = day.sorted{ $0.firstDate < $1.firstDate}
         for (i, d) in day.enumerated() {
             let lastDate = Calendar.current.date(byAdding: .month, value: 6, to: firstDate.toDay) ?? firstDate.toDay
             let dates = Calendar.current.generateDatesAfter(inside: DateInterval(start: firstDate.toDay, end: lastDate), matching: DateComponents(weekday: d.toWeekOfDayNum()))
@@ -61,9 +63,10 @@ class DataManager {
                 print(startTime[i].hour)
                 start = Calendar.current.date(byAdding: .minute, value: startTime[i].minute, to: start)!
                 print(startTime[i].minute)
+                print("\(j), \(date)")
                 var end = Calendar.current.date(byAdding: .hour, value: endTime[i].hour, to: date)!
                 end = Calendar.current.date(byAdding: .minute, value: endTime[i].minute, to: end)!
-                preSchedule = addSchedule(count: Int16(j+1), endTime: end, startTime: start, isCanceled: false, progress: "", classInfo: newClassInfo, preSchedule: preSchedule)
+                preSchedule = addSchedule(count: Int16((dayCount*j)+(i+1)), endTime: end, startTime: start, isCanceled: false, progress: "", classInfo: newClassInfo, preSchedule: preSchedule)
             }
             print(dates.map{ $0.description(with: .current) })
         }
@@ -258,6 +261,25 @@ class DataManager {
             filterSchedules = try container.viewContext.fetch(request)
             //오늘 이전 날짜 필터
             filterSchedules = filterSchedules.filter{ $0.endTime ?? Date() <= Date()}
+        } catch let error {
+            print("Fetch Error, get Members, \(error)")
+        }
+        return filterSchedules
+    }
+    
+    func getNextSchedules(classInfo: ClassInfo) -> [Schedule] {
+        let request = Schedule.fetchRequest()
+        //해당 클래스 만
+        let filter = NSPredicate(format: "classInfo == %@", classInfo)
+        //날짜 순 정렬
+        let sort = NSSortDescriptor(keyPath: \Schedule.endTime, ascending: true)
+        request.predicate = filter
+        request.sortDescriptors = [sort]
+        var filterSchedules:[Schedule] = []
+        do {
+            filterSchedules = try container.viewContext.fetch(request)
+            //오늘 이전 날짜 필터
+            filterSchedules = filterSchedules.filter{ $0.endTime ?? Date() > Date() && $0.isCanceled == false }
         } catch let error {
             print("Fetch Error, get Members, \(error)")
         }
