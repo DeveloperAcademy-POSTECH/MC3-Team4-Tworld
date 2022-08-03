@@ -49,7 +49,9 @@ struct ClassUpdateView: View {
     let dateFormatter = DateFormatter()
     @State var currentIdx: Int? = nil
     
+    
     var body: some View {
+        
         ZStack {
             Color.spBlack.ignoresSafeArea()
             VStack {
@@ -365,6 +367,8 @@ struct ClassUpdateView: View {
                 tuition = String(info.tuition)
                 tuitionPer = String(info.tuitionPer)
             }
+            UITabBar.appearance().isHidden = true
+            
             
         }
         .customSheet(isPresented: $halfModal) {
@@ -438,6 +442,10 @@ struct ClassUpdateView: View {
             })
             .padding(.bottom, CGFloat.padding.toComponents)
         }
+        .onDisappear{
+            UITabBar.appearance().isHidden = false
+        }
+        
     }
     
     func save() {
@@ -499,7 +507,7 @@ struct ClassUpdateView: View {
                 }
             }
             
-            classInfo = DataManager.shared.updateClassInfo(target: classInfo!, firstDate: firstClassDate, tuition: Int32(tuition), tuitionPer: Int16(tuitionPer), name: className, color: "", location: "")
+            classInfo = DataManager.shared.updateClassInfo(target: classInfo!, firstDate: firstClassDate, tuition: Int32(tuition), tuitionPer: Int16(tuitionPer), name: className, color: classInfo?.color ?? "", location: "")
             
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
                 self.presentationMode.wrappedValue.dismiss()

@@ -70,6 +70,9 @@ struct CalendarNumberView: View {
                 }
                 .offset(x: width*0.03 + gestureOffset + offset)
                 
+                Rectangle().foregroundColor(Color(UIColor.theme.greyscale6)).frame(height: 1)
+                    .padding(.top, CGFloat.padding.toComponents + 10)
+                
             }.gesture(
                 DragGesture()
                     .updating($gestureOffset) { dragValue, gestureState, _ in
@@ -85,7 +88,7 @@ struct CalendarNumberView: View {
                             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05) {
                                 dayList.append(dayList[2].map{ $0 + 7 })
                                 dayList.removeFirst()
-                                dayArray.append(dateInWeek(date: Date(), offset: indexOffset+7))
+                                dayArray.append(dateInWeek(date: dayArray[2][0], offset:7))
                                 dayArray.removeFirst()
                                 offset = .zero
                                 
@@ -102,7 +105,7 @@ struct CalendarNumberView: View {
                             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05) {
                                 dayList.insert(dayList[0].map{ $0 - 7 }, at: 0)
                                 dayList.removeLast()
-                                dayArray.insert(dateInWeek(date: Date(), offset: indexOffset-7), at: 0)
+                                dayArray.insert(dateInWeek(date: dayArray[0][0], offset: -7), at: 0)
                                 dayArray.removeLast()
                                 offset = .zero
                             }
@@ -123,10 +126,10 @@ struct CalendarNumberView: View {
         formatter.dateFormat = "YYYY-MM-dd-HH:mm-e-EEEE"
         let date =  Calendar.current.date(byAdding: .day, value: offset, to: date)!
         let day = formatter.string(from:date)
-        print(day)
+//        print(day)
         let today = day.components(separatedBy: "-")
         guard let interval = Double(today[4]) else{ return []}
-        print(interval)
+//        print(interval)
         var startDay = Date(timeInterval:  -(86400 * (interval - 2)), since: formatter.date(from:day)!)
         if interval == 1 {
            startDay = Calendar.current.date(byAdding: .day, value: -6, to: date)!

@@ -25,8 +25,6 @@ class ClassMemberViewController: UIViewController, InnerNavigationControll {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .theme.spBlack
-        schoolTable.layer.backgroundColor = UIColor.theme.spBlack.cgColor
         view.addSubview(schoolTable)
         DataManager.shared.fetchData(target: .classInfo)
         classArray = DataManager.shared.classInfo ?? []
@@ -38,8 +36,14 @@ class ClassMemberViewController: UIViewController, InnerNavigationControll {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        schoolTable.backgroundColor = .theme.spBlack
         schoolTable.frame = view.bounds
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+            schoolTable.reloadData()
+        print("willAppear")
     }
 
 
@@ -47,7 +51,6 @@ class ClassMemberViewController: UIViewController, InnerNavigationControll {
 
 extension ClassMemberViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        print(classArray.count)
         return classArray.count
     }
     
@@ -73,8 +76,9 @@ extension ClassMemberViewController: UITableViewDelegate, UITableViewDataSource 
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let uiView = ClassMemberSectionHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 24))
-        uiView.color = .theme.greyscale1
+        uiView.color = UIColor(named: classArray[section].color ?? "randomBlue") ?? .theme.spLightBlue
         uiView.title = classArray[section].name ?? ""
+        print(classArray[section].color ?? "NoColor")
         return uiView
     }
     
