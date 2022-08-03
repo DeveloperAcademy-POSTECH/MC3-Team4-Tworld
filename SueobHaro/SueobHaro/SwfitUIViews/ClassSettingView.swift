@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ClassSettingView: View {
-    @State private var monthFirst: Bool = false
+    @AppStorage("monthCalendarFirst") var monthCalendarFirst: Bool = false
     @State private var classNoti: Bool = false
     
     var body: some View {
@@ -26,14 +26,14 @@ struct ClassSettingView: View {
                 .padding(.bottom, .padding.toTextComponents)
                 
                 Button(action: {
-                    monthFirst.toggle()
+                    monthCalendarFirst.toggle()
                 }, label: {
                     ZStack {
                         Rectangle()
                             .fill(Color.greyscale7)
                         Rectangle()
                             .strokeBorder(Color.greyscale6)
-                        Toggle(isOn: $monthFirst, label: {
+                        Toggle(isOn: $monthCalendarFirst, label: {
                             HStack(spacing: 0) {
                                 VStack(alignment: .leading, spacing: 0) {
                                     Text("월간달력부터 보여주기")
