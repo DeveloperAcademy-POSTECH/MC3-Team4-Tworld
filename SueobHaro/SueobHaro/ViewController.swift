@@ -82,7 +82,7 @@ class ViewController: UIViewController {
         stackView.alignment = .center
         stackView.spacing = 26
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        let image = UIImage()
+        let image = UIImage(named: "question")
         let icon = UIImageView(image: image)
         [icon, noCellLabel].forEach{ stackView.addArrangedSubview($0) }
         return stackView
@@ -199,6 +199,7 @@ extension ViewController: UICollectionViewDelegate {
             cell.durationLabel.text = dateString + "  " + timeString
             let members = item.classInfo?.members?.allObjects as? [Members] ?? []
             cell.teamLabel.text = String(members.reduce(into: ""){ $0 += "\($1.name ?? ""), " }.dropLast(2))
+            cell.schoolIndicator.backgroundColor = UIColor(named: item.classInfo?.color ?? "")
             
             var container = AttributeContainer()
             container.font = .systemFont(for: .caption)

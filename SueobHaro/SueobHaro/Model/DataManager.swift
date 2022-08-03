@@ -269,7 +269,9 @@ class DataManager {
         let request = Schedule.fetchRequest()
         var filter: NSPredicate
         if section == .next {
-            filter = NSPredicate(format: "endTime > %@ AND endTime < %@", Date() as NSDate, Date().nextDay() as NSDate)
+            filter = NSPredicate(format: "endTime > %@", Date() as NSDate)
+            print(Date())
+            print(Date().nextDay())
         } else {
             filter = NSPredicate(format: "endTime < %@ AND progress == %@" , Date() as NSDate, "")
         }
