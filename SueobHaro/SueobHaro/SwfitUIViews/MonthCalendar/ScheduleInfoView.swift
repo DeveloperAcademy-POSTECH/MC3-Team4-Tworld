@@ -56,6 +56,8 @@ struct ScheduleInfoView: View {
                     .frame(height: 1)
                 
                 Group {
+                    let _ = print("-------------")
+                    let _ = print(schedule.preSchedule)
                     if let progress = schedule.preSchedule?.progress {
                         Text(progress)
                     } else {
