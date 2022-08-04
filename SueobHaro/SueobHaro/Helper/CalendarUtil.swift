@@ -54,11 +54,12 @@ extension Calendar {
         days = plans.map{ $0.day }
         var startTime = plans.map{ $0.start }
         var endTime = plans.map{ $0.end }
-        
-        while days[0] < interval.start.weekOfDay {
-            days.append(days.remove(at: 0))
-            startTime.append(startTime.remove(at: 0))
-            endTime.append(endTime.remove(at: 0))
+        if interval.start.weekOfDay < days.max()! && interval.start.weekOfDay > days.min()! {
+            while days[0] < interval.start.weekOfDay {
+                days.append(days.remove(at: 0))
+                startTime.append(startTime.remove(at: 0))
+                endTime.append(endTime.remove(at: 0))
+            }
         }
         
         var daysInterval: [Int] = [0]

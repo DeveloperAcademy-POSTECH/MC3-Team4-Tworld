@@ -61,7 +61,6 @@ class DataManager {
         var preSchedule: Schedule?
         
         for (i, interval) in dateIntervals.enumerated() {
-            print(preSchedule)
             preSchedule = addSchedule(count: Int16(i+1), endTime: interval.end, startTime: interval.start, isCanceled: false, progress: "", classInfo: newClassInfo, preSchedule: preSchedule)
         }
 

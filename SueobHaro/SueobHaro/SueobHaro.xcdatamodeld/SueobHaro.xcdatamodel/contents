@@ -38,7 +38,7 @@
         <relationship name="classInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ClassInfo" inverseName="members" inverseEntity="ClassInfo"/>
         <relationship name="school" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="School" inverseName="members" inverseEntity="School"/>
     </entity>
-    <entity name="Schedule" representedClassName=".Schedule" syncable="YES">
+    <entity name="Schedule" representedClassName=".Schedule" syncable="YES" codeGenerationType="class">
         <attribute name="count" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="endTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -46,7 +46,7 @@
         <attribute name="progress" optional="YES" attributeType="String"/>
         <attribute name="startTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="classInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ClassInfo" inverseName="schedule" inverseEntity="ClassInfo"/>
-        <relationship name="preSchedule" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Schedule" inverseName="preSchedule" inverseEntity="Schedule"/>
+        <relationship name="preSchedule" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Schedule"/>
     </entity>
     <entity name="School" representedClassName="School" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
