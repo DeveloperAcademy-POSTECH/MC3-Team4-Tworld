@@ -92,10 +92,11 @@ struct PersonalMemberView: View {
                                                             .frame(width: 90, height: 195)
                                                         Rectangle()
                                                             .stroke()
-                                                            .offset(x: 45)
+                                                            .offset(x: -45)
+                                                            .id(i)
                                                     }
                                                     .padding(.bottom, CGFloat.padding.toComponents)
-                                                    Text("\(examScores[i].score ?? 1)")
+                                                    Text("\(examScores[i].score)")
                                                         .font(.system(size: 14))
                                                         .font(Font(UIFont.systemFont(for: .body1)))
                                                         .foregroundColor(.greyscale1)
@@ -106,21 +107,28 @@ struct PersonalMemberView: View {
                                                         .font(Font(UIFont.systemFont(for: .body2)))
                                                         .foregroundColor(.greyscale4)
                                                 }
-                                                .id(i)
-                                                .offset(x: -45)
+                                                
+//                                                .offset(x: -45)
                                             }
                                     }
-                                    PointChartView(data: $pointArray)
-                                        .offset(y: -50)
+                                    PointChartView(data: $pointArray, examScore: $examScores)
+                                        .offset(x: 45 ,y: -50)
                                 }
                                 .onAppear{
-                                    proxy.scrollTo(pointArray.count - 1, anchor: .trailing)
+                                    proxy.scrollTo(examScores.count - 1, anchor: .trailing)
                                 }
-                                .onChange(of: pointArray) { _ in
-                                    proxy.scrollTo(pointArray.count - 1, anchor: .trailing)
+                                .onChange(of: examScores) { i in
+                                    print(i)
+                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05) {
+                                        withAnimation {
+                                            proxy.scrollTo(i.count - 1, anchor: .trailing)
+                                        }
+                                    }
+                                    
                                 }
                                 
                             }
+//                            .offset(x: -30)
                             .padding(.top, CGFloat.padding.toTextComponents)
                             .padding(.bottom, CGFloat.padding.toDifferentHierarchy)
                         }

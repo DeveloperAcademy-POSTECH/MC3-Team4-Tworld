@@ -17,17 +17,17 @@ class ClassMemberViewController: UIViewController, InnerNavigationControll {
     }
         
     private let schoolTable: UITableView = {
-        let table = UITableView(frame: .zero, style: .plain)
+        let table = UITableView(frame: .zero, style: .grouped)
         table.layer.backgroundColor = UIColor.theme.spBlack.cgColor
         table.register(ClassMemberTableViewCell.self, forCellReuseIdentifier: ClassMemberTableViewCell.identifier)
+        table.separatorColor = UIColor.clear
         return table
     } ()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(schoolTable)
-        DataManager.shared.fetchData(target: .classInfo)
-        classArray = DataManager.shared.classInfo ?? []
+        
         schoolTable.delegate = self
         schoolTable.dataSource = self
 
@@ -42,8 +42,9 @@ class ClassMemberViewController: UIViewController, InnerNavigationControll {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-            schoolTable.reloadData()
-        print("willAppear")
+        DataManager.shared.fetchData(target: .classInfo)
+        classArray = DataManager.shared.classInfo ?? []
+//        schoolTable.reloadData()
     }
 
 
