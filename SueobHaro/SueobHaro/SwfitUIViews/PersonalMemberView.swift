@@ -84,47 +84,64 @@ struct PersonalMemberView: View {
                         ScrollViewReader { proxy in
                             ScrollView(.horizontal, showsIndicators: false) {
                                 ZStack {
-                                    HStack(spacing: 0) {
-                                        ForEach(0..<examScores.count, id: \.self) { i in
-                                                VStack(spacing: 0) {
-                                                    ZStack {
-                                                        Color.clear
-                                                            .frame(width: 90, height: 195)
-                                                        Rectangle()
-                                                            .stroke()
-                                                            .offset(x: -45)
-                                                            .id(i)
+                                    //Make Background Gridd
+                                    VStack (spacing: 0) {
+                                        HStack(spacing: 0) {
+                                            Color.clear.frame(width: examScores.count >= 5 ? 1 : 5, height: 195)
+                                            ForEach(0..<max(examScores.count, 5), id: \.self) { i in
+                                                    VStack(spacing: 0) {
+                                                        ZStack {
+                                                            Color.clear
+                                                                .frame(width: 90, height: 195)
+                                                            Color.greyscale6.frame(width:1, height: 195)
+                                                                .id(i)
+                                                        }
                                                     }
-                                                    .padding(.bottom, CGFloat.padding.toComponents)
-                                                    Text("\(examScores[i].score)")
-                                                        .font(.system(size: 14))
-                                                        .font(Font(UIFont.systemFont(for: .body1)))
-                                                        .foregroundColor(.greyscale1)
-                                                        .background(Capsule().fill(Color.greyscale6).cornerRadius(12).frame(width:49, height: 24))
-                                                        .padding(.bottom, CGFloat.padding.toText)
-                                                    Text(examScores[i].examName ?? "NoName")
-                                                        .font(.system(size: 12))
-                                                        .font(Font(UIFont.systemFont(for: .body2)))
-                                                        .foregroundColor(.greyscale4)
                                                 }
-                                                
-//                                                .offset(x: -45)
-                                            }
+                                        }
+                                        Color.greyscale4.frame(height: 2)
+                                            .padding(.bottom, CGFloat.padding.toComponents)
+                                        
+                                        //Make Label
+                                        HStack(spacing: 0) {
+                                            Color.clear.frame(width: 1)
+                                            ForEach(0..<examScores.count, id: \.self) { i in
+                                                ZStack {
+                                                    Color.clear.frame(width: 90)
+                                                    VStack(spacing: 0) {
+                                                            Text("\(examScores[i].score)")
+                                                                .font(.system(size: 14))
+                                                                .font(Font(UIFont.systemFont(for: .body1)))
+                                                                .foregroundColor(.greyscale1)
+                                                                .background(Capsule().fill(Color.greyscale6).cornerRadius(12).frame(width:49, height: 24))
+                                                                .padding(.bottom, CGFloat.padding.toText)
+                                                            Text(examScores[i].examName ?? "NoName")
+                                                                .font(.system(size: 12))
+                                                                .font(Font(UIFont.systemFont(for: .body2)))
+                                                                .foregroundColor(.greyscale4)
+                                                        }
+                                                        
+                                                    }
+                                                    
+                                                }
+                                            Spacer()
+                                        }
                                     }
+                                    //Chart
                                     PointChartView(data: $pointArray, examScore: $examScores)
-                                        .offset(x: 45 ,y: -50)
                                 }
                                 .onAppear{
                                     proxy.scrollTo(examScores.count - 1, anchor: .trailing)
                                 }
                                 .onChange(of: examScores) { i in
                                     print(i)
-                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05) {
-                                        withAnimation {
-                                            proxy.scrollTo(i.count - 1, anchor: .trailing)
+                                    if i.count >= 5 {
+                                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05) {
+                                            withAnimation {
+                                                proxy.scrollTo(i.count - 1, anchor: .trailing)
+                                            }
                                         }
                                     }
-                                    
                                 }
                                 
                             }

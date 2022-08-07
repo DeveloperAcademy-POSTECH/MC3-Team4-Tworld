@@ -52,10 +52,12 @@ class ClassMemberViewController: UIViewController, InnerNavigationControll {
 
 extension ClassMemberViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
+        print("numberOFsection")
         return classArray.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("numberOfRowsInSection")
         return 1
     }
     
@@ -63,15 +65,18 @@ extension ClassMemberViewController: UITableViewDelegate, UITableViewDataSource 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ClassMemberTableViewCell.identifier, for: indexPath) as? ClassMemberTableViewCell else { return UITableViewCell() }
         cell.innerNavigationControll = self
         cell.sectionClass = classArray[indexPath.section]
+        print("UITableViewCell")
         return cell
     }
     
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        print("tableHeight")
         return 97
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        print("headerHight")
         return 50
     }
 
@@ -80,6 +85,7 @@ extension ClassMemberViewController: UITableViewDelegate, UITableViewDataSource 
         uiView.color = UIColor(named: classArray[section].color ?? "randomBlue") ?? .theme.spLightBlue
         uiView.title = classArray[section].name ?? ""
         print(classArray[section].color ?? "NoColor")
+        
         return uiView
     }
     
