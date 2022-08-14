@@ -75,7 +75,7 @@ extension ClassMemberTableViewCell: UICollectionViewDelegate, UICollectionViewDa
             return UICollectionViewCell() }
         guard let member = memberArray else { return cell }
         cell.memberValue = member[indexPath.row]
-        
+        cell.color = UIColor(named: member[indexPath.row].classInfo?.color ?? "randomBlue")
         return cell
         }
     

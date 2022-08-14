@@ -17,19 +17,17 @@ class ClassMemberViewController: UIViewController, InnerNavigationControll {
     }
         
     private let schoolTable: UITableView = {
-        let table = UITableView(frame: .zero, style: .plain)
+        let table = UITableView(frame: .zero, style: .grouped)
         table.layer.backgroundColor = UIColor.theme.spBlack.cgColor
         table.register(ClassMemberTableViewCell.self, forCellReuseIdentifier: ClassMemberTableViewCell.identifier)
+        table.separatorColor = UIColor.clear
         return table
     } ()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .theme.spBlack
-        schoolTable.layer.backgroundColor = UIColor.theme.spBlack.cgColor
         view.addSubview(schoolTable)
-        DataManager.shared.fetchData(target: .classInfo)
-        classArray = DataManager.shared.classInfo ?? []
+        
         schoolTable.delegate = self
         schoolTable.dataSource = self
 
@@ -38,8 +36,15 @@ class ClassMemberViewController: UIViewController, InnerNavigationControll {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        schoolTable.backgroundColor = .theme.spBlack
         schoolTable.frame = view.bounds
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DataManager.shared.fetchData(target: .classInfo)
+        classArray = DataManager.shared.classInfo ?? []
+//        schoolTable.reloadData()
     }
 
 
@@ -47,11 +52,12 @@ class ClassMemberViewController: UIViewController, InnerNavigationControll {
 
 extension ClassMemberViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        print(classArray.count)
+        print("numberOFsection")
         return classArray.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("numberOfRowsInSection")
         return 1
     }
     
@@ -59,22 +65,27 @@ extension ClassMemberViewController: UITableViewDelegate, UITableViewDataSource 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ClassMemberTableViewCell.identifier, for: indexPath) as? ClassMemberTableViewCell else { return UITableViewCell() }
         cell.innerNavigationControll = self
         cell.sectionClass = classArray[indexPath.section]
+        print("UITableViewCell")
         return cell
     }
     
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        print("tableHeight")
         return 97
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        print("headerHight")
         return 50
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let uiView = ClassMemberSectionHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 24))
-        uiView.color = .theme.greyscale1
+        uiView.color = UIColor(named: classArray[section].color ?? "randomBlue") ?? .theme.spLightBlue
         uiView.title = classArray[section].name ?? ""
+        print(classArray[section].color ?? "NoColor")
+        
         return uiView
     }
     

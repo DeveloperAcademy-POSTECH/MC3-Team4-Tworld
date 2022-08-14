@@ -167,7 +167,6 @@ struct ClassUpdateModalView: View {
         
         let dateFormatter = DateFormatter() // Date 포맷 객체 선언
         dateFormatter.locale = Locale(identifier: "ko") // 한국 지정
-        
         dateFormatter.dateFormat = "yyyy.MM.dd (E)" // Date 포맷 타입 지정
         let date_string = dateFormatter.string(from: date) // 포맷된 형식 문자열로 반환
 
@@ -177,7 +176,6 @@ struct ClassUpdateModalView: View {
     func getTime(date: Date) -> String {
         let dateFormatter = DateFormatter() // Date 포맷 객체 선언
         dateFormatter.locale = Locale(identifier: "ko") // 한국 지정
-        
         dateFormatter.dateFormat = "kk:mm:ss" // Date 포맷 타입 지정
         let date_string = dateFormatter.string(from: date) // 포맷된 형식 문자열로 반환
 

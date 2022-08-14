@@ -18,7 +18,7 @@ struct ClassInformationHeaderComponent: View {
         VStack(alignment: .leading,spacing: 0) {
             HStack(spacing:0) {
                 Circle()
-                    .foregroundColor(.red)
+                    .foregroundColor(Color(classInfo?.color ?? "randomBlue"))
                     .frame(width: 8, height: 8)
                     .padding(.trailing, CGFloat.padding.toText)
                 Text(classTitle)

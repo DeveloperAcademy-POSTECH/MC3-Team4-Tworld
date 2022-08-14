@@ -31,11 +31,26 @@
         <relationship name="examInfos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ExamInfo" inverseName="examPeriod" inverseEntity="ExamInfo"/>
         <relationship name="school" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="School" inverseName="examPeriods" inverseEntity="School"/>
     </entity>
+    <entity name="ExamScore" representedClassName="ExamScore" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="examName" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="score" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="member" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Members" inverseName="examScore" inverseEntity="Members"/>
+    </entity>
+    <entity name="MemberHistory" representedClassName="MemberHistory" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="history" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="member" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Members" inverseName="memberHistory" inverseEntity="Members"/>
+    </entity>
     <entity name="Members" representedClassName=".Members" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="phoneNumber" optional="YES" attributeType="String"/>
         <relationship name="classInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ClassInfo" inverseName="members" inverseEntity="ClassInfo"/>
+        <relationship name="examScore" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ExamScore" inverseName="member" inverseEntity="ExamScore"/>
+        <relationship name="memberHistory" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MemberHistory" inverseName="member" inverseEntity="MemberHistory"/>
         <relationship name="school" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="School" inverseName="members" inverseEntity="School"/>
     </entity>
     <entity name="Schedule" representedClassName=".Schedule" syncable="YES" codeGenerationType="class">
@@ -59,7 +74,9 @@
         <element name="ClassIteration" positionX="-228.25" positionY="178.42578125" width="128" height="118"/>
         <element name="ExamInfo" positionX="-243" positionY="-90" width="128" height="104"/>
         <element name="ExamPeriod" positionX="-8.29296875" positionY="148.078125" width="128" height="74"/>
-        <element name="Members" positionX="-450.91015625" positionY="-44.20703125" width="128" height="118"/>
+        <element name="ExamScore" positionX="-243" positionY="-90" width="128" height="104"/>
+        <element name="MemberHistory" positionX="-234" positionY="-81" width="128" height="89"/>
+        <element name="Members" positionX="-450.91015625" positionY="-44.20703125" width="128" height="134"/>
         <element name="Schedule" positionX="236.25390625" positionY="-71.26953125" width="128" height="149"/>
         <element name="School" positionX="286.6171875" positionY="245.328125" width="128" height="89"/>
     </elements>

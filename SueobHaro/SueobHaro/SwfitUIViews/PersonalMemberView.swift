@@ -18,7 +18,9 @@ struct PersonalMemberView: View {
     
     @State var pointArray = [80, 70, 60, 70, 90, 100, 90, 95]
     @State var examArray = ["3월", "중간고사", "모의고사", "모의고사", "기말고사", "중간고사", "모의고사", "수능"]
-    @State var recordHistory = ["지리에 대한 지식이 아무것도 없다", "디자인 감각이 좋다", "항상 졸리다", "항상 배가고프다"]
+//    @State var recordHistory = ["지리에 대한 지식이 아무것도 없다", "디자인 감각이 좋다", "항상 졸리다", "항상 배가고프다"]
+    @State var recordHistory: [MemberHistory] = []
+    @State var examScores: [ExamScore] = []
     @State var selectedRecordIndex = 0
     let pointPerHeight:CGFloat = 195 / 100
     
@@ -39,7 +41,7 @@ struct PersonalMemberView: View {
                             .foregroundColor(.greyscale1)
                         Spacer()
                         Circle()
-                            .foregroundColor(.mint)
+                            .foregroundColor(Color(member?.classInfo?.color ?? "Greyscale2"))
                             .frame(width: 8, height: 8)
                             .padding(.trailing, CGFloat.padding.toText)
                         Text(member?.classInfo?.name ?? "No Class")
@@ -82,43 +84,68 @@ struct PersonalMemberView: View {
                         ScrollViewReader { proxy in
                             ScrollView(.horizontal, showsIndicators: false) {
                                 ZStack {
-                                    HStack(spacing: 0) {
-                                        ForEach(0..<pointArray.count, id: \.self) { i in
-                                                VStack(spacing: 0) {
-                                                    ZStack {
-                                                        Color.clear
-                                                            .frame(width: 90, height: 195)
-                                                        Rectangle()
-                                                            .stroke()
-                                                            .offset(x: 45)
+                                    //Make Background Gridd
+                                    VStack (spacing: 0) {
+                                        HStack(spacing: 0) {
+                                            Color.clear.frame(width: examScores.count >= 5 ? 1 : 5, height: 195)
+                                            ForEach(0..<max(examScores.count, 5), id: \.self) { i in
+                                                    VStack(spacing: 0) {
+                                                        ZStack {
+                                                            Color.clear
+                                                                .frame(width: 90, height: 195)
+                                                            Color.greyscale6.frame(width:1, height: 195)
+                                                                .id(i)
+                                                        }
                                                     }
-                                                    .padding(.bottom, CGFloat.padding.toComponents)
-                                                    Text("\(pointArray[i])")
-                                                        .font(.system(size: 14))
-                                                        .font(Font(UIFont.systemFont(for: .body1)))
-                                                        .foregroundColor(.greyscale1)
-                                                        .background(Capsule().fill(Color.greyscale6).cornerRadius(12).frame(width:49, height: 24))
-                                                        .padding(.bottom, CGFloat.padding.toText)
-                                                    Text(examArray[i])
-                                                        .font(.system(size: 12))
-                                                        .font(Font(UIFont.systemFont(for: .body2)))
-                                                        .foregroundColor(.greyscale4)
                                                 }
-                                                .id(i)
-                                                .offset(x: -45)
-                                            }
+                                        }
+                                        Color.greyscale4.frame(height: 2)
+                                            .padding(.bottom, CGFloat.padding.toComponents)
+                                        
+                                        //Make Label
+                                        HStack(spacing: 0) {
+                                            Color.clear.frame(width: 1)
+                                            ForEach(0..<examScores.count, id: \.self) { i in
+                                                ZStack {
+                                                    Color.clear.frame(width: 90)
+                                                    VStack(spacing: 0) {
+                                                            Text("\(examScores[i].score)")
+                                                                .font(.system(size: 14))
+                                                                .font(Font(UIFont.systemFont(for: .body1)))
+                                                                .foregroundColor(.greyscale1)
+                                                                .background(Capsule().fill(Color.greyscale6).cornerRadius(12).frame(width:49, height: 24))
+                                                                .padding(.bottom, CGFloat.padding.toText)
+                                                            Text(examScores[i].examName ?? "NoName")
+                                                                .font(.system(size: 12))
+                                                                .font(Font(UIFont.systemFont(for: .body2)))
+                                                                .foregroundColor(.greyscale4)
+                                                        }
+                                                        
+                                                    }
+                                                    
+                                                }
+                                            Spacer()
+                                        }
                                     }
-                                    PointChartView(data: $pointArray)
-                                        .offset(y: -50)
+                                    //Chart
+                                    PointChartView(data: $pointArray, examScore: $examScores)
                                 }
                                 .onAppear{
-                                    proxy.scrollTo(pointArray.count - 1, anchor: .trailing)
+                                    proxy.scrollTo(examScores.count - 1, anchor: .trailing)
                                 }
-                                .onChange(of: pointArray) { _ in
-                                    proxy.scrollTo(pointArray.count - 1, anchor: .trailing)
+                                .onChange(of: examScores) { i in
+                                    print(i)
+                                    if i.count >= 5 {
+                                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05) {
+                                            withAnimation {
+                                                proxy.scrollTo(i.count - 1, anchor: .trailing)
+                                            }
+                                        }
+                                    }
                                 }
                                 
                             }
+//                            .offset(x: -30)
                             .padding(.top, CGFloat.padding.toTextComponents)
                             .padding(.bottom, CGFloat.padding.toDifferentHierarchy)
                         }
@@ -177,6 +204,7 @@ struct PersonalMemberView: View {
                                     Button(action: {
                                         isEtcDeleteAlertShowed = true
                                         selectedRecordIndex = index
+                                        
                                     }, label: {
                                         Image(systemName: "trash")
                                             .foregroundColor(.greyscale1)
@@ -185,7 +213,7 @@ struct PersonalMemberView: View {
                                     
                                 }
                                 HStack {
-                                    Text(recordHistory[index])
+                                    Text(recordHistory[index].history ?? "")
                                         .font(Font(UIFont.systemFont(for: .body2)))
                                         .foregroundColor(.greyscale1)
                                     Spacer()
@@ -201,8 +229,6 @@ struct PersonalMemberView: View {
                             }
                             
                         }
-                        
-                        
                     }
                 }
                 
@@ -258,7 +284,10 @@ struct PersonalMemberView: View {
             ToolbarItemGroup(placement: .keyboard) {
                 Button(action: {
                     if isShow {
-                        recordHistory.insert(inputText, at: 0)
+//                        recordHistory.insert(inputText, at: 0)
+                        DataManager.shared.addMemberHistory(member: member!, history: inputText)
+                        recordHistory = []
+                        recordHistory = DataManager.shared.fetchMemberHistory(member: member!)
                         inputText = ""
                         isShow = false
                         isFocused = false
@@ -273,6 +302,10 @@ struct PersonalMemberView: View {
                             withAnimation{
                                 pointArray.append(Int(examPoint)!)
                                 examArray.append(examTitle)
+                                DataManager.shared.addExamScore(member: member!, score: Int(examPoint) ?? 0, examName: examTitle)
+//                                print(DataManager.shared.fetchExamScore(member: member!))
+                                examScores = []
+                                examScores = DataManager.shared.fetchExamScore(member: member!)
                             }
                             isShowHalfMOdal = false
                             examPoint = ""
@@ -338,12 +371,16 @@ struct PersonalMemberView: View {
         }
         .onAppear {
             UITextView.appearance().backgroundColor = .clear
+            recordHistory = DataManager.shared.fetchMemberHistory(member: member!)
+            examScores = DataManager.shared.fetchExamScore(member: member!)
         }
         
-        .alert("저장하지 않고 나가기", isPresented: $isEtcDeleteAlertShowed) {
+        .alert("학생기록 삭제하기.", isPresented: $isEtcDeleteAlertShowed) {
             Button("취소", role: .cancel) {}
             Button("삭제", role: .destructive) {
-                recordHistory.remove(at: selectedRecordIndex)
+                DataManager.shared.deleteData(target: recordHistory[selectedRecordIndex])
+                recordHistory = []
+                recordHistory = DataManager.shared.fetchMemberHistory(member: member!)
             }
         } message: {
             Text("기록한 내용을 정말 삭제하시겠습니까?🥲")
@@ -409,6 +446,7 @@ struct PersonalMemberView: View {
                 .ignoresSafeArea()
             
         }
+        
     }
 }
 

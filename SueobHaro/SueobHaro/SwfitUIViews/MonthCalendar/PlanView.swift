@@ -14,9 +14,13 @@ enum CalendarCase: String {
 
 struct PlanView: View {
     @StateObject private var vm = PlanViewModel()
-    @State private var calendarCase: CalendarCase = .week
+    @State private var calendarCase: CalendarCase  = {
+        @AppStorage("monthCalendarFirst") var monthCalendarFirst: Bool = false
+        return monthCalendarFirst ? .month : .week
+    }()
     @State private var showClassAddView = false
     @State private var showExamAddView = false
+    
     
     var body: some View {
         NavigationView {

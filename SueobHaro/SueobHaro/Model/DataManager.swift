@@ -52,6 +52,7 @@ class DataManager {
                       schoolString: memberSchool[idx]
             )
         }
+
         let lastDate = Calendar.current.date(byAdding: .month, value: 6, to: firstDate.toDay) ?? firstDate.toDay
         let dateIntervals = Calendar.current.generateWeekOfDays(
             inside: DateInterval(start: firstDate.toDay, end: lastDate),
@@ -261,12 +262,33 @@ class DataManager {
         return filterSchedules
     }
     
+    func getNextSchedules(classInfo: ClassInfo) -> [Schedule] {
+        let request = Schedule.fetchRequest()
+        //해당 클래스 만
+        let filter = NSPredicate(format: "classInfo == %@", classInfo)
+        //날짜 순 정렬
+        let sort = NSSortDescriptor(keyPath: \Schedule.endTime, ascending: true)
+        request.predicate = filter
+        request.sortDescriptors = [sort]
+        var filterSchedules:[Schedule] = []
+        do {
+            filterSchedules = try container.viewContext.fetch(request)
+            //오늘 이전 날짜 필터
+            filterSchedules = filterSchedules.filter{ $0.endTime ?? Date() > Date() && $0.isCanceled == false }
+        } catch let error {
+            print("Fetch Error, get Members, \(error)")
+        }
+        return filterSchedules
+    }
+    
     // MARK: Fetch
     func fetchSchedules(section: Section) -> [Schedule] {
         let request = Schedule.fetchRequest()
         var filter: NSPredicate
         if section == .next {
-            filter = NSPredicate(format: "endTime > %@ AND endTime < %@", Date() as NSDate, Date().nextDay() as NSDate)
+            filter = NSPredicate(format: "endTime > %@", Date() as NSDate)
+            print(Date())
+            print(Date().nextDay())
         } else {
             filter = NSPredicate(format: "endTime < %@ AND progress == %@" , Date() as NSDate, "")
         }
@@ -298,6 +320,69 @@ class DataManager {
         } else {
             return []
         }
+    }
+    
+    func addExamScore(member: Members, score: Int, examName: String) -> Void {
+        let newScore = ExamScore(context: container.viewContext)
+        newScore.id = UUID()
+        newScore.examName = examName
+        newScore.score = Int32(score)
+        newScore.createdAt = Date()
+        newScore.member = member
+//        let school = schools?.filter({ $0.name ?? "" == schoolString })
+//
+//        if school?.isEmpty ?? true {
+//            newMember.school = addSchool(name: schoolString)
+//        } else {
+//            newMember.school = school!.first!
+//        }
+        try? container.viewContext.save()
+    }
+    
+    func addMemberHistory(member: Members, history: String) -> Void {
+        let newHistory = MemberHistory(context: container.viewContext)
+        newHistory.id = UUID()
+        newHistory.history = history
+        newHistory.createdAt = Date()
+        newHistory.member = member
+        
+        try? container.viewContext.save()
+    }
+    
+    func fetchExamScore(member: Members) -> [ExamScore] {
+        let request = ExamScore.fetchRequest()
+        //해당 클래스 만
+        let filter = NSPredicate(format: "member == %@", member)
+        //날짜 순 정렬
+        let sort = NSSortDescriptor(keyPath: \ExamScore.createdAt, ascending: true)
+        request.predicate = filter
+        request.sortDescriptors = [sort]
+        var filteredExamScore:[ExamScore] = []
+        do {
+            filteredExamScore = try container.viewContext.fetch(request)
+
+        } catch let error {
+            print("Fetch Error, get Members, \(error)")
+        }
+        return filteredExamScore
+    }
+    
+    func fetchMemberHistory(member: Members) -> [MemberHistory] {
+        let request = MemberHistory.fetchRequest()
+        //해당 클래스 만
+        let filter = NSPredicate(format: "member == %@", member)
+        //날짜 순 정렬
+        let sort = NSSortDescriptor(keyPath: \MemberHistory.createdAt, ascending: true)
+        request.predicate = filter
+        request.sortDescriptors = [sort]
+        var filteredMemberHistory:[MemberHistory] = []
+        do {
+            filteredMemberHistory = try container.viewContext.fetch(request)
+
+        } catch let error {
+            print("Fetch Error, get Members, \(error)")
+        }
+        return filteredMemberHistory
     }
     
 }

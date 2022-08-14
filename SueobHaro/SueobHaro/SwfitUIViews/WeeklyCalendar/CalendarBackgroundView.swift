@@ -67,10 +67,12 @@ struct CalendarBackgroundView: View {
                         .frame(width: 1)
                 }
                 .onAppear{
-                    height = reader.size.height
+//                    height = reader.frame(in: .local).height
+//                    print(height)
                 }
             }
         }
+//        .frame(height: 400)
     }
 }
 
