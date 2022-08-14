@@ -52,24 +52,19 @@ class DataManager {
                       schoolString: memberSchool[idx]
             )
         }
-        let dayCount = day.count
-//        let newDay = day.sorted{ $0.firstDate < $1.firstDate}
-        for (i, d) in day.enumerated() {
-            let lastDate = Calendar.current.date(byAdding: .month, value: 6, to: firstDate.toDay) ?? firstDate.toDay
-            let dates = Calendar.current.generateDatesAfter(inside: DateInterval(start: firstDate.toDay, end: lastDate), matching: DateComponents(weekday: d.toWeekOfDayNum()))
-            var preSchedule: Schedule?
-            for (j, date) in dates.enumerated() {
-                var start = Calendar.current.date(byAdding: .hour, value: startTime[i].hour, to: date)!
-                print(startTime[i].hour)
-                start = Calendar.current.date(byAdding: .minute, value: startTime[i].minute, to: start)!
-                print(startTime[i].minute)
-                print("\(j), \(date)")
-                var end = Calendar.current.date(byAdding: .hour, value: endTime[i].hour, to: date)!
-                end = Calendar.current.date(byAdding: .minute, value: endTime[i].minute, to: end)!
-                preSchedule = addSchedule(count: Int16((dayCount*j)+(i+1)), endTime: end, startTime: start, isCanceled: false, progress: "", classInfo: newClassInfo, preSchedule: preSchedule)
-            }
-            print(dates.map{ $0.description(with: .current) })
+
+        let lastDate = Calendar.current.date(byAdding: .month, value: 6, to: firstDate.toDay) ?? firstDate.toDay
+        let dateIntervals = Calendar.current.generateWeekOfDays(
+            inside: DateInterval(start: firstDate.toDay, end: lastDate),
+            matching: day,
+            start: startTime,
+            end: endTime)
+        var preSchedule: Schedule?
+        
+        for (i, interval) in dateIntervals.enumerated() {
+            preSchedule = addSchedule(count: Int16(i+1), endTime: interval.end, startTime: interval.start, isCanceled: false, progress: "", classInfo: newClassInfo, preSchedule: preSchedule)
         }
+
     }
     
     func addSchedule(count: Int16, endTime: Date, startTime: Date, isCanceled: Bool, progress: String, classInfo: ClassInfo, preSchedule: Schedule?) -> Schedule {

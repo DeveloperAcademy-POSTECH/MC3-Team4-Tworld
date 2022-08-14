@@ -32,6 +32,75 @@ extension Calendar {
         return dates
     }
     
+    func generateWeekOfDays(
+        inside interval: DateInterval,
+        matching days: [String],
+        start startTime: [Date],
+        end endTime: [Date]
+    ) -> [DateInterval] {
+        var dateIntervals: [DateInterval] = []
+        
+        var days = days.map{ $0.toWeekOfDayNum() }
+        
+        typealias Plan = (day: Int, start: Date, end: Date)
+        var plans: [Plan] = []
+        
+        for i in 0..<days.count {
+            plans.append(Plan(day: days[i], start: startTime[i], end: endTime[i]))
+        }
+        
+        plans.sort { $0.day < $1.day }
+        
+        days = plans.map{ $0.day }
+        var startTime = plans.map{ $0.start }
+        var endTime = plans.map{ $0.end }
+        if interval.start.weekOfDay < days.max()! && interval.start.weekOfDay > days.min()! {
+            while days[0] < interval.start.weekOfDay {
+                days.append(days.remove(at: 0))
+                startTime.append(startTime.remove(at: 0))
+                endTime.append(endTime.remove(at: 0))
+            }
+        }
+        
+        var daysInterval: [Int] = [0]
+
+        for i in 0..<days.count {
+            if i == 0 { continue }
+            if days[i] > days[0] {
+                daysInterval.append(days[i] - days[0])
+            } else {
+                daysInterval.append(days[i] - days[0] + 7)
+            }
+        }
+
+        let components = DateComponents(weekday: days[0])
+        
+        enumerateDates(
+            startingAfter: interval.start,
+            matching: components,
+            matchingPolicy: .nextTime) { date, _, stop in
+            if let date = date {
+                if date < interval.end {
+                    for (i, interval) in daysInterval.enumerated() {
+                        var startDate = Calendar.current.date(byAdding: .day, value: interval, to: date)!
+                        startDate = Calendar.current.date(byAdding: .hour, value: startTime[i].hour, to: startDate)!
+                        startDate = Calendar.current.date(byAdding: .minute, value: startTime[i].minute, to: startDate)!
+                        
+                        var endDate = Calendar.current.date(byAdding: .day, value: interval, to: date)!
+                        endDate = Calendar.current.date(byAdding: .hour, value: endTime[i].hour, to: endDate)!
+                        endDate = Calendar.current.date(byAdding: .minute, value: endTime[i].minute, to: endDate)!
+                        
+                        dateIntervals.append(DateInterval(start: startDate, end: endDate))
+                    }
+                } else {
+                    stop = true
+                }
+            }
+        }
+        print(dateIntervals)
+        return dateIntervals
+    }
+    
     func generateDates(
         inside interval: DateInterval,
         matching components: DateComponents
@@ -70,6 +139,11 @@ extension Date {
     var toDay: Date {
         let calendar = Calendar.current
         return calendar.date(bySettingHour: 0, minute: 0, second: 0, of: self) ?? self
+    }
+    
+    var weekOfDay: Int {
+        let weekOfDay = Calendar.current.component(.weekday, from: self)
+        return weekOfDay
     }
     
     var hour: Int {

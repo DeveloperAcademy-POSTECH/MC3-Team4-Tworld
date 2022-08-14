@@ -48,8 +48,6 @@
 		31EBB83528957E5E00502441 /* CalendarBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EBB83428957E5E00502441 /* CalendarBackgroundView.swift */; };
 		31EBB83728957E7100502441 /* CalendarNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EBB83628957E7100502441 /* CalendarNumberView.swift */; };
 		31EBB83928957EBE00502441 /* WeeklyNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EBB83828957EBE00502441 /* WeeklyNumberView.swift */; };
-		371A52522896D00100FA01DF /* Schedule+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371A52502896D00100FA01DF /* Schedule+CoreDataClass.swift */; };
-		371A52532896D00100FA01DF /* Schedule+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371A52512896D00100FA01DF /* Schedule+CoreDataProperties.swift */; };
 		372B0EDC288FBA9B00482730 /* ClassAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EDB288FBA9B00482730 /* ClassAddView.swift */; };
 		372B0EDE288FD76400482730 /* ClassTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EDD288FD76400482730 /* ClassTextField.swift */; };
 		372B0EE0289106F500482730 /* DateFormatUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372B0EDF289106F500482730 /* DateFormatUtil.swift */; };
@@ -121,8 +119,6 @@
 		31EBB83428957E5E00502441 /* CalendarBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarBackgroundView.swift; sourceTree = "<group>"; };
 		31EBB83628957E7100502441 /* CalendarNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarNumberView.swift; sourceTree = "<group>"; };
 		31EBB83828957EBE00502441 /* WeeklyNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyNumberView.swift; sourceTree = "<group>"; };
-		371A52502896D00100FA01DF /* Schedule+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Schedule+CoreDataClass.swift"; sourceTree = "<group>"; };
-		371A52512896D00100FA01DF /* Schedule+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Schedule+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		372B0EDB288FBA9B00482730 /* ClassAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassAddView.swift; sourceTree = "<group>"; };
 		372B0EDD288FD76400482730 /* ClassTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassTextField.swift; sourceTree = "<group>"; };
 		372B0EDF289106F500482730 /* DateFormatUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatUtil.swift; sourceTree = "<group>"; };
@@ -334,8 +330,6 @@
 		37B042BC28854A350043E9CB /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
-				371A52502896D00100FA01DF /* Schedule+CoreDataClass.swift */,
-				371A52512896D00100FA01DF /* Schedule+CoreDataProperties.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -467,7 +461,6 @@
 				37B0427628848FC00043E9CB /* DataManager.swift in Sources */,
 				31DD866C2896FC8B00861A5D /* PointChartView.swift in Sources */,
 				31EBB8062893BD1000502441 /* ClassUpdateView.swift in Sources */,
-				371A52532896D00100FA01DF /* Schedule+CoreDataProperties.swift in Sources */,
 				31EBB7FE2891920700502441 /* KeyboardHeightHelper.swift in Sources */,
 				372B0EE42891429700482730 /* ClassTitleProgressView.swift in Sources */,
 				317AE6C42888648B00FDA57B /* ClassInformationHeaderComponent.swift in Sources */,
@@ -500,7 +493,6 @@
 				31EB7DD02897BFFC00689030 /* ClassMemberSectionHeaderView.swift in Sources */,
 				317AE68C2886EFE700FDA57B /* ClassInformationViewController.swift in Sources */,
 				317AE68E28870DAF00FDA57B /* ProgressUpdateModalViewController.swift in Sources */,
-				371A52522896D00100FA01DF /* Schedule+CoreDataClass.swift in Sources */,
 				2118206B289252DC00F2BA8E /* ScheduleInfoView.swift in Sources */,
 				37B0431328868DE50043E9CB /* ClassNameView.swift in Sources */,
 				37B042B928854A290043E9CB /* ClassIteration+CoreDataProperties.swift in Sources */,

@@ -56,7 +56,7 @@ struct ScheduleInfoView: View {
                     .frame(height: 1)
                 
                 Group {
-                    if let progress = schedule.preSchedule?.progress {
+                    if let progress = schedule.preSchedule?.progress, progress != "" {
                         Text(progress)
                     } else {
                         Text("지난 수업의 진도를 기록하지 않았어요…")
