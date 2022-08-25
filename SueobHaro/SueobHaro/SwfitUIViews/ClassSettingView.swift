@@ -10,6 +10,8 @@ import SwiftUI
 struct ClassSettingView: View {
     @AppStorage("monthCalendarFirst") var monthCalendarFirst: Bool = false
     @State private var classNoti: Bool = false
+    @State private var monthCalendarFirstAlert: Bool = false
+    @State private var classNotiAlert: Bool = false
     
     var body: some View {
         ZStack {
@@ -26,7 +28,7 @@ struct ClassSettingView: View {
                 .padding(.bottom, .padding.toTextComponents)
                 
                 Button(action: {
-                    monthCalendarFirst.toggle()
+                    monthCalendarFirstAlert.toggle()
                 }, label: {
                     ZStack {
                         Rectangle()
@@ -52,10 +54,14 @@ struct ClassSettingView: View {
                         .toggleStyle(SwitchToggleStyle(tint: .spLightBlue))
                         .padding(.vertical, .padding.inBox)
                         .padding(.horizontal, .padding.margin)
+                        .disabled(true)
                     }.frame(maxHeight: 100)
                 })
+                .alert(isPresented: $monthCalendarFirstAlert) {
+                    Alert(title: Text("아직 준비중인 서비스입니다."), message: nil, dismissButton: .default(Text("확인")))
+                }
                 Button(action: {
-                    classNoti.toggle()
+                    classNotiAlert.toggle()
                 }, label: {
                     ZStack {
                         Rectangle()
@@ -81,9 +87,14 @@ struct ClassSettingView: View {
                         .toggleStyle(SwitchToggleStyle(tint: .spLightBlue))
                         .padding(.vertical, .padding.inBox)
                         .padding(.horizontal, .padding.margin)
+                        .disabled(true)
                         
                     }.frame(maxHeight: 100)
-                }).padding(.bottom, .padding.toText)
+                })
+                .padding(.bottom, .padding.toText)
+                .alert(isPresented: $classNotiAlert) {
+                    Alert(title: Text("아직 준비중인 서비스입니다."), message: nil, dismissButton: .default(Text("확인")))
+                }
                 
                 ZStack {
                     Rectangle()
