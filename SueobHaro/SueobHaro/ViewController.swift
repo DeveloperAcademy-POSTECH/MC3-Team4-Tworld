@@ -212,10 +212,15 @@ extension ViewController: UICollectionViewDelegate {
             container.font = .systemFont(for: .caption)
             cell.progressCountLabel.label.text = "\(item.count)회차"
             
+            cell.daylabel.text = item.startTime?.todayString() ?? ""
+            cell.daySubLabel.text = item.startTime?.toDayOfWeekString() ?? ""
             
             if indexPath.row == 0 || !(self.schedules[indexPath.row - 1].startTime ?? Date()).isSameDay(date: item.startTime ?? Date()) {
-                cell.daylabel.text = item.startTime?.todayString() ?? ""
-                cell.daySubLabel.text = item.startTime?.toDayOfWeekString() ?? ""
+                cell.daylabel.alpha = 1
+                cell.daySubLabel.alpha = 1
+            } else {
+                cell.daylabel.alpha = 0
+                cell.daySubLabel.alpha = 0
             }
             
             cell.schoolIndicator.backgroundColor = UIColor(named: item.classInfo?.color ?? "randomBlue")
@@ -333,12 +338,13 @@ extension ViewController {
             dataSource.apply(snapshot, animatingDifferences: false)
         }
         if schedules.isEmpty {
-            noCellLabel.text = nowSection == .next ? "등록된 수업이 없어요!" : "노트를 작성하지 않은 수업이 없어요!"
-            noCellView.alpha = 1
-            addButton.alpha = 1
+            noCellLabel.text = nowSection == .next ? "다음 수업이 없어요!" : "노트를 작성하지 않은 수업이 없어요!"
         } else {
             noCellView.alpha = 0
             addButton.alpha = 0
+        }
+        if DataManager.shared.classInfo?.count == 0 {
+            addButton.alpha = 1
         }
     }
     
