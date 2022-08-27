@@ -63,6 +63,7 @@ struct MonthCalendarView: View {
         
         return VStack(spacing: 20) {
             Text("\(year)년 \(month)월 \(day)일 일정")
+                .foregroundColor(.white)
                 .font(Font(uiFont: .systemFont(for: .title2)))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, 16)
@@ -79,6 +80,7 @@ struct MonthCalendarView: View {
                             .frame(width: 3)
                         
                         Text(examInfo.examPeriod?.school?.name ?? "" + " 시험")
+                            .foregroundColor(.white)
                             .font(Font(uiFont: .systemFont(for: .title3)))
                         
                         if let text = examInfo.text, !text.isEmpty {
@@ -113,6 +115,7 @@ struct MonthCalendarView: View {
                         Spacer()
                             .frame(width: 64)
                         Text("오늘은 일정이 존재하지 않아요.")
+                            .foregroundColor(.white)
                             .font(Font(uiFont: .systemFont(for: .body2)))
                             .padding(.padding.inBox)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -201,6 +204,7 @@ struct MonthCalendarView: View {
         return VStack(spacing: 20) {
             HStack{
                 Text("\(String(year))년 \(month)월")
+                    .foregroundColor(.white)
                     .font(Font(uiFont: .systemFont(for: .title2)))
                 Spacer()
                 
