@@ -329,6 +329,7 @@ extension ViewController {
     private func updateCell() {
         DataManager.shared.fetchData(target: .schedule)
         self.schedules = DataManager.shared.fetchSchedules(section: nowSection)
+        let prevSchedules = DataManager.shared.fetchSchedules(section: .prev)
         var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
         if !schedules.isEmpty {
             snapshot.appendSections([nowSection])
@@ -337,6 +338,13 @@ extension ViewController {
         if let dataSource = self.dataSource {
             dataSource.apply(snapshot, animatingDifferences: false)
         }
+        
+        if prevSchedules.count == 0 {
+            indicator.alpha = 0
+        } else {
+            indicator.alpha = 1
+        }
+        
         if schedules.isEmpty {
             noCellLabel.text = nowSection == .next ? "다음 수업이 없어요!" : "노트를 작성하지 않은 수업이 없어요!"
         } else {

@@ -31,9 +31,7 @@ struct ClassCheckView: View {
             startTimes.append(classTimeInfo[day]!["start"]!!)
             endTimes.append(classTimeInfo[day]!["end"]!!)
         }
-        DispatchQueue.main.async {
-            DataManager.shared.addClassInfo(firstDate: firstClassDate, tuition: Int32(tuition)!, tuitionPer: Int16(tuitionPer)!, name: className, color: RandomColorTheme.allCases.randomElement()?.name, location: nil, day: classDay, startTime: startTimes, endTime: endTimes, memberName: memberNames, memberPhoneNumber: memberPhoneNumbers, memberSchool: memberSchools)
-        }
+        DataManager.shared.addClassInfo(firstDate: firstClassDate, tuition: Int32(tuition)!, tuitionPer: Int16(tuitionPer)!, name: className, color: RandomColorTheme.allCases.randomElement()?.name, location: nil, day: classDay, startTime: startTimes, endTime: endTimes, memberName: memberNames, memberPhoneNumber: memberPhoneNumbers, memberSchool: memberSchools)
     }
     
     var body: some View {
