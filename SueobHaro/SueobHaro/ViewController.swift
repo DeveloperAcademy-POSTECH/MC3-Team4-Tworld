@@ -212,8 +212,11 @@ extension ViewController: UICollectionViewDelegate {
             container.font = .systemFont(for: .caption)
             cell.progressCountLabel.label.text = "\(item.count)회차"
             
-            cell.daylabel.text = item.startTime?.todayString() ?? ""
-            cell.daySubLabel.text = item.startTime?.toDayOfWeekString() ?? ""
+            
+            if indexPath.row == 0 || !(self.schedules[indexPath.row - 1].startTime ?? Date()).isSameDay(date: item.startTime ?? Date()) {
+                cell.daylabel.text = item.startTime?.todayString() ?? ""
+                cell.daySubLabel.text = item.startTime?.toDayOfWeekString() ?? ""
+            }
             
             cell.schoolIndicator.backgroundColor = UIColor(named: item.classInfo?.color ?? "randomBlue")
             
@@ -372,9 +375,8 @@ extension Date {
     }
     
     func todayString() -> String {
-        let date = Date()
         let calendar = Calendar.current
-        let components = calendar.dateComponents([.day], from: date)
+        let components = calendar.dateComponents([.day], from: self)
         let dayOfMonth = components.day
         return String(dayOfMonth ?? 0)
     }
@@ -386,10 +388,9 @@ extension Date {
         } else if calendar.isDateInTomorrow(self) {
             return "내일"
         } else {
-            let date = Date()
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "EEEE"
-            let dayOfTheWeekString = dateFormatter.string(from: date)
+            dateFormatter.dateFormat = "EEE"
+            let dayOfTheWeekString = dateFormatter.string(from: self)
             return dayOfTheWeekString
         }
         

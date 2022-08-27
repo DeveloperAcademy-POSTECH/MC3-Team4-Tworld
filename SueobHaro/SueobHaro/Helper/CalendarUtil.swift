@@ -162,6 +162,12 @@ extension Date {
         return newDate
     }
     
+    func nextWeekDay() -> Date {
+        let calendar = Calendar.current
+        let newDate = calendar.date(byAdding: .day, value: 7, to: self) ?? self
+        return newDate
+    }
+    
     func isSameDay(date: Date) -> Bool {
         return Calendar.current.isDate(self, inSameDayAs: date)
     }

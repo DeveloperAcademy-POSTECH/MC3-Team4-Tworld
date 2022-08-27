@@ -84,7 +84,7 @@ class NextScheduleInfoCell: UICollectionViewCell {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(for: .caption)
-        label.text = "내일"
+        label.text = ""
         label.textColor = .theme.greyscale3
         
         return label
