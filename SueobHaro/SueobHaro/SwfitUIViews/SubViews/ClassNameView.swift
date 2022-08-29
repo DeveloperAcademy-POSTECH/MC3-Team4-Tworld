@@ -236,7 +236,7 @@ struct ClassNameView: View {
                 }
                 .frame(maxHeight: 52)
             })
-            .padding(.bottom, CGFloat.padding.toComponents)
+            .padding(.bottom, CGFloat(56))
         }
     }
 }
