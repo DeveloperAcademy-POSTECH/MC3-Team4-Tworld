@@ -49,231 +49,239 @@ struct ClassDetailView: View {
     
     
     var body: some View {
-        VStack {
-            ScrollView(showsIndicators: false) {
-                ScrollViewReader { proxy in
+        ZStack {
+            Color.spBlack.ignoresSafeArea()
+            VStack {
+                HStack(spacing: 0) {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        NavBarBackButton(title: "빠른수업")
+                    })
+                    .padding([.top, .leading], 8)
+                    Spacer()
+                }.padding(.bottom, CGFloat.padding.toComponents)
+                ScrollView(showsIndicators: false) {
+                    ScrollViewReader { proxy in
 
-                    //수업정보와, 멤버 이름 들어감
-                        
-                    VStack(spacing: 0) {
-                        HStack(spacing: 0) {
-                            Circle()
-                                .foregroundColor(Color(selectedClass?.color ?? "randomBlue"))
-                                .frame(width: 8, height: 8)
-                                .padding(.trailing, CGFloat.padding.toText)
-                            Text(classTitle)
-                                .font(Font(uiFont: .systemFont(for: .title2)))
-                                .foregroundColor(.greyscale1)
+                        //수업정보와, 멤버 이름 들어감
                             
-                            Spacer()
-                            NavigationLink(destination: ClassInformationView(classTitle: $classTitle, classInfo: $selectedClass ,memberList: $members)) {
-                                Text("더보기 +")
-                                    .font(Font(uiFont: .systemFont(for: .body1)))
-                                    .foregroundColor(.spLightBlue)
-                            }
-                        }
-                        .padding(.bottom, CGFloat.padding.toText)
-                        HStack(spacing: 0) {
-                            ForEach(0..<members.count, id: \.self) { i in
-                                Text(i != members.count - 1 ? "\(members[i].name ?? ""), " : "\(members[i].name ?? "")")
-                                    .font(Font(uiFont: .systemFont(for: .body1)))
-                                    .foregroundColor(.greyscale3)
-                            }
-                            
-                            Spacer()
-                        }
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.top, CGFloat.padding.toTextComponents)
-                    Rectangle()
-                        .fill(Color(UIColor.theme.greyscale5))
-                        .frame(height:1)
-                        .frame(maxWidth:.infinity)
-                    
-                    if let data = nextSchedule {
-//                        if selectedSchedule == nil
-                            VStack(spacing: 0) {
-                                HStack {
-                                    Text("다음 수업")
-                                        .font(Font(UIFont.systemFont(for: .title3)))
-                                        .foregroundColor(.greyscale1)
-                                    Spacer()
-                                }
-                                .padding(.horizontal, CGFloat.padding.margin)
-                                .padding(.vertical, CGFloat.padding.toTextComponents)
-                                VStack {
-                                    HStack {
-                                        Text(getDate(date: data.startTime ?? Date()))
-                                            .font(Font(uiFont: .systemFont(for: .title3)))
-                                            .foregroundColor(Color(UIColor.theme.greyscale1))
-                                        Spacer()
-                                        Text("\(data.count)회차")
-                                            .font(Font(uiFont: .systemFont(for: .caption)))
-                                            .foregroundColor(Color(UIColor.theme.greyscale7))
-                                            .background{
-                                                Capsule()
-                                                    .fill(LinearGradient(gradient: Gradient(colors: [Color(UIColor.theme.spLightBlue), Color(UIColor.theme.spDarkBlue)]), startPoint: .topLeading, endPoint: .bottomTrailing))
-                                                    .frame(width: 42, height: 24, alignment: .center)
-                                            }
-                                            .padding(.trailing, CGFloat.padding.inBox)
-                                    }
-                                    .padding(.top, CGFloat.padding.inBox)
-                                    .padding(.leading, CGFloat.padding.inBox)
-
-                                    HStack {
-                                        Text("\(getTime(date:data.startTime ?? Date()))~\(getTime(date:data.endTime ?? Date()))")
-                                            .foregroundColor(Color(UIColor.theme.greyscale3))
-                                            .font(Font(uiFont: .systemFont(for: .body1)))
-                                        Spacer()
-                                        
-                                    }
-                                    .padding(.horizontal, CGFloat.padding.inBox)
-                                    .padding(.top, CGFloat.padding.toText)
-                                    .padding(.bottom, CGFloat.padding.inBox)
-                                    
-                                    Button(action: {
-                                        isAlertShowing = true
-                                    }, label: {
-                                        ZStack {
-                                            Rectangle()
-                                                .fill(Color(UIColor.theme.greyscale6))
-                                                .cornerRadius(radius: 10.0, corners: [.bottomLeft, .bottomRight])
-                                                .frame(width: UIScreen.main.bounds.size.width - (CGFloat.padding.margin * 2))
-                                            Text("\(data.isCanceled ?"휴강취소" : "휴강하기")")
-                                                .font(Font(UIFont.systemFont(for: .button)))
-                                                .foregroundColor(.greyscale2)
-                                                .padding(.vertical, CGFloat.padding.inBox)
-                                        }
-                                        
-                                            
-                                            
-                                    })
-                                }
-                                .background {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .fill(Color(UIColor.theme.greyscale7))
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(Color(UIColor.theme.greyscale5), lineWidth: 1)
-                                    }
-                                    
-                                }
-                                .padding(.horizontal, CGFloat.padding.margin)
+                        VStack(spacing: 0) {
+                            HStack(spacing: 0) {
+                                Circle()
+                                    .foregroundColor(Color(selectedClass?.color ?? "randomBlue"))
+                                    .frame(width: 8, height: 8)
+                                    .padding(.trailing, CGFloat.padding.toText)
+                                Text(classTitle)
+                                    .font(Font(uiFont: .systemFont(for: .title2)))
+                                    .foregroundColor(.greyscale1)
                                 
+                                Spacer()
+                                NavigationLink(destination: ClassInformationView(classTitle: $classTitle, classInfo: $selectedClass ,memberList: $members)) {
+                                    Text("더보기 +")
+                                        .font(Font(uiFont: .systemFont(for: .body1)))
+                                        .foregroundColor(.spLightBlue)
+                                }
                             }
-                            
-                            
-                        
-                    
-                    }
-                        
-                       
-                    HStack {
-                        Text("수업 노트")
-                            .font(Font(uiFont: .systemFont(for: .title3)))
-                            .foregroundColor(Color(UIColor.theme.greyscale1))
-                            .padding(.top, CGFloat.padding.toDifferentHierarchy)
-                            .padding(.bottom, CGFloat.padding.toTextComponents)
-                        Spacer()
-                    }.padding(.horizontal, 16)
-                    
-                    if classSchedules.isEmpty {
-                        VStack {
-                            Text("아직 수업을 한번도 진행하지 않았어요!")
-                                .font(Font(uiFont: .systemFont(for: .body1)))
-                                .foregroundColor(Color(UIColor.theme.greyscale3))
-                        }
-                        .frame(width: UIScreen.main.bounds.size.width - 32, height: 142)
-                        .background{
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color(UIColor.theme.greyscale7))
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color(UIColor.theme.greyscale6), lineWidth: 1)
+                            .padding(.bottom, CGFloat.padding.toText)
+                            HStack(spacing: 0) {
+                                ForEach(0..<members.count, id: \.self) { i in
+                                    Text(i != members.count - 1 ? "\(members[i].name ?? ""), " : "\(members[i].name ?? "")")
+                                        .font(Font(uiFont: .systemFont(for: .body1)))
+                                        .foregroundColor(.greyscale3)
+                                }
+                                
+                                Spacer()
+                            }
                         }
                         .padding(.horizontal, 16)
+                        .padding(.top, CGFloat.padding.toTextComponents)
+                        Rectangle()
+                            .fill(Color(UIColor.theme.greyscale5))
+                            .frame(height:1)
+                            .frame(maxWidth:.infinity)
                         
-                    } else {
-                        ForEach(Array($classSchedules.enumerated()), id: \.offset) { index, value in
-                            //스케쥴 카드 컴퍼넌트 들어감
-                            ClassScheduleCardComponent(classSchedule: value, myIndex: index, selectedIndex: $selectedIndex, scheduleList: $classSchedules)
-                                .id(index)
-                                .padding(.horizontal, 16)
-                                .padding(.bottom, CGFloat.padding.toComponents)
-                        }
-                        
-                        .onChange(of: selectedIndex) { _ in
-                            if let scrollIndex = selectedIndex {
-                                // 시간 순서에 따라 렌더에 영향을 주지 않게 하기 위해 시간 차이를 준다
-                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) {
-                                    withAnimation{
-                                        // 데이터가 적을 시 스크롤이 되지 않는 문제를 해결하기 위해 바텀 패딩을 준다
-                                        bottomPadding = 260
-                                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-                                            // 패딩으로 스크롤이 가능하게 되면 선택한 카드의 id 값에 해당하는 것으로 스크롤뷰에 바텀에 위치시킨다.
-                                            proxy.scrollTo(scrollIndex, anchor: .bottom)
-//                                        isScrollDisable = true
-                                        }
+                        if let data = nextSchedule {
+    //                        if selectedSchedule == nil
+                                VStack(spacing: 0) {
+                                    HStack {
+                                        Text("다음 수업")
+                                            .font(Font(UIFont.systemFont(for: .title3)))
+                                            .foregroundColor(.greyscale1)
+                                        Spacer()
                                     }
+                                    .padding(.horizontal, CGFloat.padding.margin)
+                                    .padding(.vertical, CGFloat.padding.toTextComponents)
+                                    VStack {
+                                        HStack {
+                                            Text(getDate(date: data.startTime ?? Date()))
+                                                .font(Font(uiFont: .systemFont(for: .title3)))
+                                                .foregroundColor(Color(UIColor.theme.greyscale1))
+                                            Spacer()
+                                            Text("\(data.count)회차")
+                                                .font(Font(uiFont: .systemFont(for: .caption)))
+                                                .foregroundColor(Color(UIColor.theme.greyscale7))
+                                                .background{
+                                                    Capsule()
+                                                        .fill(LinearGradient(gradient: Gradient(colors: [Color(UIColor.theme.spLightBlue), Color(UIColor.theme.spDarkBlue)]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                                                        .frame(width: 42, height: 24, alignment: .center)
+                                                }
+                                                .padding(.trailing, CGFloat.padding.inBox)
+                                        }
+                                        .padding(.top, CGFloat.padding.inBox)
+                                        .padding(.leading, CGFloat.padding.inBox)
+
+                                        HStack {
+                                            Text("\(getTime(date:data.startTime ?? Date()))~\(getTime(date:data.endTime ?? Date()))")
+                                                .foregroundColor(Color(UIColor.theme.greyscale3))
+                                                .font(Font(uiFont: .systemFont(for: .body1)))
+                                            Spacer()
+                                            
+                                        }
+                                        .padding(.horizontal, CGFloat.padding.inBox)
+                                        .padding(.top, CGFloat.padding.toText)
+                                        .padding(.bottom, CGFloat.padding.inBox)
+                                        
+                                        Button(action: {
+                                            isAlertShowing = true
+                                        }, label: {
+                                            ZStack {
+                                                Rectangle()
+                                                    .fill(Color(UIColor.theme.greyscale6))
+                                                    .cornerRadius(radius: 10.0, corners: [.bottomLeft, .bottomRight])
+                                                    .frame(width: UIScreen.main.bounds.size.width - (CGFloat.padding.margin * 2))
+                                                Text("\(data.isCanceled ?"휴강취소" : "휴강하기")")
+                                                    .font(Font(UIFont.systemFont(for: .button)))
+                                                    .foregroundColor(.greyscale2)
+                                                    .padding(.vertical, CGFloat.padding.inBox)
+                                            }
+                                            
+                                                
+                                                
+                                        })
+                                    }
+                                    .background {
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .fill(Color(UIColor.theme.greyscale7))
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .stroke(Color(UIColor.theme.greyscale5), lineWidth: 1)
+                                        }
+                                        
+                                    }
+                                    .padding(.horizontal, CGFloat.padding.margin)
+                                    
                                 }
-                            } else {
-                                // 선택이 해제가 되는 경우로 패딩을 원상 복귀 한다.
-                                bottomPadding = 0
-                                // 선택이 해제되는 경우는 데이터 값의 변화가 있던지, 작성 중이 내용을 취소한 경우로 스케쥴 데이터를 다시 fetch 하여 해당 값을 refresh 해준다
-                                classSchedules = DataManager.shared.getSchedules(classInfo: selectedClass!)
-                                print("is OUt \(isOut)")
-                                if isOut {
-                                    self.presentationMode.wrappedValue.dismiss()
-                                    dismissAction()
-                                }
-                            }
+                                
+                                
+                            
+                        
                         }
-                        .onAppear{
-                            // 빠른 노트에서 스케쥴을 선택하고 들어온 경우 포커싱을 주기 위해 값을 확인하여 selectedIndex 값의 변화를 준다
-                            if let schdule = selectedSchedule {
-//                                print(classSchedules.firstIndex(of: schdule))
-                                // 변화를 줄때 렌더되는 과정가 동시에 일어나게 되면 충돌로 텍스트 에디터에 포커싱을 주는 로직이 씹히는 상황이 발생하여 그것을 예방하기 위해 약간의 시간을 준 후 값을 변화시킨다.
-                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-                                    selectedIndex = classSchedules.firstIndex(of: schdule)
-                                }
+                            
+                           
+                        HStack {
+                            Text("수업 노트")
+                                .font(Font(uiFont: .systemFont(for: .title3)))
+                                .foregroundColor(Color(UIColor.theme.greyscale1))
+                                .padding(.top, CGFloat.padding.toDifferentHierarchy)
+                                .padding(.bottom, CGFloat.padding.toTextComponents)
+                            Spacer()
+                        }.padding(.horizontal, 16)
+                        
+                        if classSchedules.isEmpty {
+                            VStack {
+                                Text("아직 수업을 한번도 진행하지 않았어요!")
+                                    .font(Font(uiFont: .systemFont(for: .body1)))
+                                    .foregroundColor(Color(UIColor.theme.greyscale3))
+                            }
+                            .frame(width: UIScreen.main.bounds.size.width - 32, height: 142)
+                            .background{
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color(UIColor.theme.greyscale7))
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color(UIColor.theme.greyscale6), lineWidth: 1)
+                            }
+                            .padding(.horizontal, 16)
+                            
+                        } else {
+                            ForEach(Array($classSchedules.enumerated()), id: \.offset) { index, value in
+                                //스케쥴 카드 컴퍼넌트 들어감
+                                ClassScheduleCardComponent(classSchedule: value, myIndex: index, selectedIndex: $selectedIndex, scheduleList: $classSchedules)
+                                    .id(index)
+                                    .padding(.horizontal, 16)
+                                    .padding(.bottom, CGFloat.padding.toComponents)
                             }
                             
+                            .onChange(of: selectedIndex) { _ in
+                                if let scrollIndex = selectedIndex {
+                                    // 시간 순서에 따라 렌더에 영향을 주지 않게 하기 위해 시간 차이를 준다
+                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) {
+                                        withAnimation{
+                                            // 데이터가 적을 시 스크롤이 되지 않는 문제를 해결하기 위해 바텀 패딩을 준다
+                                            bottomPadding = 260
+                                            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                                                // 패딩으로 스크롤이 가능하게 되면 선택한 카드의 id 값에 해당하는 것으로 스크롤뷰에 바텀에 위치시킨다.
+                                                proxy.scrollTo(scrollIndex, anchor: .bottom)
+    //                                        isScrollDisable = true
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    // 선택이 해제가 되는 경우로 패딩을 원상 복귀 한다.
+                                    bottomPadding = 0
+                                    // 선택이 해제되는 경우는 데이터 값의 변화가 있던지, 작성 중이 내용을 취소한 경우로 스케쥴 데이터를 다시 fetch 하여 해당 값을 refresh 해준다
+                                    classSchedules = DataManager.shared.getSchedules(classInfo: selectedClass!)
+                                    print("is OUt \(isOut)")
+                                    if isOut {
+                                        self.presentationMode.wrappedValue.dismiss()
+                                        dismissAction()
+                                    }
+                                }
+                            }
+                            .onAppear{
+                                // 빠른 노트에서 스케쥴을 선택하고 들어온 경우 포커싱을 주기 위해 값을 확인하여 selectedIndex 값의 변화를 준다
+                                if let schdule = selectedSchedule {
+    //                                print(classSchedules.firstIndex(of: schdule))
+                                    // 변화를 줄때 렌더되는 과정가 동시에 일어나게 되면 충돌로 텍스트 에디터에 포커싱을 주는 로직이 씹히는 상황이 발생하여 그것을 예방하기 위해 약간의 시간을 준 후 값을 변화시킨다.
+                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                                        selectedIndex = classSchedules.firstIndex(of: schdule)
+                                    }
+                                }
+                                
+                            }
                         }
-                    }
+                            
                         
-                    
-                }
-                .background(GeometryReader {
-                    // 스크롤 값을 확인한다.
-                    Color.clear.preference(key: ViewOffsetKey.self, value: -$0.frame(in: .named("scroll")).origin.y)
-                })
-                .onPreferenceChange(ViewOffsetKey.self) {
-                    isOffset = $0
-                    // 스크롤 값에 일정 수치 이상이 되는 경우 네비게이션 타이틀에 클래스 타이틀 값을 주기 위한 판단 로직
-                    if $0 > 60 {
-                        withAnimation {
-                            isNavigationTitle = true
-//                            print(isNavigationTitle)
-                        }
-                    } else {
-                        withAnimation{
-                            isNavigationTitle = false
-                        }
                     }
-                   
+                    .background(GeometryReader {
+                        // 스크롤 값을 확인한다.
+                        Color.clear.preference(key: ViewOffsetKey.self, value: -$0.frame(in: .named("scroll")).origin.y)
+                    })
+                    .onPreferenceChange(ViewOffsetKey.self) {
+                        isOffset = $0
+                        // 스크롤 값에 일정 수치 이상이 되는 경우 네비게이션 타이틀에 클래스 타이틀 값을 주기 위한 판단 로직
+                        if $0 > 60 {
+                            withAnimation {
+                                isNavigationTitle = true
+    //                            print(isNavigationTitle)
+                            }
+                        } else {
+                            withAnimation{
+                                isNavigationTitle = false
+                            }
+                        }
+                       
+                    }
                 }
+                // 추후 스케쥴 선택 시 스크롤이 안되게 하는 것을 고려 중
+                // 현재 스크롤 불가와 키보드 보여지는 것이 동시에 일어나게 되면 충돌로 키보드가 안보이는 문제가 있어 현재는 사용하지 않는다.
+                .disabled(isScrollDisable)
+                .padding(.bottom, bottomPadding)
+                .ignoresSafeArea(.keyboard)
+                
+                .coordinateSpace(name: "scroll")
+                
             }
-            // 추후 스케쥴 선택 시 스크롤이 안되게 하는 것을 고려 중
-            // 현재 스크롤 불가와 키보드 보여지는 것이 동시에 일어나게 되면 충돌로 키보드가 안보이는 문제가 있어 현재는 사용하지 않는다.
-            .disabled(isScrollDisable)
-            .padding(.bottom, bottomPadding)
-            .ignoresSafeArea(.keyboard)
-            .background{
-                Color(UIColor.theme.spBlack)
-                    .ignoresSafeArea()
-            }
-            
-            .coordinateSpace(name: "scroll")
-            
         }
         // 스크롤 값에 따라 네비게이션 타이틀 노출 여부 결정
         .navigationBarTitle(isNavigationTitle ? classTitle : "", displayMode: .inline)
@@ -322,7 +330,8 @@ struct ClassDetailView: View {
         }
         
         
-//        .navigationBarBackButtonHidden(isPresented)
+        .navigationBarHidden(true)
+
         .onAppear {
             DataManager.shared.fetchData(target: .classInfo)
             DataManager.shared.fetchData(target: .schedule)
