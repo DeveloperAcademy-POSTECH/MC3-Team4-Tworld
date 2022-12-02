@@ -286,9 +286,7 @@ class DataManager {
         let request = Schedule.fetchRequest()
         var filter: NSPredicate
         if section == .next {
-            filter = NSPredicate(format: "endTime > %@", Date() as NSDate)
-            print(Date())
-            print(Date().nextDay())
+            filter = NSPredicate(format: "endTime > %@ AND endTime < %@", Date() as NSDate, Date().nextWeekDay() as NSDate)
         } else {
             filter = NSPredicate(format: "endTime < %@ AND progress == %@" , Date() as NSDate, "")
         }
@@ -303,6 +301,7 @@ class DataManager {
         filterSchedules = try? container.viewContext.fetch(request)
         
         if let filterSchedules = filterSchedules {
+            print(filterSchedules.map{ $0.endTime })
             return filterSchedules
         } else {
             return []

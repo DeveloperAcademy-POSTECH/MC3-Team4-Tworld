@@ -215,6 +215,16 @@ extension ViewController: UICollectionViewDelegate {
             cell.daylabel.text = item.startTime?.todayString() ?? ""
             cell.daySubLabel.text = item.startTime?.toDayOfWeekString() ?? ""
             
+            if indexPath.row == 0 || !(self.schedules[indexPath.row - 1].startTime ?? Date()).isSameDay(date: item.startTime ?? Date()) {
+                cell.daylabel.alpha = 1
+                cell.daySubLabel.alpha = 1
+            } else {
+                cell.daylabel.alpha = 0
+                cell.daySubLabel.alpha = 0
+            }
+            
+            cell.schoolIndicator.backgroundColor = UIColor(named: item.classInfo?.color ?? "randomBlue")
+            
             if indexPath.row > 0, Calendar.current.isDate((DataManager.shared.schedule?[indexPath.row - 1].startTime ?? Date()), inSameDayAs: item.startTime ?? Date()) {
                 cell.dayStackView.alpha = 0
             }
@@ -319,6 +329,7 @@ extension ViewController {
     private func updateCell() {
         DataManager.shared.fetchData(target: .schedule)
         self.schedules = DataManager.shared.fetchSchedules(section: nowSection)
+        let prevSchedules = DataManager.shared.fetchSchedules(section: .prev)
         var snapshot = NSDiffableDataSourceSnapshot<Section, Schedule>()
         if !schedules.isEmpty {
             snapshot.appendSections([nowSection])
@@ -327,13 +338,21 @@ extension ViewController {
         if let dataSource = self.dataSource {
             dataSource.apply(snapshot, animatingDifferences: false)
         }
+        
+        if prevSchedules.count == 0 {
+            indicator.alpha = 0
+        } else {
+            indicator.alpha = 1
+        }
+        
         if schedules.isEmpty {
-            noCellLabel.text = nowSection == .next ? "등록된 수업이 없어요!" : "노트를 작성하지 않은 수업이 없어요!"
-            noCellView.alpha = 1
-            addButton.alpha = 1
+            noCellLabel.text = nowSection == .next ? "다음 수업이 없어요!" : "노트를 작성하지 않은 수업이 없어요!"
         } else {
             noCellView.alpha = 0
             addButton.alpha = 0
+        }
+        if DataManager.shared.classInfo?.count == 0 {
+            addButton.alpha = 1
         }
     }
     
@@ -370,9 +389,8 @@ extension Date {
     }
     
     func todayString() -> String {
-        let date = Date()
         let calendar = Calendar.current
-        let components = calendar.dateComponents([.day], from: date)
+        let components = calendar.dateComponents([.day], from: self)
         let dayOfMonth = components.day
         return String(dayOfMonth ?? 0)
     }
@@ -384,10 +402,9 @@ extension Date {
         } else if calendar.isDateInTomorrow(self) {
             return "내일"
         } else {
-            let date = Date()
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "EEEE"
-            let dayOfTheWeekString = dateFormatter.string(from: date)
+            dateFormatter.dateFormat = "EEE"
+            let dayOfTheWeekString = dateFormatter.string(from: self)
             return dayOfTheWeekString
         }
         

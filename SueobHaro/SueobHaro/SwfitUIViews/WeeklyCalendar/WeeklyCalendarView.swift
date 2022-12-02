@@ -37,6 +37,7 @@ struct WeeklyCalendarView: View {
             Group {
                 HStack {
                     Text(titleFormatter() ?? "")
+                        .foregroundColor(.white)
                         .font(Font(uiFont: UIFont.systemFont(for: .title2)))
                     Spacer()
                 }

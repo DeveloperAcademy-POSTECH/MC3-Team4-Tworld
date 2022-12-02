@@ -87,6 +87,7 @@ struct PlanView: View {
     private var calendarCasePicker: some View {
         HStack(spacing: 0) {
             Text("주간일정")
+                .foregroundColor(.white)
                 .padding(4)
                 .onTapGesture {
                     withAnimation(.spring()) {
@@ -94,6 +95,7 @@ struct PlanView: View {
                     }
                 }
             Text("월간일정")
+                .foregroundColor(.white)
                 .padding(4)
                 .onTapGesture {
                     withAnimation(.spring()) {
